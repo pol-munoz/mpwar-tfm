@@ -12,7 +12,7 @@ final class Uuid implements Stringable
     {
     }
 
-    public static function create(string $raw)
+    public static function fromRaw(string $raw)
     {
         self::assertValidId($raw);
         return new self($raw);
