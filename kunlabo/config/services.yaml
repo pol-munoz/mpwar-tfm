@@ -23,3 +23,21 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    _instanceof:
+        # all services implementing the CommandHandler interface
+        # will be registered on the command.bus bus
+        Kunlabo\Shared\Application\Bus\Command\CommandHandler:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+
+        # all services implementing the QueryHandler interface
+        # registered on the query.bus bus
+        Kunlabo\Shared\Application\Bus\Query\QueryHandler:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+
+        # all services implementing the DomainEventSubscriber interface
+        # registered on the domain.bus bus
+        Kunlabo\Shared\Application\Bus\Event\DomainEventSubscriber:
+            tags:
+                - { name: messenger.message_handler, bus: event.bus }

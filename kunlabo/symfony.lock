@@ -1,4 +1,7 @@
 {
+    "brick/math": {
+        "version": "0.9.2"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.2"
     },
@@ -103,6 +106,15 @@
     "psr/log": {
         "version": "2.0.0"
     },
+    "ramsey/collection": {
+        "version": "1.2.1"
+    },
+    "ramsey/uuid": {
+        "version": "4.2.1"
+    },
+    "symfony/amqp-messenger": {
+        "version": "v5.3.4"
+    },
     "symfony/cache": {
         "version": "v5.3.4"
     },
@@ -131,6 +143,9 @@
         "version": "v2.4.0"
     },
     "symfony/doctrine-bridge": {
+        "version": "v5.3.4"
+    },
+    "symfony/doctrine-messenger": {
         "version": "v5.3.4"
     },
     "symfony/dotenv": {
@@ -200,6 +215,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "e9a414b113ceadbf4e52abe37bf8f1b443f06ccb"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/orm-pack": {
         "version": "v2.1.0"
     },
@@ -222,6 +249,9 @@
         "version": "v1.23.0"
     },
     "symfony/proxy-manager-bridge": {
+        "version": "v5.3.4"
+    },
+    "symfony/redis-messenger": {
         "version": "v5.3.4"
     },
     "symfony/routing": {
@@ -248,6 +278,22 @@
     },
     "symfony/string": {
         "version": "v5.3.3"
+    },
+    "symfony/translation-contracts": {
+        "version": "v2.4.0"
+    },
+    "symfony/validator": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "3eb8df139ec05414489d55b97603c5f6ca0c44cb"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+            "config/packages/validator.yaml"
+        ]
     },
     "symfony/var-dumper": {
         "version": "v5.3.6"
