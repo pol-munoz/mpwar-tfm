@@ -1,4 +1,4 @@
-# Coevo - A platform for user testing in co-creative scenarios
+# Kunlabo - A platform for user testing in co-creative scenarios
 
 ## Usage
 
