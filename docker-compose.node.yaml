@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+    node:
+        image: node:16.6.1-alpine3.14
+        volumes:
+            - ./kunlabo:/kunlabo
+        working_dir: /kunlabo/frontend

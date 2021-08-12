@@ -3,12 +3,13 @@
 namespace Kunlabo\Shared\Infrastructure\Bus\Query;
 
 use Kunlabo\Shared\Application\Bus\Query\Query;
+use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Application\Bus\Query\Response;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class SymfonyQueryBus
+final class SymfonyQueryBus implements QueryBus
 {
     public function __construct(private MessageBusInterface $queryBus)
     {

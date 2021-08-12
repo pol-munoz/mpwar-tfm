@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register - Kunlabo{% endblock %}
+
+{% block body %}
+    <form name="signUp" action="{{ path('web_register') }}" method="post">
+        {% if error is defined %}
+            <div>{{ error }}</div>
+        {% endif %}
+
+        <label for="email">Email</label>
+        <input name="email" type="email" id="email">
+
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password">
+
+        <input type="submit" value="Sign up">
+        <p>Already have an account? <a href="{{ path("web_login") }}">Sign in</a></p>
+    </form>
+{% endblock body %}

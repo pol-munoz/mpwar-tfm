@@ -1,37 +1,39 @@
 version: '3.8'
 
 services:
-  nginx:
-    image: nginx:1.21.1-alpine
-    ports:
-      - 8080:80
-    volumes:
-      - ./kunlabo:/var/www/kunlabo
-      - ./ops/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - php
+    nginx:
+        image: nginx:1.21.1-alpine
+        ports:
+            - 8080:80
+        volumes:
+            - ./kunlabo:/var/www/kunlabo
+            - ./ops/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        working_dir: /var/www/kunlabo
+        depends_on:
+            - php
 
-  php:
-    build: ./ops/php-fpm
-    volumes:
-      - ./kunlabo:/var/www/kunlabo
-    depends_on:
-      - mysql
-    environment:
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_NAME: ${MYSQL_DATABASE}
-      DB_VERSION: 8.0.26
+    php:
+        build: ./ops/php-fpm
+        volumes:
+            - ./kunlabo:/var/www/kunlabo
+        working_dir: /var/www/kunlabo
+        depends_on:
+            - mysql
+        environment:
+            DB_HOST: mysql
+            DB_PORT: 3306
+            DB_NAME: ${MYSQL_DATABASE}
+            DB_VERSION: 8.0.26
 
-  mysql:
-    image: mysql:8.0.26
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    environment:
-      MYSQL_DATABASE: ~
-      MYSQL_USER: ~
-      MYSQL_USER_PASSWORD: ~
-      MYSQL_ROOT_PASSWORD: ~
-    ports:
-      - 3360:3306
-    volumes:
-      - ./volumes/db/data:/var/lib/mysql
+    mysql:
+        image: mysql:8.0.26
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        environment:
+            MYSQL_DATABASE: ~
+            MYSQL_USER: ~
+            MYSQL_PASSWORD: ~
+            MYSQL_ROOT_PASSWORD: ~
+        ports:
+            - 3360:3306
+        volumes:
+            - ./volumes/db/data:/var/lib/mysql

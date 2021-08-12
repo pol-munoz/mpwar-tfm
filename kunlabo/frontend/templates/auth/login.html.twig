@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login - Kunlabo{% endblock %}
+
+{% block body %}
+    <form action="{{ path('web_login') }}" method="post">
+
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" value="{{ last_username }}"/>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"/>
+
+        <label>
+            <input type="checkbox" name="_remember_me"> Remember me
+        </label>
+        <button type="submit">Sign in</button>
+
+        <p>Need an account? <a href="{{ path("web_register") }}">Register</a></p>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+    </form>
+{% endblock body %}

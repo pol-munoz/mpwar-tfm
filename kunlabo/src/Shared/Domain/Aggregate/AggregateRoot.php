@@ -3,14 +3,14 @@
 
 namespace Kunlabo\Shared\Domain\Aggregate;
 
-use Kunlabo\Shared\Domain\Bus\Event\DomainEvent;
+use Kunlabo\Shared\Domain\Event\DomainEvent;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
 abstract class AggregateRoot
 {
     private array $domainEvents;
 
-    public function __construct(protected Uuid $id)
+    protected function __construct(protected Uuid $id)
     {
         $this->domainEvents = [];
     }

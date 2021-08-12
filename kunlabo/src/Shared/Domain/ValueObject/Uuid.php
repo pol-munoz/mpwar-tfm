@@ -2,17 +2,12 @@
 
 namespace Kunlabo\Shared\Domain\ValueObject;
 
-use InvalidArgumentException;
+use Kunlabo\Shared\Domain\ValueObject\Exception\InvalidUuidException;
 use Ramsey\Uuid\Uuid as RamseyUuid;
-use Stringable;
 
-final class Uuid implements Stringable
+final class Uuid extends StringValueObject
 {
-    private function __construct(private string $raw)
-    {
-    }
-
-    public static function fromRaw(string $raw)
+    public static function fromRaw(string $raw): self
     {
         self::assertValidId($raw);
         return new self($raw);
@@ -26,22 +21,12 @@ final class Uuid implements Stringable
     private static function assertValidId(string $id): void
     {
         if (!RamseyUuid::isValid($id)) {
-            throw new InvalidArgumentException('Invalid UUID: ' . $id);
+            throw new InvalidUuidException($id);
         }
-    }
-
-    public function getRaw(): string
-    {
-        return $this->raw;
     }
 
     public function equals(Uuid $other): bool
     {
         return $this->raw === $other->raw;
-    }
-
-    public function __toString(): string
-    {
-        return $this->raw;
     }
 }

@@ -8,3 +8,10 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/frontend/node_modules/
+/public/build/
+/frontend/npm-debug.log
+/frontend/yarn-error.log
+###< symfony/webpack-encore-bundle ###

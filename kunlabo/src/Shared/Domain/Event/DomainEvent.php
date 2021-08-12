@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunlabo\Shared\Application\Bus\Event;
+namespace Kunlabo\Shared\Domain\Event;
 
 use DateTimeImmutable;
 use Kunlabo\Shared\Domain\Utils;
@@ -19,12 +19,12 @@ abstract class DomainEvent
 
     public function getAggregateId(): string
     {
-        return $this->aggregateId;
+        return $this->aggregateId->getRaw();
     }
 
     public function getEventId(): string
     {
-        return $this->eventId;
+        return $this->eventId->getRaw();
     }
 
     public function getOccurredOn(): string
