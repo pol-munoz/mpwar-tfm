@@ -6,7 +6,7 @@
     <form action="{{ path('web_login') }}" method="post">
 
         {% if error %}
-            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            <div>{{ error.message }}</div>
         {% endif %}
 
         <label for="email">Email:</label>

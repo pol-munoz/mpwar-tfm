@@ -51,12 +51,12 @@ final class RegisterController extends AbstractController
             );
         } catch (UserAlreadyExistsException $exception) {
             return new Response(
-                $this->renderView('auth/register.html.twig', ['error' => $exception->getMessage()]),
+                $this->renderView('auth/register.html.twig', ['error' => $exception->getMessage(), 'email' => $email]),
                 Response::HTTP_CONFLICT
             );
         } catch (DomainException $exception) {
             return new Response(
-                $this->renderView('auth/register.html.twig', ['error' => $exception->getMessage()]),
+                $this->renderView('auth/register.html.twig', ['error' => $exception->getMessage(), 'email' => $email]),
                 Response::HTTP_BAD_REQUEST
             );
         }
