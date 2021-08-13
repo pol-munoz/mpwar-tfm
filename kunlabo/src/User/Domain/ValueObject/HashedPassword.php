@@ -18,9 +18,7 @@ final class HashedPassword
 
     public static function fromPlain(string $plain): self
     {
-        if (strlen($plain) < 8 || strlen($plain) > 72) {
-            throw new InvalidPasswordException("Must be between 8 and 72 characters");
-        }
+        self::validatePassword($plain);
 
         return new self(self::hash($plain));
     }
@@ -44,6 +42,24 @@ final class HashedPassword
     public static function needsRehash(string $hash): bool
     {
         return password_needs_rehash($hash, self::ALGO, self::OPTIONS);
+    }
+
+    private static function validatePassword(string $plain): void
+    {
+        if (strlen($plain) < 8 || strlen($plain) > 72) {
+            throw new InvalidPasswordException("Password must be between 8 and 72 characters.");
+        }
+
+        $uppercase = preg_match('@[A-Z]@', $plain);
+        $lowercase = preg_match('@[a-z]@', $plain);
+        $number = preg_match('@[0-9]@', $plain);
+        $special = preg_match('@[^\w]@', $plain);
+
+        if (!$uppercase || !$lowercase || !$number || !$special) {
+            throw new InvalidPasswordException(
+                "Password must contain both upper and lowercase letters, a number and a special character."
+            );
+        }
     }
 
     public function match(string $plainPassword): bool
