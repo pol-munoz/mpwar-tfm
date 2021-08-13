@@ -1,20 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'auth/base.html.twig' %}
 
 {% block title %}Register - Kunlabo{% endblock %}
 
 {% block body %}
-    <form name="signUp" action="{{ path('web_register') }}" method="post">
-        {% if error is defined %}
-            <div>{{ error }}</div>
-        {% endif %}
+    <turbo-frame id="auth">
+        <form name="signUp" action="{{ path('web_register') }}" method="post">
+            {% if error is defined %}
+                <div>{{ error }}</div>
+            {% endif %}
 
-        <label for="email">Email</label>
-        <input name="email" type="email" id="email" value="{{ email ?? '' }}">
+            <label for="email">Email</label>
+            <input name="email" type="email" id="email" value="{{ email ?? '' }}">
 
-        <label for="password">Password</label>
-        <input name="password" type="password" id="password">
+            <label for="password">Password</label>
+            <input name="password" type="password" id="password">
 
-        <input type="submit" value="Sign up">
-        <p>Already have an account? <a href="{{ path("web_login") }}">Sign in</a></p>
-    </form>
+            <input type="submit" value="Sign up">
+        </form>
+    </turbo-frame>
+    <p>Already have an account? <a href="{{ path("web_login") }}">Sign in</a></p>
 {% endblock body %}

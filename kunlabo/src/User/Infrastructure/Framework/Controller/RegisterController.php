@@ -33,6 +33,8 @@ final class RegisterController extends AbstractController
         UserAuthenticatorInterface $authenticator,
         LoginAuthenticator $loginAuthenticator
     ): Response {
+        echo $request->headers->get('Turbo-Frame');
+
         $email = $request->request->get('email', '');
         $password = $request->request->get('password', '');
         $uuid = Uuid::random();
@@ -49,15 +51,10 @@ final class RegisterController extends AbstractController
                 $loginAuthenticator,
                 $request
             );
-        } catch (UserAlreadyExistsException $exception) {
-            return new Response(
-                $this->renderView('auth/register.html.twig', ['error' => $exception->getMessage(), 'email' => $email]),
-                Response::HTTP_CONFLICT
-            );
         } catch (DomainException $exception) {
             return new Response(
                 $this->renderView('auth/register.html.twig', ['error' => $exception->getMessage(), 'email' => $email]),
-                Response::HTTP_BAD_REQUEST
+                Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
     }
