@@ -21,4 +21,9 @@ abstract class StringValueObject implements Stringable
     {
         return $this->raw;
     }
+
+    public function equals(StringValueObject $other): bool
+    {
+        return get_class($this) === get_class($other) && $this->raw === $other->raw;
+    }
 }

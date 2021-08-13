@@ -40,6 +40,7 @@ final class RegisterController extends AbstractController
         try {
             $commandBus->dispatch(SignUpCommand::fromRaw($uuid, $email, $password));
 
+            // A bit weird but needed to automatically authenticate the user
             $user = $queryBus->ask(FindByIdQuery::fromId($uuid))->getUser();
             $user = AuthUser::fromDomainUser($user);
 

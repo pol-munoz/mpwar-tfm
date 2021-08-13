@@ -24,9 +24,4 @@ final class Uuid extends StringValueObject
             throw new InvalidUuidException($id);
         }
     }
-
-    public function equals(Uuid $other): bool
-    {
-        return $this->raw === $other->raw;
-    }
 }

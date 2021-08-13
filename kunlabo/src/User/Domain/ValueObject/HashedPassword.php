@@ -5,6 +5,8 @@ namespace Kunlabo\User\Domain\ValueObject;
 use Kunlabo\User\Domain\ValueObject\Exception\InvalidPasswordException;
 use RuntimeException;
 
+// This isn't a StringValueObject because I value the ::fromHash and ::fromPlain distinction.
+// Having ::fromRaw would be weird.
 final class HashedPassword
 {
     public const ALGO = PASSWORD_BCRYPT;
@@ -41,7 +43,7 @@ final class HashedPassword
 
     public static function needsRehash(string $hash): bool
     {
-        return password_needs_rehash($hash,self::ALGO, self::OPTIONS);
+        return password_needs_rehash($hash, self::ALGO, self::OPTIONS);
     }
 
     public function match(string $plainPassword): bool
@@ -52,5 +54,10 @@ final class HashedPassword
     public function getHash(): string
     {
         return $this->hash;
+    }
+
+    public function equals(HashedPassword $other): bool
+    {
+        return $this->hash === $other->hash;
     }
 }
