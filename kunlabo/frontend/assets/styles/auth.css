@@ -25,7 +25,7 @@ body {
     padding: 40px;
     border-radius: 35px;
     box-shadow: 0 5px 10px rgba(29, 61, 112, 0.2);
-    width: 350px;
+    width: 420px;
     margin: 50px;
 }
 
@@ -76,7 +76,6 @@ body {
     border-radius: 2em;
     margin: 0;
     opacity: 0;
-    transition: opacity 0.25s ease-in-out;
 }
 
 .Auth-input-error i {

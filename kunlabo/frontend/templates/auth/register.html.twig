@@ -4,7 +4,7 @@
 
 {% block auth %}
     <form class="Auth-form" name="signUp" action="{{ path('web_register') }}" method="post" novalidate
-          data-controller="register">
+          data-controller="register" data-action="register#submit">
         <label class="Auth-label" for="name">Name</label>
         <input class="Auth-input" name="name" type="text" id="name" value="{{ name ?? '' }}"
                data-register-target="name" data-action="register#nameChanged blur->register#nameBlur">
