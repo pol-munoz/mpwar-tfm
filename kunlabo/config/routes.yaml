@@ -3,5 +3,5 @@ user_controllers:
     type: annotation
 
 home_controllers:
-    resource: '../src/Home/Infrastructure/Framework/Controller'
+    resource: '../src/Shared/Infrastructure/Framework/Controller'
     type: annotation
