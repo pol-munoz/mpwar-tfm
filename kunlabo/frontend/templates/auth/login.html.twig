@@ -3,35 +3,33 @@
 {% block title %}Login - Kunlabo{% endblock %}
 
 {% block auth %}
-    <turbo-frame id="auth" target="_top">
-        <form class="Auth-form" action="{{ path('web_login') }}" method="post">
-            <label class="Auth-label" for="email">Email</label>
-            <input class="Auth-input Auth-separation" type="text" id="email" name="email" value="{{ last_username }}"
-                   required/>
+    <form class="Auth-form" action="{{ path('web_login') }}" method="post">
+        <label class="Auth-label" for="email">Email</label>
+        <input class="Auth-input Auth-separation" type="text" id="email" name="email" value="{{ last_username }}"
+               required/>
 
-            <label class="Auth-label" for="password">Password</label>
-            <div class="Auth-pass Auth-separation">
-                <input class="Auth-input Auth-pass-input" name="password" type="password" id="password" required
-                       data-password-target="input">
-                <div class="Auth-pass-button" data-action="click->password#toggle">
-                    <i class="far fa-eye" data-password-target="icon"></i>
-                </div>
+        <label class="Auth-label" for="password">Password</label>
+        <div class="Auth-pass Auth-separation">
+            <input class="Auth-input Auth-pass-input" name="password" type="password" id="password" required
+                   data-password-target="input">
+            <div class="Auth-pass-button" data-action="click->password#toggle">
+                <i class="far fa-eye" data-password-target="icon"></i>
             </div>
+        </div>
 
-            <button class="Auth-button" type="submit">Sign in</button>
+        <button class="Auth-button" type="submit">Sign in</button>
 
-            <label class="Auth-label Auth-checkbox">
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
+        <label class="Auth-label Auth-checkbox">
+            <input type="checkbox" name="_remember_me"> Remember me
+        </label>
 
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}"
-            >
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
 
-            {% if error %}
-                <p class="Auth-error">{{ error.message }}</p>
-            {% endif %}
-        </form>
-    </turbo-frame>
+        {% if error %}
+            <p class="Auth-error">{{ error.message }}</p>
+        {% endif %}
+    </form>
     <p class="Auth-footer">Need an account? <a class="Auth-link" href="{{ path("web_register") }}">Register</a></p>
 {% endblock %}
