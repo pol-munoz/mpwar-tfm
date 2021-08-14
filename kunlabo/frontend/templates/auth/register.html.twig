@@ -2,21 +2,46 @@
 
 {% block title %}Register - Kunlabo{% endblock %}
 
-{% block body %}
+{% block auth %}
     <turbo-frame id="auth">
-        <form name="signUp" action="{{ path('web_register') }}" method="post">
+        <form class="Auth-form" name="signUp" action="{{ path('web_register') }}" method="post" novalidate
+              data-controller="register">
+            <label class="Auth-label" for="name">Name</label>
+            <input class="Auth-input" name="name" type="text" id="name" value="{{ name ?? '' }}"
+                   data-register-target="name" data-action="register#nameChanged blur->register#nameBlur">
+            <p class="Auth-input-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <span data-register-target="nameError">Error</span>
+            </p>
+
+            <label class="Auth-label" for="email">Email</label>
+            <input class="Auth-input" name="email" type="email" id="email" value="{{ email ?? '' }}"
+                   data-register-target="email" data-action="register#emailChanged blur->register#emailBlur">
+            <p class="Auth-input-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <span data-register-target="emailError">Error</span>
+            </p>
+
+            <label class="Auth-label" for="password">Password</label>
+            <div class="Auth-pass">
+                <input class="Auth-input Auth-pass-input" name="password" type="password" id="password"
+                       data-password-target="input" data-register-target="password"
+                       data-action="register#passwordChanged blur->register#passwordBlur">
+                <div class="Auth-pass-button" data-action="click->password#toggle">
+                    <i class="far fa-eye" data-password-target="icon"></i>
+                </div>
+            </div>
+            <p class="Auth-input-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <span data-register-target="passwordError">Error</span>
+            </p>
+
+            <input class="Auth-button" type="submit" value="Register">
+
             {% if error is defined %}
-                <div>{{ error }}</div>
+                <p class="Auth-error">{{ error }}</p>
             {% endif %}
-
-            <label for="email">Email</label>
-            <input name="email" type="email" id="email" value="{{ email ?? '' }}">
-
-            <label for="password">Password</label>
-            <input name="password" type="password" id="password">
-
-            <input type="submit" value="Sign up">
         </form>
     </turbo-frame>
-    <p>Already have an account? <a href="{{ path("web_login") }}">Sign in</a></p>
-{% endblock body %}
+    <p class="Auth-footer">Have an account? <a class="Auth-link" href="{{ path("web_login") }}">Sign in</a></p>
+{% endblock %}

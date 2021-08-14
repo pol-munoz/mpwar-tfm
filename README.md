@@ -29,12 +29,14 @@ This project makes use of several Domain-Driven Design practices and other relat
     - [Symfony Security](https://symfony.com/doc/current/security.html) to manage user accounts with the [new authenticator system](https://symfony.com/doc/current/security/authenticator_manager.html).
     - [Symfony Messenger](https://symfony.com/doc/current/messenger.html) to implement Command, Query and Domain Event buses.
 
-- [Twig](https://twig.symfony.com/) To define and render templates.
-
-- [Webpack Encore](https://symfony.com/doc/current/frontend.html) to manage, process and bundle assets.
-    - [Stimulus](https://stimulus.hotwired.dev/) As a light JavaScript framework.
-    - [Turbo](https://turbo.hotwired.dev/) To improve perceived performance.
-
 - [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) as the Object-Relational-Mapper.
 
 - [Ramsey UUID](https://uuid.ramsey.dev/en/stable/) to provide UUID-v4 unique entity identifiers.
+
+- [Webpack Encore](https://symfony.com/doc/current/frontend.html) to manage, process and bundle assets.
+    - [Stimulus](https://stimulus.hotwired.dev/) as a light JavaScript framework.
+    - [Turbo](https://turbo.hotwired.dev/) to improve perceived performance.
+    
+- [Twig](https://twig.symfony.com/) To define and render templates.
+    
+- [FontAwesome](https://fontawesome.com/) for icons.

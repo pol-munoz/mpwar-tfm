@@ -8,6 +8,7 @@
             <unique-constraint columns="email" name="email_unique" />
         </unique-constraints>
         <id name="id" type="aggregate_uuid" column="id"/>
+        <embedded name="name" class="Kunlabo\User\Domain\ValueObject\Name" use-column-prefix="false"/>
         <embedded name="email" class="Kunlabo\User\Domain\ValueObject\Email" use-column-prefix="false"/>
         <embedded name="hashedPassword" class="Kunlabo\User\Domain\ValueObject\HashedPassword" use-column-prefix="false"/>
         <field name="roles" type="role_array"/>

@@ -4,9 +4,9 @@ namespace Kunlabo\User\Domain\ValueObject\Exception;
 
 use DomainException;
 
-final class InvalidPasswordException extends DomainException
+final class InvalidNameException extends DomainException
 {
-    public function __construct(string $reason)
+    public function __construct($reason)
     {
         parent::__construct($reason);
     }

@@ -20,7 +20,7 @@ final class SignUpHandler implements CommandHandler
             throw new UserAlreadyExistsException();
         }
 
-        $user = User::signUp($command->getUuid(), $command->getEmail(), $command->getHashedPassword());
+        $user = User::signUp($command->getUuid(), $command->getName(), $command->getEmail(), $command->getHashedPassword());
         $user->addRole(Role::createUserRole());
 
         $this->repository->create($user);

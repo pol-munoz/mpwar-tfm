@@ -1,0 +1,168 @@
+html {
+    background: #EFF3FB;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: #EFF3FB;
+    background: linear-gradient(180deg, #EFF3FB 0%, #AEC5EA 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Auth-logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.Auth-wrapper {
+    background: white;
+    padding: 40px;
+    border-radius: 35px;
+    box-shadow: 0 5px 10px rgba(29, 61, 112, 0.2);
+    width: 350px;
+    margin: 50px;
+}
+
+.Auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.Auth-error {
+    color: white;
+    background: #DB3B3B;
+    padding: 5px 15px;
+    font-size: 0.8em;
+    border-radius: 2em;
+    margin: 20px 0 0;
+}
+
+.Auth-label {
+    font-size: 1em;
+    padding: 0 15px;
+    margin: 0 1px 2px;
+}
+
+.Auth-input {
+    display: flex;
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 2em;
+    outline: none;
+    border: 1px solid white;
+    background: #fafafa;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.Auth-input:focus {
+    border: 1px solid #7DA2DE;
+    box-shadow: inset 0 1px 4px rgba(29, 61, 112, 0.3);
+}
+
+.Auth-input-error {
+    display: flex;
+    flex-direction: row;
+    color: #DB3B3B;
+    padding: 5px 15px;
+    font-size: 0.8em;
+    border-radius: 2em;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out;
+}
+
+.Auth-input-error i {
+    margin: 3px 5px 0 0;
+}
+
+.Auth-pass {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+}
+
+.Auth-pass-input {
+    padding-right: 40px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Auth-pass-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 1em;
+    text-shadow: 0 0 4px white;
+    font-size: 1em;
+}
+
+.fa-eye {
+    margin-right: 1px;
+}
+
+.Auth-button {
+    margin: 10px 0 0;
+    border: 1px solid #1d3d70;
+    background: #264F92;
+    color: white;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 15px;
+    border-radius: 2em;
+    cursor: pointer;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.2);
+}
+
+.Auth-button:hover {
+    background: #28549A;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.4);
+}
+
+.Auth-button:active {
+    background: #244B8A;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.3);
+}
+
+.Auth-footer {
+    font-size: 0.9em;
+    margin: 25px 0 0;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.Auth-link {
+    color: #264F92;
+    text-decoration: none;
+}
+
+.Auth-separation {
+    margin-bottom: 28px;
+}
+
+.Auth-checkbox {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    cursor: pointer;
+    align-self: flex-start;
+    font-size: 0.9em;
+    font-weight: lighter;
+}
+
+.Auth-checkbox input {
+    cursor: pointer;
+    margin-right: 10px;
+}

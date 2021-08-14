@@ -2,29 +2,36 @@
 
 {% block title %}Login - Kunlabo{% endblock %}
 
-{% block body %}
-    <turbo-frame id="auth">
-        <form action="{{ path('web_login') }}" method="post">
+{% block auth %}
+    <turbo-frame id="auth" target="_top">
+        <form class="Auth-form" action="{{ path('web_login') }}" method="post">
+            <label class="Auth-label" for="email">Email</label>
+            <input class="Auth-input Auth-separation" type="text" id="email" name="email" value="{{ last_username }}"
+                   required/>
 
-            {% if error %}
-                <div>{{ error.message }}</div>
-            {% endif %}
+            <label class="Auth-label" for="password">Password</label>
+            <div class="Auth-pass Auth-separation">
+                <input class="Auth-input Auth-pass-input" name="password" type="password" id="password" required
+                       data-password-target="input">
+                <div class="Auth-pass-button" data-action="click->password#toggle">
+                    <i class="far fa-eye" data-password-target="icon"></i>
+                </div>
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email" value="{{ last_username }}"/>
+            <button class="Auth-button" type="submit">Sign in</button>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password"/>
-
-            <label>
+            <label class="Auth-label Auth-checkbox">
                 <input type="checkbox" name="_remember_me"> Remember me
             </label>
-            <button type="submit">Sign in</button>
 
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}"
             >
+
+            {% if error %}
+                <p class="Auth-error">{{ error.message }}</p>
+            {% endif %}
         </form>
     </turbo-frame>
-    <p>Need an account? <a href="{{ path("web_register") }}">Register</a></p>
-{% endblock body %}
+    <p class="Auth-footer">Need an account? <a class="Auth-link" href="{{ path("web_register") }}">Register</a></p>
+{% endblock %}

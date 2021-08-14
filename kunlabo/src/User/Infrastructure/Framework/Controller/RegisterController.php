@@ -8,7 +8,6 @@ use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\User\Application\Command\SignUp\SignUpCommand;
 use Kunlabo\User\Application\Query\FindByIdQuery\FindByIdQuery;
-use Kunlabo\User\Domain\Exception\UserAlreadyExistsException;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Kunlabo\User\Infrastructure\Framework\Auth\Guard\LoginAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,12 +34,13 @@ final class RegisterController extends AbstractController
     ): Response {
         echo $request->headers->get('Turbo-Frame');
 
+        $name = $request->request->get('name', '');
         $email = $request->request->get('email', '');
         $password = $request->request->get('password', '');
         $uuid = Uuid::random();
 
         try {
-            $commandBus->dispatch(SignUpCommand::fromRaw($uuid, $email, $password));
+            $commandBus->dispatch(SignUpCommand::fromRaw($uuid, $name, $email, $password));
 
             // A bit weird but needed to automatically authenticate the user
             $user = $queryBus->ask(FindByIdQuery::fromId($uuid))->getUser();

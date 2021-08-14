@@ -9,12 +9,14 @@ use Kunlabo\User\Domain\Event\UserSignedUpEvent;
 use Kunlabo\User\Domain\Exception\InvalidCredentialsException;
 use Kunlabo\User\Domain\ValueObject\Email;
 use Kunlabo\User\Domain\ValueObject\HashedPassword;
+use Kunlabo\User\Domain\ValueObject\Name;
 use Kunlabo\User\Domain\ValueObject\Role;
 
 class User extends AggregateRoot
 {
     protected function __construct(
         Uuid $id,
+        private Name $name,
         private Email $email,
         private HashedPassword $hashedPassword,
         protected array $roles = []
@@ -24,10 +26,12 @@ class User extends AggregateRoot
 
     public static function signUp(
         Uuid $id,
+        Name $name,
         Email $email,
         HashedPassword $hashedPassword
     ): self {
-        $user = new self($id, $email, $hashedPassword);
+
+        $user = new self($id, $name, $email, $hashedPassword);
         $user->record(new UserSignedUpEvent($user));
 
         return $user;
@@ -39,6 +43,11 @@ class User extends AggregateRoot
             throw new InvalidCredentialsException();
         }
         $this->record(new UserSignedInEvent($this));
+    }
+
+    public function getName(): Name
+    {
+        return $this->name;
     }
 
     public function getEmail(): Email
