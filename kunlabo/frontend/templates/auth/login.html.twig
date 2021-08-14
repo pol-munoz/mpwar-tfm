@@ -3,7 +3,7 @@
 {% block title %}Login - Kunlabo{% endblock %}
 
 {% block auth %}
-    <form class="Auth-form" action="{{ path('web_login') }}" method="post">
+    <form class="Auth-form" action="{{ path('web_login') }}" method="post" autocomplete="on">
         <label class="Auth-label" for="email">Email</label>
         <input class="Auth-input Auth-separation" type="text" id="email" name="email" value="{{ last_username }}"
                required/>
@@ -11,6 +11,7 @@
         <label class="Auth-label" for="password">Password</label>
         <div class="Auth-pass Auth-separation">
             <input class="Auth-input Auth-pass-input" name="password" type="password" id="password" required
+                   autocomplete="current-password"
                    data-password-target="input">
             <div class="Auth-pass-button" data-action="click->password#toggle">
                 <i class="far fa-eye" data-password-target="icon"></i>

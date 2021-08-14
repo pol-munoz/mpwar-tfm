@@ -3,7 +3,7 @@
 {% block title %}Register - Kunlabo{% endblock %}
 
 {% block auth %}
-    <form class="Auth-form" name="signUp" action="{{ path('web_register') }}" method="post" novalidate
+    <form class="Auth-form" name="signUp" action="{{ path('web_register') }}" method="post" novalidate autocomplete="on"
           data-controller="register" data-action="register#submit">
         <label class="Auth-label" for="name">Name</label>
         <input class="Auth-input" name="name" type="text" id="name" value="{{ name ?? '' }}"
@@ -24,6 +24,7 @@
         <label class="Auth-label" for="password">Password</label>
         <div class="Auth-pass">
             <input class="Auth-input Auth-pass-input" name="password" type="password" id="password"
+                   autocomplete="new-password"
                    data-password-target="input" data-register-target="password"
                    data-action="register#passwordChanged blur->register#passwordBlur">
             <div class="Auth-pass-button" data-action="click->password#toggle">
