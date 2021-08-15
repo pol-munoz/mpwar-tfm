@@ -14,13 +14,6 @@ body {
     overflow: hidden;
 }
 
-.App-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: hidden;
-}
-
 .App-header {
     padding: 10px;
     background: white;
@@ -131,4 +124,47 @@ body {
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
+}
+
+.App-button {
+    margin: 0 0 0 10px;
+    border: 1px solid #1d3d70;
+    background: #264F92;
+    color: white;
+    font-size: 0.9em;
+    font-family: 'Poppins', sans-serif;
+    padding: 5px 10px;
+    border-radius: 2em;
+    cursor: pointer;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.2), 0 1px 4px rgba(29, 61, 112, 0.2);
+}
+
+.App-button:hover {
+    background: #28549A;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.4), 0 1px 6px rgba(29, 61, 112, 0.3);
+}
+
+.App-button:active {
+    background: #244B8A;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.3), 0 1px 2px rgba(29, 61, 112, 0.2);
+}
+
+.App-label {
+
+}
+
+.App-input {
+    padding: 5px 10px;
+    border-radius: 2em;
+    outline: none;
+    border: 1px solid white;
+    background: #fafafa;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    font-family: 'Poppins', sans-serif;
+}
+
+.App-input:focus {
+    border: 1px solid #7DA2DE;
+    box-shadow: inset 0 1px 4px rgba(29, 61, 112, 0.3);
 }

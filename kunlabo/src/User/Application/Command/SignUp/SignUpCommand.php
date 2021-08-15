@@ -4,9 +4,9 @@ namespace Kunlabo\User\Application\Command\SignUp;
 
 use Kunlabo\Shared\Application\Bus\Command\Command;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
+use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\User\Domain\ValueObject\Email;
 use Kunlabo\User\Domain\ValueObject\HashedPassword;
-use Kunlabo\User\Domain\ValueObject\Name;
 
 final class SignUpCommand implements Command
 {

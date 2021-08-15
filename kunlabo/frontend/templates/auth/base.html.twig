@@ -13,9 +13,7 @@
         <img height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
     </a>
     <main class="Auth-wrapper" data-controller="password">
-        <turbo-frame id="auth">
-            {% block auth %}
-            {% endblock %}
-        </turbo-frame>
+        {% block auth %}
+        {% endblock %}
     </main>
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunlabo\User\Domain\ValueObject\Exception;
+namespace Kunlabo\Shared\Domain\ValueObject\Exception;
 
 use DomainException;
 

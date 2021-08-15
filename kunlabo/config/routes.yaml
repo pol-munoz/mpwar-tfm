@@ -2,6 +2,10 @@ user_controllers:
     resource: '../src/User/Infrastructure/Framework/Controller'
     type: annotation
 
-home_controllers:
+shared_controllers:
     resource: '../src/Shared/Infrastructure/Framework/Controller'
+    type: annotation
+
+engine_controllers:
+    resource: '../src/Engine/Infrastructure/Framework/Controller'
     type: annotation

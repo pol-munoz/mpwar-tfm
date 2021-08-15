@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunlabo\User\Domain\ValueObject;
+namespace Kunlabo\Shared\Domain\ValueObject;
 
 use Kunlabo\Shared\Domain\ValueObject\StringValueObject;
 use Kunlabo\User\Domain\ValueObject\Exception\InvalidNameException;

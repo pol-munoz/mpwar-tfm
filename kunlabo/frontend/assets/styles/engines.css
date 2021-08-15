@@ -1,0 +1,26 @@
+.App-content {
+    padding: 50px;
+}
+
+.Engines-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.Engines-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.Engines-title {
+    margin: 0;
+    color: #040910;
+}
+
+.Engines-form {
+    display: none;
+}

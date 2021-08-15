@@ -4,7 +4,7 @@ namespace Kunlabo\Shared\Domain\ValueObject\Exception;
 
 use DomainException;
 
-class InvalidUuidException extends DomainException
+final class InvalidUuidException extends DomainException
 {
     public function __construct(string $id)
     {

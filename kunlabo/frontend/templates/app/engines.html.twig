@@ -1,0 +1,29 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}Engines - Kunlabo{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('engines') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('engines') }}
+{% endblock %}
+
+{% block content %}
+    <div class="Engines-wrapper" data-controller="newEngine">
+        <div class="Engines-header">
+            <h1 class="Engines-title">Engines</h1>
+            <button class="App-button" data-action="newEngine#show" data-newEngine-target="button">New engine</button>
+            <form class="Engines-form" action="{{ path('web_engines') }}" method="post" autocomplete="off"
+                  data-newEngine-target="form" data-action="newEngine#submit">
+                <label class="App-label" for="name" style="display: none">Name</label>
+                <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"
+                       data-newEngine-target="input" data-action="keyup->newEngine#keyUp blur->newEngine#blur">
+            </form>
+        </div>
+        {# TODO engine link list  #}
+    </div>
+{% endblock %}

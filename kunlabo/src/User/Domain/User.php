@@ -4,12 +4,12 @@ namespace Kunlabo\User\Domain;
 
 use Kunlabo\Shared\Domain\Aggregate\AggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
+use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\User\Domain\Event\UserSignedInEvent;
 use Kunlabo\User\Domain\Event\UserSignedUpEvent;
 use Kunlabo\User\Domain\Exception\InvalidCredentialsException;
 use Kunlabo\User\Domain\ValueObject\Email;
 use Kunlabo\User\Domain\ValueObject\HashedPassword;
-use Kunlabo\User\Domain\ValueObject\Name;
 use Kunlabo\User\Domain\ValueObject\Role;
 
 class User extends AggregateRoot
