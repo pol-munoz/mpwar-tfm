@@ -11,6 +11,12 @@ body {
     flex-direction: column;
 }
 
+.App-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 .App-header {
     padding: 10px;
     background: white;
@@ -85,6 +91,7 @@ body {
     overflow: hidden;
     box-sizing: border-box;
     text-decoration: none;
+    margin-bottom: 8px;
 }
 
 .App-nav-item:hover {
@@ -106,7 +113,7 @@ body {
     margin-left: 10px;
 }
 
-.App-wrapper {
+.App-content {
     display: flex;
     flex-direction: column;
     flex: 1;

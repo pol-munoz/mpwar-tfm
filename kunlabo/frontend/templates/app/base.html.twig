@@ -17,22 +17,25 @@
 {% endblock %}
 
 {% block body %}
-    <header class="App-header">
-        <a class="App-logo" href="{{ path("web_home") }}">
-            <img height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
-        </a>
-        <div class="App-account">
-            <span class="App-username">{{ app.user.name }}</span>
-            <a class="App-logout" href="{{ path("web_logout") }}">
-                <i class="fas fa-sign-out-alt"></i>
+    <turbo-frame id="app" class="App-wrapper">
+        <header class="App-header">
+            <a class="App-logo" href="{{ path("web_home") }}">
+                <img height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
             </a>
-        </div>
-    </header>
-    <main class="App-main">
-        <turbo-frame id="app" style="display: flex; flex: 1">
+            <div class="App-account">
+                <span class="App-username">{{ app.user.name }}</span>
+                <a class="App-logout" href="{{ path("web_logout") }}" data-turbo-frame="_top">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </header>
+        <main class="App-main">
             <nav class="App-nav" data-controller="sidebar" data-sidebar-target="nav">
                 <div class="App-nav-main">
                     {{ _self.navlink('web_home', 'fa-home', 'Home') }}
+                    {{ _self.navlink('web_home', 'fa-flask', 'Studies') }}
+                    {{ _self.navlink('web_home', 'fa-toolbox', 'Engines') }}
+                    {{ _self.navlink('web_home', 'fa-brain', 'Agents') }}
                 </div>
 
                 <div class="App-nav-item" data-action="click->sidebar#toggle">
@@ -40,10 +43,10 @@
                     <span class="App-nav-text">Collapse</span>
                 </div>
             </nav>
-            <div class="App-wrapper">
+            <div class="App-content">
                 {% block app %}
                 {% endblock %}
             </div>
-        </turbo-frame>
-    </main>
+        </main>
+    </turbo-frame>
 {% endblock %}
