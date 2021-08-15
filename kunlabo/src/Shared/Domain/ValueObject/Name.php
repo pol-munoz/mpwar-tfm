@@ -2,12 +2,11 @@
 
 namespace Kunlabo\Shared\Domain\ValueObject;
 
-use Kunlabo\Shared\Domain\ValueObject\StringValueObject;
-use Kunlabo\User\Domain\ValueObject\Exception\InvalidNameException;
+use Kunlabo\Shared\Domain\ValueObject\Exception\InvalidNameException;
 
 final class Name extends StringValueObject
 {
-    public static function fromRaw(string $raw): Name
+    public static function fromRaw(string $raw): self
     {
         self::assertValidName($raw);
         return new self($raw);

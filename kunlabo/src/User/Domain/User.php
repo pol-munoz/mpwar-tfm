@@ -2,6 +2,7 @@
 
 namespace Kunlabo\User\Domain;
 
+use DateTime;
 use Kunlabo\Shared\Domain\Aggregate\AggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Shared\Domain\ValueObject\Name;
@@ -19,7 +20,8 @@ class User extends AggregateRoot
         private Name $name,
         private Email $email,
         private HashedPassword $hashedPassword,
-        protected array $roles = []
+        private DateTime $created,
+        protected array $roles
     ) {
         parent::__construct($id);
     }
@@ -31,7 +33,7 @@ class User extends AggregateRoot
         HashedPassword $hashedPassword
     ): self {
 
-        $user = new self($id, $name, $email, $hashedPassword);
+        $user = new self($id, $name, $email, $hashedPassword, new DateTime(), []);
         $user->record(new UserSignedUpEvent($user));
 
         return $user;
@@ -58,6 +60,11 @@ class User extends AggregateRoot
     public function getHashedPassword(): HashedPassword
     {
         return $this->hashedPassword;
+    }
+
+    public function getCreated(): DateTime
+    {
+        return $this->created;
     }
 
     public function getRoles(): array

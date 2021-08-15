@@ -18,7 +18,7 @@ final class HashedPassword
 
     public static function fromPlain(string $plain): self
     {
-        self::validatePassword($plain);
+        self::assertValidPassword($plain);
 
         return new self(self::hash($plain));
     }
@@ -44,7 +44,7 @@ final class HashedPassword
         return password_needs_rehash($hash, self::ALGO, self::OPTIONS);
     }
 
-    private static function validatePassword(string $plain): void
+    private static function assertValidPassword(string $plain): void
     {
         if (strlen($plain) < 8 || strlen($plain) > 72) {
             throw new InvalidPasswordException("Password must be between 8 and 72 characters.");

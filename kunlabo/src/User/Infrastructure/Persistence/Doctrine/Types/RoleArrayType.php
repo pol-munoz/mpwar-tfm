@@ -10,7 +10,7 @@ use Kunlabo\User\Domain\ValueObject\Role;
 // IMO this is a good compromise, as having a fake entity to represent roles as a one to many relationship is overkill,
 // embeddables don't support collections, json would require extra serialization in the Domain layer
 // and simple_array (or json) wouldn't respect the Value Object
-final class RoleArray extends StringType
+final class RoleArrayType extends StringType
 {
     public const NAME = 'role_array';
 

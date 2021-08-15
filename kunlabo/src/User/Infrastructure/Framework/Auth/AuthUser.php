@@ -21,6 +21,7 @@ final class AuthUser extends User implements UserInterface, PasswordHasherAwareI
             $user->getName(),
             $user->getEmail(),
             $user->getHashedPassword(),
+            $user->getCreated(),
             $user->getRoles()
         );
     }

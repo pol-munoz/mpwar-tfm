@@ -6,7 +6,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-final class AggregateUuid extends GuidType
+final class AggregateUuidType extends GuidType
 {
     public const NAME = 'aggregate_uuid';
 
