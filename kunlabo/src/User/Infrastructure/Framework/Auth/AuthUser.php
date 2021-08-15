@@ -18,10 +18,11 @@ final class AuthUser extends User implements UserInterface, PasswordHasherAwareI
     {
         return new self(
             $user->getId(),
+            $user->getCreated(),
+            $user->getModified(),
             $user->getName(),
             $user->getEmail(),
             $user->getHashedPassword(),
-            $user->getCreated(),
             $user->getRoles()
         );
     }

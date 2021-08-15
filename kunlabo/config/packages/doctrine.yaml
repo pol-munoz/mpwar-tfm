@@ -17,6 +17,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/User/Infrastructure/Persistence/Doctrine/Mapping'
                 prefix: 'Kunlabo\User\Domain'
                 alias: User
+            KunlaboEngine:
+                type: xml
+                dir: '%kernel.project_dir%/src/Engine/Infrastructure/Persistence/Doctrine/Mapping'
+                prefix: 'Kunlabo\Engine\Domain'
+                alias: Engine
             KunlaboShared:
                 type: xml
                 dir: '%kernel.project_dir%/src/Shared/Infrastructure/Persistence/Doctrine/Mapping'

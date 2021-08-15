@@ -3,7 +3,7 @@
 namespace Kunlabo\User\Domain;
 
 use DateTime;
-use Kunlabo\Shared\Domain\Aggregate\AggregateRoot;
+use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\User\Domain\Event\UserSignedInEvent;
@@ -13,17 +13,18 @@ use Kunlabo\User\Domain\ValueObject\Email;
 use Kunlabo\User\Domain\ValueObject\HashedPassword;
 use Kunlabo\User\Domain\ValueObject\Role;
 
-class User extends AggregateRoot
+class User extends NamedAggregateRoot
 {
     protected function __construct(
         Uuid $id,
-        private Name $name,
+        DateTime $created,
+        DateTime $modified,
+        Name $name,
         private Email $email,
         private HashedPassword $hashedPassword,
-        private DateTime $created,
         protected array $roles
     ) {
-        parent::__construct($id);
+        parent::__construct($id, $created, $modified, $name);
     }
 
     public static function signUp(
@@ -33,7 +34,7 @@ class User extends AggregateRoot
         HashedPassword $hashedPassword
     ): self {
 
-        $user = new self($id, $name, $email, $hashedPassword, new DateTime(), []);
+        $user = new self($id, new DateTime(), new DateTime(), $name, $email, $hashedPassword, []);
         $user->record(new UserSignedUpEvent($user));
 
         return $user;
@@ -47,11 +48,6 @@ class User extends AggregateRoot
         $this->record(new UserSignedInEvent($this));
     }
 
-    public function getName(): Name
-    {
-        return $this->name;
-    }
-
     public function getEmail(): Email
     {
         return $this->email;
@@ -60,11 +56,6 @@ class User extends AggregateRoot
     public function getHashedPassword(): HashedPassword
     {
         return $this->hashedPassword;
-    }
-
-    public function getCreated(): DateTime
-    {
-        return $this->created;
     }
 
     public function getRoles(): array
