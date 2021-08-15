@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% macro navlink(route, icon, name, params = {}) %}
+    <a class="App-nav-item {{ app.request.get('_route') starts with route ? 'App-nav-item-active' : '' }}"
+       href="{{ path(route, params) }}">
+        <i class="fas fa-fw {{ icon }} App-nav-icon"></i>
+        <span class="App-nav-text">{{ name }}</span>
+    </a>
+{% endmacro %}
+
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
 {% endblock %}
@@ -9,4 +17,33 @@
 {% endblock %}
 
 {% block body %}
+    <header class="App-header">
+        <a class="App-logo" href="{{ path("web_home") }}">
+            <img height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
+        </a>
+        <div class="App-account">
+            <span class="App-username">{{ app.user.name }}</span>
+            <a class="App-logout" href="{{ path("web_logout") }}">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
+    <main class="App-main">
+        <nav class="App-nav" data-controller="sidebar" data-sidebar-target="nav">
+            <div class="App-nav-main">
+                {{ _self.navlink('web_home', 'fa-home', 'Home') }}
+            </div>
+
+            <div class="App-nav-item" data-action="click->sidebar#toggle">
+                <i class="fas fa-fw fa-angle-double-left App-nav-icon" data-sidebar-target="icon"></i>
+                <span class="App-nav-text">Collapse</span>
+            </div>
+        </nav>
+        <div class="App-wrapper">
+            <turbo-frame id="app">
+                {% block app %}
+                {% endblock %}
+            </turbo-frame>
+        </div>
+    </main>
 {% endblock %}

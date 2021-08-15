@@ -18,9 +18,14 @@ final class Role extends StringValueObject
         return new self($raw);
     }
 
-    public static function createUserRole()
+    public static function createUserRole(): self
     {
         return new self(self::ROLE_USER);
+    }
+
+    public static function createResearcherRole(): self
+    {
+        return new self(self::ROLE_RESEARCHER);
     }
 
     private static function assertValidRole(string $role): void

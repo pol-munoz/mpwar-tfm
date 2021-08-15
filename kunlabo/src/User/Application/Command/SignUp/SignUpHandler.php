@@ -22,6 +22,7 @@ final class SignUpHandler implements CommandHandler
 
         $user = User::signUp($command->getUuid(), $command->getName(), $command->getEmail(), $command->getHashedPassword());
         $user->addRole(Role::createUserRole());
+        $user->addRole(Role::createResearcherRole());
 
         $this->repository->create($user);
 

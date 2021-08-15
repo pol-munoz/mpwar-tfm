@@ -1,3 +1,114 @@
+html {
+    background: #f2f2f2;
+    font-family: 'Poppins', sans-serif;
+}
+
 body {
-    background-color: lightgray;
+    min-height: 100vh;
+    margin: 0;
+    background: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+}
+
+.App-header {
+    padding: 10px;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
+    border-bottom: 1px solid #f8f8f8;
+}
+
+.App-logo {
+    display: flex;
+}
+
+.App-account {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.App-username {
+    font-weight: lighter;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+.App-logout {
+    display: flex;
+    font-size: 1.2em;
+    color: #1d3d70;
+    text-decoration: none;
+    padding: 3px;
+}
+
+.App-main {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.App-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #264F92;
+    border-right: 1px solid #244B8A;
+    z-index: 50;
+    box-shadow: 1px 0 4px rgba(29, 61, 112, 0.2);
+    padding: 10px;
+    width: 150px;
+}
+
+.App-nav-animated {
+    transition: width 0.25s ease-in-out;
+}
+
+.App-nav-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.App-nav-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.App-nav-item:hover {
+    background: #2E61B2;
+    box-shadow: 0 2px 6px rgba(29, 61, 112, 0.2);
+}
+
+.App-nav-item-active {
+    background: #326AC3 !important;
+    box-shadow: 0 2px 6px rgba(29, 61, 112, 0.2) !important;
+}
+
+.App-nav-icon {
+    font-size: 1.2em;
+    flex-shrink: 0;
+}
+
+.App-nav-text {
+    margin-left: 10px;
+}
+
+.App-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
 }

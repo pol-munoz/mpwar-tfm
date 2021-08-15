@@ -12,7 +12,7 @@ final class KunlaboController extends AbstractController
     #[Route('/home', name: 'web_home', methods: ['GET'])]
     public function home(): Response
     {
-        $this->denyAccessUnlessGranted(AuthUser::ROLE_USER);
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
         return $this->render("app/home.html.twig");
     }
 

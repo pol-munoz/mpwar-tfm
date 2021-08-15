@@ -3,7 +3,8 @@
 {% block title %}Login - Kunlabo{% endblock %}
 
 {% block auth %}
-    <form class="Auth-form" action="{{ path('web_login') }}" method="post" autocomplete="on">
+    <form class="Auth-form" action="{{ path('web_login') }}" method="post" autocomplete="on"
+          data-turbo-frame="_top">
         <label class="Auth-label" for="email">Email</label>
         <input class="Auth-input Auth-separation" type="text" id="email" name="email" value="{{ last_username }}"
                required/>
