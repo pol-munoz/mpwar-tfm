@@ -19,10 +19,10 @@ export default class extends Controller {
 
     renderSidebar() {
         if (this.isOpen) {
-            this.navTarget.style = ""
+            this.navTarget.style = "width: 150px"
             this.iconTarget.classList.replace('fa-angle-double-right', 'fa-angle-double-left')
         } else {
-            this.navTarget.style = "width: 35px"
+            this.navTarget.style = ""
             this.iconTarget.classList.replace('fa-angle-double-left', 'fa-angle-double-right')
         }
     }

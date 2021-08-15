@@ -29,21 +29,21 @@
         </div>
     </header>
     <main class="App-main">
-        <nav class="App-nav" data-controller="sidebar" data-sidebar-target="nav">
-            <div class="App-nav-main">
-                {{ _self.navlink('web_home', 'fa-home', 'Home') }}
-            </div>
+        <turbo-frame id="app" style="display: flex; flex: 1">
+            <nav class="App-nav" data-controller="sidebar" data-sidebar-target="nav">
+                <div class="App-nav-main">
+                    {{ _self.navlink('web_home', 'fa-home', 'Home') }}
+                </div>
 
-            <div class="App-nav-item" data-action="click->sidebar#toggle">
-                <i class="fas fa-fw fa-angle-double-left App-nav-icon" data-sidebar-target="icon"></i>
-                <span class="App-nav-text">Collapse</span>
-            </div>
-        </nav>
-        <div class="App-wrapper">
-            <turbo-frame id="app">
+                <div class="App-nav-item" data-action="click->sidebar#toggle">
+                    <i class="fas fa-fw fa-angle-double-left App-nav-icon" data-sidebar-target="icon"></i>
+                    <span class="App-nav-text">Collapse</span>
+                </div>
+            </nav>
+            <div class="App-wrapper">
                 {% block app %}
                 {% endblock %}
-            </turbo-frame>
-        </div>
+            </div>
+        </turbo-frame>
     </main>
 {% endblock %}
