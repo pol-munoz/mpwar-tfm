@@ -25,15 +25,24 @@
             </form>
         </div>
 
-        {% for engine in engines %}
-            <div>
-                <a href="{{ path('web_engines_by_id', {id: engine.id}) }}">{{ engine.name }}</a>
-            </div>
-        {% else  %}
+        {% if engines is empty %}
             <div class="App-placeholder">
                 <i class="fas fa-box-open App-placeholder-icon"></i>
                 <p class="App-placeholder-text">No engines yet. Create one!</p>
             </div>
-        {% endfor %}
+        {% else %}
+                <div class="Engines-list-header">
+                    <p class="Engines-list-item"><strong>Name</strong></p>
+                    <p class="Engines-list-item"><strong>Created</strong></p>
+                    <p class="Engines-list-item"><strong>Modified</strong></p>
+                </div>
+                {% for engine in engines %}
+                    <a class="Engines-list-row" href="{{ path('web_engines_by_id', {id: engine.id}) }}">
+                        <p class="Engines-list-item">{{ engine.name }}</p>
+                        <p class="Engines-list-item">{{ engine.created | ago }}</p>
+                        <p class="Engines-list-item">{{ engine.modified | ago }}</p>
+                    </a>
+                {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
