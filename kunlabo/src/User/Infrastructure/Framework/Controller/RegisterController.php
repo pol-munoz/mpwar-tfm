@@ -7,7 +7,7 @@ use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\User\Application\Command\SignUp\SignUpCommand;
-use Kunlabo\User\Application\Query\FindByIdQuery\FindByIdQuery;
+use Kunlabo\User\Application\Query\FindUserById\FindUserByIdQuery;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Kunlabo\User\Infrastructure\Framework\Auth\Guard\LoginAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +41,7 @@ final class RegisterController extends AbstractController
             $commandBus->dispatch(SignUpCommand::create($uuid, $name, $email, $password));
 
             // A bit weird but needed to automatically authenticate the user
-            $user = $queryBus->ask(FindByIdQuery::fromId($uuid))->getUser();
+            $user = $queryBus->ask(FindUserByIdQuery::fromId($uuid))->getUser();
             $user = AuthUser::fromDomainUser($user);
 
             return $authenticator->authenticateUser(

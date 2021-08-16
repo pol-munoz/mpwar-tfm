@@ -48,6 +48,7 @@ body {
     font-size: 1em;
     padding: 0 15px;
     margin: 0 1px 2px;
+    color: #040910;
 }
 
 .Auth-input {
@@ -61,6 +62,7 @@ body {
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
     font-size: 1em;
     font-family: 'Poppins', sans-serif;
+    color: #040910;
 }
 
 .Auth-input:focus {
@@ -107,6 +109,7 @@ body {
     border-radius: 1em;
     text-shadow: 0 0 4px white;
     font-size: 1em;
+    color: #040910;
 }
 
 .fa-eye {
@@ -141,6 +144,7 @@ body {
     margin: 25px 0 0;
     text-align: center;
     font-weight: lighter;
+    color: #040910;
 }
 
 .Auth-link {

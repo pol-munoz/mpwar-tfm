@@ -6,7 +6,7 @@ use DomainException;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\User\Application\Command\SignIn\SignInCommand;
-use Kunlabo\User\Application\Query\FindByEmail\FindByEmailQuery;
+use Kunlabo\User\Application\Query\SearchUserByEmail\SearchUserByEmailQuery;
 use Kunlabo\User\Domain\Exception\InvalidCredentialsException;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -59,7 +59,7 @@ final class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new Passport(
                 new UserBadge(
                     $email, function (string $email): AuthUser {
-                    $user = $this->queryBus->ask(FindByEmailQuery::fromRaw($email))->getUser();
+                    $user = $this->queryBus->ask(SearchUserByEmailQuery::fromRaw($email))->getUser();
                     return AuthUser::fromDomainUser($user);
                 }
                 ),

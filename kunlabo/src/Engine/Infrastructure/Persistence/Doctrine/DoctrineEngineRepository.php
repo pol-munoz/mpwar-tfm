@@ -32,8 +32,8 @@ class DoctrineEngineRepository implements EngineRepository
     public function readAllForUser(Uuid $owner): array
     {
         return $this->repository->findBy(
-            ['owner.raw' => $owner->getRaw()],
-            ['modified']
+            ['owner' => $owner],
+            ['modified' => 'DESC']
         );
     }
 }

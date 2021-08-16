@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunlabo\User\Application\Query\FindByEmail;
+namespace Kunlabo\User\Application\Query\SearchUserByEmail;
 
 use Kunlabo\Shared\Application\Bus\Query\Query;
 use Kunlabo\User\Domain\ValueObject\Email;
 
-final class FindByEmailQuery implements Query
+final class SearchUserByEmailQuery implements Query
 {
     private function __construct(private Email $email)
     {

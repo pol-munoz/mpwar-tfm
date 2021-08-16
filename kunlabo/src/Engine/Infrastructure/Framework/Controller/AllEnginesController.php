@@ -4,7 +4,9 @@ namespace Kunlabo\Engine\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Engine\Application\Command\CreateEngine\CreateEngineCommand;
+use Kunlabo\Engine\Application\Query\SearchEnginesByOwnerIdQuery\SearchEnginesByOwnerIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
+use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,14 +18,24 @@ use Symfony\Component\Security\Core\Security;
 final class AllEnginesController extends AbstractController
 {
     #[Route('/engines', name: 'web_engines', methods: ['GET'])]
-    public function allEngines(): Response
-    {
-        return $this->render('app/engines.html.twig');
+    public function allEngines(
+        QueryBus $queryBus,
+        Security $security
+    ): Response {
+        $owner = $security->getUser()->getId();
+
+        $engines = $queryBus->ask(SearchEnginesByOwnerIdQuery::fromOwnerId($owner))->getEngines();
+
+        return $this->render('app/engines.html.twig', ['engines' => $engines]);
     }
 
     #[Route('/engines', name: 'web_engines_post', methods: ['POST'])]
-    public function allEnginesPost(Request $request, CommandBus $commandBus, Security $security): Response
-    {
+    public function allEnginesPost(
+        Request $request,
+        QueryBus $queryBus,
+        CommandBus $commandBus,
+        Security $security
+    ): Response {
         $owner = $security->getUser()->getId();
         $name = $request->request->get('name', '');
         $uuid = Uuid::random();
@@ -33,8 +45,13 @@ final class AllEnginesController extends AbstractController
 
             return new RedirectResponse($request->getUri(), Response::HTTP_SEE_OTHER);
         } catch (DomainException $exception) {
+            $engines = $queryBus->ask(SearchEnginesByOwnerIdQuery::fromOwnerId($owner))->getEngines();
+
             return new Response(
-                $this->renderView('app/engines.html.twig', ['error' => $exception->getMessage()]),
+                $this->renderView(
+                    'app/engines.html.twig',
+                    ['error' => $exception->getMessage(), 'engines' => $engines]
+                ),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }

@@ -1,21 +1,21 @@
 <?php
 
-namespace Kunlabo\User\Application\Query\FindByEmail;
+namespace Kunlabo\User\Application\Query\FindUserById;
 
 use Kunlabo\Shared\Application\Bus\Query\QueryHandler;
 use Kunlabo\Shared\Application\Bus\Query\Response;
 use Kunlabo\User\Application\Query\UserResponse;
 use Kunlabo\User\Domain\UserRepository;
 
-final class FindByEmailHandler implements QueryHandler
+final class FindUserByIdHandler implements QueryHandler
 {
     public function __construct(private UserRepository $repository)
     {
     }
 
-    public function __invoke(FindByEmailQuery $query): Response
+    public function __invoke(FindUserByIdQuery $query): Response
     {
-        $user = $this->repository->readByEmail($query->getEmail());
+        $user = $this->repository->readById($query->getId());
 
         return new UserResponse($user);
     }

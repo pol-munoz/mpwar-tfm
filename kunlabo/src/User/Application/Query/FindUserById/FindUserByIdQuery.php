@@ -1,11 +1,11 @@
 <?php
 
-namespace Kunlabo\User\Application\Query\FindByIdQuery;
+namespace Kunlabo\User\Application\Query\FindUserById;
 
 use Kunlabo\Shared\Application\Bus\Query\Query;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-final class FindByIdQuery implements Query
+final class FindUserByIdQuery implements Query
 {
     private function __construct(private Uuid $id)
     {
