@@ -7,11 +7,11 @@ use Kunlabo\User\Domain\User;
 
 final class UserResponse implements Response
 {
-    public function __construct(private User $user)
+    public function __construct(private ?User $user)
     {
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }

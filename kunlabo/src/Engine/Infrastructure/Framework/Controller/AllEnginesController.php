@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Security;
 
 final class AllEnginesController extends AbstractController
 {
-    #[Route('/engines', name: 'web_engines', methods: ['GET'])]
+    #[Route('/', name: 'web_engines', methods: ['GET'])]
     public function allEngines(
         QueryBus $queryBus,
         Security $security
@@ -26,10 +26,10 @@ final class AllEnginesController extends AbstractController
 
         $engines = $queryBus->ask(SearchEnginesByOwnerIdQuery::fromOwnerId($owner))->getEngines();
 
-        return $this->render('app/engines.html.twig', ['engines' => $engines]);
+        return $this->render('app/engines/engines.html.twig', ['engines' => $engines]);
     }
 
-    #[Route('/engines', name: 'web_engines_post', methods: ['POST'])]
+    #[Route('/', name: 'web_engines_post', methods: ['POST'])]
     public function allEnginesPost(
         Request $request,
         QueryBus $queryBus,
@@ -49,7 +49,7 @@ final class AllEnginesController extends AbstractController
 
             return new Response(
                 $this->renderView(
-                    'app/engines.html.twig',
+                    'app/engines/engines.html.twig',
                     ['error' => $exception->getMessage(), 'engines' => $engines]
                 ),
                 Response::HTTP_UNPROCESSABLE_ENTITY

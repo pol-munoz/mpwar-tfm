@@ -25,7 +25,7 @@ final class DoctrineUserRepository implements UserRepository
     }
 
     /** @noinspection PhpIncompatibleReturnTypeInspection */
-    public function readById(Uuid $id): User
+    public function readById(Uuid $id): ?User
     {
         return $this->repository->find($id);
     }

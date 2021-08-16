@@ -9,6 +9,6 @@ interface UserRepository
 {
     public function create(User $user): void;
 
-    public function readById(Uuid $id): User;
+    public function readById(Uuid $id): ?User;
     public function readByEmail(Email $email): ?User;
 }

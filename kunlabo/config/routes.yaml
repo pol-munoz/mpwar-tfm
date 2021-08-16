@@ -9,3 +9,4 @@ shared_controllers:
 engine_controllers:
     resource: '../src/Engine/Infrastructure/Framework/Controller'
     type: annotation
+    prefix: engines

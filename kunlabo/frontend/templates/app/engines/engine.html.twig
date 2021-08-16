@@ -1,0 +1,16 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ engine.name }} - Kunlabo{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('engines') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('engines') }}
+{% endblock %}
+
+{% block content %}
+{% endblock %}

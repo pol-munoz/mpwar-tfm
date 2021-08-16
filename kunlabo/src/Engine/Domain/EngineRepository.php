@@ -8,6 +8,6 @@ interface EngineRepository
 {
     public function create(Engine $engine): void;
 
-    public function readById(Uuid $id): Engine;
+    public function readById(Uuid $id): ?Engine;
     public function readAllForUser(Uuid $owner): array;
 }

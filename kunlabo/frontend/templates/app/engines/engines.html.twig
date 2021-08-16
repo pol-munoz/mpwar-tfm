@@ -26,6 +26,9 @@
         </div>
 
         {% for engine in engines %}
+            <div>
+                <a href="{{ path('web_engines_by_id', {id: engine.id}) }}">{{ engine.name }}</a>
+            </div>
         {% else  %}
             <div class="App-placeholder">
                 <i class="fas fa-box-open App-placeholder-icon"></i>

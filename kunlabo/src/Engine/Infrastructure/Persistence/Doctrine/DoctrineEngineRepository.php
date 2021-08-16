@@ -8,7 +8,7 @@ use Kunlabo\Engine\Domain\Engine;
 use Kunlabo\Engine\Domain\EngineRepository;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-class DoctrineEngineRepository implements EngineRepository
+final class DoctrineEngineRepository implements EngineRepository
 {
     private ObjectRepository $repository;
 
@@ -24,7 +24,7 @@ class DoctrineEngineRepository implements EngineRepository
     }
 
     /** @noinspection PhpIncompatibleReturnTypeInspection */
-    public function readById(Uuid $id): Engine
+    public function readById(Uuid $id): ?Engine
     {
         return $this->repository->find($id);
     }
