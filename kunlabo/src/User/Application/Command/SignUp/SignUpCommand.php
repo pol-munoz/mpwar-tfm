@@ -18,14 +18,14 @@ final class SignUpCommand implements Command
     ) {
     }
 
-    public static function fromRaw(
-        string $uuid,
+    public static function create(
+        Uuid $uuid,
         string $name,
         string $email,
         string $plainPassword
     ): self {
         return new self(
-            Uuid::fromRaw($uuid),
+            $uuid,
             Name::fromRaw($name),
             Email::fromRaw($email),
             HashedPassword::fromPlain($plainPassword)

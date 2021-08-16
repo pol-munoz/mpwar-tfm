@@ -52,7 +52,7 @@ final class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
 
         try {
-            $this->commandBus->dispatch(SignInCommand::fromRaw($email, $plainPassword));
+            $this->commandBus->dispatch(SignInCommand::create($email, $plainPassword));
 
             $request->getSession()->set(Security::LAST_USERNAME, $email);
 

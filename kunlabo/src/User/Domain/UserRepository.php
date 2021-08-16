@@ -7,8 +7,8 @@ use Kunlabo\User\Domain\ValueObject\Email;
 
 interface UserRepository
 {
-    public function create(User $user);
+    public function create(User $user): void;
 
-    public function readById(Uuid $id);
+    public function readById(Uuid $id): User;
     public function readByEmail(Email $email): ?User;
 }

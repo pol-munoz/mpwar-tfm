@@ -11,7 +11,7 @@ final class SignInCommand implements Command
     {
     }
 
-    public static function fromRaw(string $email, string $plainPassword): self
+    public static function create(string $email, string $plainPassword): self
     {
         return new self(
             Email::fromRaw($email),

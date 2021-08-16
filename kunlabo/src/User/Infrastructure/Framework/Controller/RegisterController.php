@@ -32,15 +32,13 @@ final class RegisterController extends AbstractController
         UserAuthenticatorInterface $authenticator,
         LoginAuthenticator $loginAuthenticator
     ): Response {
-        echo $request->headers->get('Turbo-Frame');
-
         $name = $request->request->get('name', '');
         $email = $request->request->get('email', '');
         $password = $request->request->get('password', '');
         $uuid = Uuid::random();
 
         try {
-            $commandBus->dispatch(SignUpCommand::fromRaw($uuid, $name, $email, $password));
+            $commandBus->dispatch(SignUpCommand::create($uuid, $name, $email, $password));
 
             // A bit weird but needed to automatically authenticate the user
             $user = $queryBus->ask(FindByIdQuery::fromId($uuid))->getUser();
@@ -58,5 +56,4 @@ final class RegisterController extends AbstractController
             );
         }
     }
-
 }

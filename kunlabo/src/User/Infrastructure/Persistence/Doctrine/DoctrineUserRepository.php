@@ -18,7 +18,7 @@ final class DoctrineUserRepository implements UserRepository
         $this->repository = $manager->getRepository(User::class);
     }
 
-    public function create(User $user)
+    public function create(User $user): void
     {
         $this->manager->persist($user);
         $this->manager->flush();

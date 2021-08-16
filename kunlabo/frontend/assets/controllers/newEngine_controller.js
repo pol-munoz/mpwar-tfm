@@ -33,6 +33,8 @@ export default class extends Controller {
         } else if (this.inputTarget.value.length > 255) {
             alert('Name must not exceed 255 characters')
             event.preventDefault()
+        } else {
+            this.hide()
         }
     }
 }
