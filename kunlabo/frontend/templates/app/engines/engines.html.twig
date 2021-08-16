@@ -38,9 +38,9 @@
                 </div>
                 {% for engine in engines %}
                     <a class="Engines-list-row" href="{{ path('web_engines_by_id', {id: engine.id}) }}">
-                        <p class="Engines-list-item">{{ engine.name }}</p>
-                        <p class="Engines-list-item">{{ engine.created | ago }}</p>
-                        <p class="Engines-list-item">{{ engine.modified | ago }}</p>
+                        <div class="Engines-list-item"><span>{{ engine.name }}</span></div>
+                        <div class="Engines-list-item"><span>{{ engine.created | ago }}</span></div>
+                        <div class="Engines-list-item"><span>{{ engine.modified | ago }}</span></div>
                     </a>
                 {% endfor %}
         {% endif %}
