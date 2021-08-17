@@ -1,0 +1,89 @@
+.Files-overlay-wrapper {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    background: #f2f2f2;
+}
+
+.Files-overlay {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    border: 10px dashed rgba(4, 9, 16, 0.4);
+    margin: 50px;
+}
+
+.Files {
+    display: flex;
+    flex-direction: column;
+}
+
+.Files-folder {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.Files-folder-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Files-folder-button {
+    color: #1d3d70;
+    margin: 0 10px 2px 0;
+    cursor: pointer;
+}
+
+.Files-folder-contents {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 25px;
+    border-left: 2px solid #1d3d70;
+    margin-left: 7px;
+    overflow: hidden;
+}
+
+.Files-folder-closed .Files-folder-contents {
+    height: 0;
+}
+
+.Files-name {
+    color: #040910;
+    margin: 5px 0;
+}
+
+.Files-name > strong {
+    font-weight: 600;
+    color: #10213d;
+}
+
+.Files-progress {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 10px;
+    width: 100%;
+    z-index: 5;
+    box-shadow: 0 -1px 4px rgba(29, 61, 112, 0.2);
+    background: white;
+}
+
+.Files-progress-bar {
+    background: #4caf50;
+    height: 10px;
+    width: 0;
+    transition: width 0.25s linear;
+}

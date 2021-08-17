@@ -12,9 +12,27 @@
     {{ encore_entry_script_tags('engines') }}
 {% endblock %}
 
+{% macro folder(contents) %}
+    {% for name, content in contents %}
+        {% if content is iterable %}
+            <div class="Files-folder Files-folder-closed">
+                <div class="Files-folder-header">
+                    <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
+                    <p class="Files-name"><strong>{{ name }}</strong></p>
+                </div>
+                <div class="Files-folder-contents">
+                    {{ _self.folder(content) }}
+                </div>
+            </div>
+        {% else %}
+            <p class="Files-name">{{ name }}</p>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
 {% block content %}
-    <div class="Engines-wrapper" data-controller="upload"
-         data-action="dragenter->upload#dragEnter dragover->upload#drag dragleave->upload#dragLeave drop->upload#drop" >
+    <div class="Engines-wrapper" data-controller="files"
+         data-action="dragenter->files#dragEnter dragover->files#drag dragleave->files#dragLeave drop->files#drop" >
         <div class="Engines-header">
             <div class="Engine-header-row">
                 <a href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
@@ -22,16 +40,24 @@
             </div>
         </div>
 
-        <div class="App-placeholder">
+        <div class="Files" data-files-target="files" style="{{ files is empty ? 'display : none' : '' }}">
+            {{ _self.folder(files) }}
+        </div>
+
+        <div class="App-placeholder" data-files-target="placeholder" style="{{ files is empty ? '' : 'display : none' }}">
             <i class="fas fa-cloud-upload-alt App-placeholder-icon"></i>
             <p class="App-placeholder-text">Drop some files or folders to upload!</p>
         </div>
 
-        <div class="Engine-overlay-wrapper" data-upload-target="overlay">
-            <div class="Engine-overlay">
+        <div class="Files-overlay-wrapper" data-files-target="overlay">
+            <div class="Files-overlay">
                 <i class="fas fa-file-upload App-placeholder-icon"></i>
                 <p class="App-placeholder-text" style="margin-bottom: -23px">Drop to upload!</p>
             </div>
+        </div>
+
+        <div class="Files-progress" style="display: none">
+            <div class="Files-progress-bar" data-files-target="progress"></div>
         </div>
     </div>
 {% endblock %}

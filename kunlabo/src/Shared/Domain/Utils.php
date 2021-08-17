@@ -17,4 +17,17 @@ final class Utils
     {
         return new DateTimeImmutable($date);
     }
+
+    public static function expandPath(string $original, string $path, array &$output): void
+    {
+        $arr = explode("/", $path, 2);
+        if (count($arr) === 1) {
+            $output[$arr[0]] = $original;
+        } else {
+            if (!array_key_exists($arr[0], $output)) {
+                $output[$arr[0]] = [];
+            }
+            self::expandPath($original, $arr[1], $output[$arr[0]]);
+        }
+    }
 }

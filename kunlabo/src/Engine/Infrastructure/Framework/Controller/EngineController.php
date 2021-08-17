@@ -9,6 +9,7 @@ use Kunlabo\Engine\Application\Query\SearchEngineFilesByEngineId\SearchEngineFil
 use Kunlabo\Engine\Domain\EngineFile;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
+use Kunlabo\Shared\Domain\Utils;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,12 +29,20 @@ final class EngineController extends AbstractController
 
             $uuid = Uuid::fromRaw($id);
             $engine = $queryBus->ask(FindEngineByIdQuery::fromId($uuid))->getEngine();
-            $files = $queryBus->ask(SearchEngineFilesByEngineIdQuery::fromEngineId($uuid))->getEngineFiles();
 
             if ($engine === null) {
                 throw $this->createNotFoundException();
             }
-            return $this->render('app/engines/engine.html.twig', ['engine' => $engine, 'files' => $files]);
+
+            $files = $queryBus->ask(SearchEngineFilesByEngineIdQuery::fromEngineId($uuid))->getEngineFiles();
+
+            $output = [];
+            foreach ($files as $file) {
+                $path = $file->getPath();
+                Utils::expandPath($path, substr($path, 1), $output);
+            }
+
+            return $this->render('app/engines/engine.html.twig', ['engine' => $engine, 'files' => $output]);
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }
@@ -59,6 +68,6 @@ final class EngineController extends AbstractController
             $commandBus->dispatch(CreateEngineFileCommand::create($id, $path . $name));
         }
 
-        return new Response($path, Response::HTTP_OK);
+        return new Response();
     }
 }

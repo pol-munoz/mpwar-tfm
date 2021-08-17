@@ -195,7 +195,6 @@ body {
     flex: 1;
     justify-content: center;
     align-items: center;
-    pointer-events: none;
 }
 
 .App-placeholder-icon {
