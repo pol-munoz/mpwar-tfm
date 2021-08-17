@@ -59,7 +59,7 @@ final class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new Passport(
                 new UserBadge(
                     $email, function (string $email): AuthUser {
-                    $user = $this->queryBus->ask(SearchUserByEmailQuery::fromRaw($email))->getUser();
+                    $user = $this->queryBus->ask(SearchUserByEmailQuery::create($email))->getUser();
                     return AuthUser::fromDomainUser($user);
                 }
                 ),

@@ -6,9 +6,9 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-final class AggregateUuidType extends GuidType
+final class EntityUuidType extends GuidType
 {
-    public const NAME = 'aggregate_uuid';
+    public const NAME = 'entity_uuid';
 
     public function convertToPHPValue($value, AbstractPlatform $platform): Uuid
     {

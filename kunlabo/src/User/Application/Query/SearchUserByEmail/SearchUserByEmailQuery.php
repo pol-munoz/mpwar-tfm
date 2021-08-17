@@ -11,7 +11,7 @@ final class SearchUserByEmailQuery implements Query
     {
     }
 
-    public static function fromRaw(string $email): self
+    public static function create(string $email): self
     {
         return new self(
             Email::fromRaw($email)

@@ -195,6 +195,7 @@ body {
     flex: 1;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
 }
 
 .App-placeholder-icon {
@@ -206,4 +207,5 @@ body {
     font-size: 2em;
     font-weight: bold;
     color: rgba(4, 9, 16, 0.4);
+    text-align: center;
 }

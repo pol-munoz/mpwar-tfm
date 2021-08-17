@@ -12,6 +12,7 @@
 ###> symfony/webpack-encore-bundle ###
 /frontend/node_modules/
 /public/build/
+/public/uploads/
 /frontend/npm-debug.log
 /frontend/yarn-error.log
 ###< symfony/webpack-encore-bundle ###

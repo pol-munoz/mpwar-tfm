@@ -8,6 +8,7 @@ use Kunlabo\Engine\Application\Query\SearchEnginesByOwnerIdQuery\SearchEnginesBy
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
+use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,8 @@ final class AllEnginesController extends AbstractController
         QueryBus $queryBus,
         Security $security
     ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
         $owner = $security->getUser()->getId();
 
         $engines = $queryBus->ask(SearchEnginesByOwnerIdQuery::fromOwnerId($owner))->getEngines();
@@ -36,6 +39,8 @@ final class AllEnginesController extends AbstractController
         CommandBus $commandBus,
         Security $security
     ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
         $owner = $security->getUser()->getId();
         $name = $request->request->get('name', '');
         $uuid = Uuid::random();

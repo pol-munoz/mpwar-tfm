@@ -5,7 +5,7 @@ doctrine:
     dbal:
         url: '%env(resolve:DB_URL)%'
         types:
-            aggregate_uuid: Kunlabo\Shared\Infrastructure\Persistence\Doctrine\Types\AggregateUuidType
+            entity_uuid: Kunlabo\Shared\Infrastructure\Persistence\Doctrine\Types\EntityUuidType
             role_array: Kunlabo\User\Infrastructure\Persistence\Doctrine\Types\RoleArrayType
     orm:
         auto_generate_proxy_classes: true

@@ -13,11 +13,24 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Engines-wrapper">
+    <div class="Engines-wrapper" data-controller="upload"
+         data-action="dragenter->upload#dragEnter dragover->upload#drag dragleave->upload#dragLeave drop->upload#drop" >
         <div class="Engines-header">
             <div class="Engine-header-row">
                 <a href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
                 <h2 class="App-title">{{ engine.name }}</h2>
+            </div>
+        </div>
+
+        <div class="App-placeholder">
+            <i class="fas fa-cloud-upload-alt App-placeholder-icon"></i>
+            <p class="App-placeholder-text">Drop some files or folders to upload!</p>
+        </div>
+
+        <div class="Engine-overlay-wrapper" data-upload-target="overlay">
+            <div class="Engine-overlay">
+                <i class="fas fa-file-upload App-placeholder-icon"></i>
+                <p class="App-placeholder-text" style="margin-bottom: -23px">Drop to upload!</p>
             </div>
         </div>
     </div>

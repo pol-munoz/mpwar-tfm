@@ -3,10 +3,10 @@
                   xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="Kunlabo\Engine\Domain\Engine" table="engines">
+    <entity name="Kunlabo\Engine\Domain\EngineFile" table="enginefiles">
         <id name="id" type="entity_uuid" column="id"/>
-        <embedded name="name" class="Kunlabo\Shared\Domain\ValueObject\Name" use-column-prefix="false"/>
-        <field name="owner" type="entity_uuid"/>
+        <field name="engine" type="entity_uuid"/>
+        <field name="path" type="text"/>
         <field name="created" type="datetime"/>
         <field name="modified" type="datetime"/>
     </entity>

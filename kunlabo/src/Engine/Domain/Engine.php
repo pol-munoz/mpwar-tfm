@@ -4,6 +4,7 @@ namespace Kunlabo\Engine\Domain;
 
 use DateTime;
 use Kunlabo\Engine\Domain\Event\EngineCreatedEvent;
+use Kunlabo\Engine\Domain\Event\EngineFileCreatedEvent;
 use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
@@ -33,5 +34,16 @@ final class Engine extends NamedAggregateRoot {
     public function getOwner(): Uuid
     {
         return $this->owner;
+    }
+
+    public function addFile(string $path): EngineFile
+    {
+        $file = EngineFile::create(Uuid::random(), $this->id, $path);
+
+        $this->modified = new DateTime();
+
+        $this->record(new EngineFileCreatedEvent($file));
+
+        return $file;
     }
 }

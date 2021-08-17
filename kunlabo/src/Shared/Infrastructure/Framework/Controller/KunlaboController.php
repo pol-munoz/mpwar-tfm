@@ -13,6 +13,7 @@ final class KunlaboController extends AbstractController
     public function home(): Response
     {
         $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
         return $this->render("app/home.html.twig");
     }
 

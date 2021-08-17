@@ -7,28 +7,14 @@ use DateTime;
 use Kunlabo\Shared\Domain\Event\DomainEvent;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-abstract class AggregateRoot
+abstract class AggregateRoot extends Entity
 {
     private array $domainEvents;
 
-    protected function __construct(protected Uuid $id, protected DateTime $created, protected DateTime $modified)
+    protected function __construct(Uuid $id, DateTime $created, DateTime $modified)
     {
+        parent::__construct($id, $created, $modified);
         $this->domainEvents = [];
-    }
-
-    public function getId(): Uuid
-    {
-        return $this->id;
-    }
-
-    public function getCreated(): DateTime
-    {
-        return $this->created;
-    }
-
-    public function getModified(): DateTime
-    {
-        return $this->modified;
     }
 
     final public function pullDomainEvents(): array
