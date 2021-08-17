@@ -3,9 +3,10 @@ import {Controller} from 'stimulus';
 export default class extends Controller {
     static targets = ["overlay"]
 
-    // TODO upload files
-    // - show progress and render result per file
-    // - ALSO placeholder if the engine is empty: show an upload icon and some text like "Drop some files or folders to upload them"
+    // TODO
+    // - show progress and render result per file (if it doesn't exist yet!!!! use path as id???) reload???
+    // - backend render??'
+    // - hide placeholder
 
     dragEnter() {
         this.overlayTarget.style = "display: flex"

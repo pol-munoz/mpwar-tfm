@@ -12,6 +12,7 @@ use Kunlabo\Shared\Domain\ValueObject\Uuid;
 final class DoctrineEngineRepository implements EngineRepository
 {
     private ObjectRepository $repository;
+    private ObjectRepository $fileRepository;
 
     public function __construct(private EntityManagerInterface $manager)
     {
@@ -50,6 +51,13 @@ final class DoctrineEngineRepository implements EngineRepository
     {
         return $this->fileRepository->findOneBy(
             ['engine' => $engine, 'path' => $path]
+        );
+    }
+
+    public function readFilesForEngineId(Uuid $engine): array
+    {
+        return $this->fileRepository->findBy(
+            ['engine' => $engine]
         );
     }
 

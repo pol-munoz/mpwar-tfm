@@ -4,7 +4,7 @@ namespace Kunlabo\Engine\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Engine\Application\Command\CreateEngine\CreateEngineCommand;
-use Kunlabo\Engine\Application\Query\SearchEnginesByOwnerIdQuery\SearchEnginesByOwnerIdQuery;
+use Kunlabo\Engine\Application\Query\SearchEnginesByOwnerId\SearchEnginesByOwnerIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;

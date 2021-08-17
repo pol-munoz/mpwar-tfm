@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunlabo\Engine\Application\Query\SearchEnginesByOwnerIdQuery;
+namespace Kunlabo\Engine\Application\Query\SearchEnginesByOwnerId;
 
 use Kunlabo\Shared\Application\Bus\Query\Query;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;

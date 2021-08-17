@@ -1,6 +1,6 @@
 <?php
 
-namespace Kunlabo\Engine\Application\Query\SearchEnginesByOwnerIdQuery;
+namespace Kunlabo\Engine\Application\Query\SearchEnginesByOwnerId;
 
 use Kunlabo\Engine\Application\EnginesResponse;
 use Kunlabo\Engine\Domain\EngineRepository;

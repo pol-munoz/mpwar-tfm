@@ -5,7 +5,7 @@ namespace Kunlabo\Engine\Infrastructure\Framework\Controller;
 use DomainException;
 use Kunlabo\Engine\Application\Command\CreateEngineFile\CreateEngineFileCommand;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
-use Kunlabo\Engine\Domain\Engine;
+use Kunlabo\Engine\Application\Query\SearchEngineFilesByEngineId\SearchEngineFilesByEngineIdQuery;
 use Kunlabo\Engine\Domain\EngineFile;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 final class EngineController extends AbstractController
 {
@@ -29,15 +28,17 @@ final class EngineController extends AbstractController
 
             $uuid = Uuid::fromRaw($id);
             $engine = $queryBus->ask(FindEngineByIdQuery::fromId($uuid))->getEngine();
+            $files = $queryBus->ask(SearchEngineFilesByEngineIdQuery::fromEngineId($uuid))->getEngineFiles();
 
             if ($engine === null) {
                 throw $this->createNotFoundException();
             }
-            return $this->render('app/engines/engine.html.twig', ['engine' => $engine]);
+            return $this->render('app/engines/engine.html.twig', ['engine' => $engine, 'files' => $files]);
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }
     }
+
     #[Route('/{id}', name: 'web_engines_by_id_post', methods: ['POST'])]
     public function enginePost(
         Request $request,

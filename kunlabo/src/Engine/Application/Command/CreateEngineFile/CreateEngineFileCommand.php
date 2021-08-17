@@ -23,7 +23,7 @@ final class CreateEngineFileCommand implements Command
         );
     }
 
-    public function getEngine(): Uuid
+    public function getEngineId(): Uuid
     {
         return $this->engine;
     }

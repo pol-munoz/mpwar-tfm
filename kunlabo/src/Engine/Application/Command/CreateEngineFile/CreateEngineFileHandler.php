@@ -15,10 +15,10 @@ final class CreateEngineFileHandler implements CommandHandler
 
     public function __invoke(CreateEngineFileCommand $command): void
     {
-        $engine = $this->repository->readById($command->getEngine());
+        $engine = $this->repository->readById($command->getEngineId());
 
         if ($engine === null) {
-            throw new UnknownEngineException($command->getEngine());
+            throw new UnknownEngineException($command->getEngineId());
         }
 
         $file = $this->repository->readFileByEngineIdAndPath($engine->getId(), $command->getPath());
