@@ -6,16 +6,21 @@ export default class extends Controller {
     initialize() {
         this.uploading = 0
         this.uploaded = 0
+        this.dragCount = 0
     }
 
-    dragEnter(event) {
-        this.overlayTarget.style = "display: flex"
-        event.preventDefault()
+    dragEnter() {
+        if (this.dragCount === 0) {
+            this.overlayTarget.style = "display: flex"
+        }
+        this.dragCount++
     }
 
-    dragLeave(event) {
-        this.overlayTarget.style = ""
-        event.preventDefault()
+    dragLeave() {
+        this.dragCount--
+        if (this.dragCount === 0) {
+            this.overlayTarget.style = ""
+        }
     }
 
     drag(event) {
@@ -77,7 +82,6 @@ export default class extends Controller {
         }
     }
 
-    // TODO drag and drop bug: overlay is closed when hovering over stuff
     // TODO render uploaded file (if it doesn't exist yet!!!! use path as id???)
     renderFile(path) {
 

@@ -33,6 +33,14 @@
 {% block content %}
     <div class="Engines-wrapper" data-controller="files"
          data-action="dragenter->files#dragEnter dragover->files#drag dragleave->files#dragLeave drop->files#drop" >
+
+        <div class="Files-overlay-wrapper" data-files-target="overlay">
+            <div class="Files-overlay">
+                <i class="fas fa-file-upload App-placeholder-icon"></i>
+                <p class="App-placeholder-text" style="margin-bottom: -23px">Drop to upload!</p>
+            </div>
+        </div>
+
         <div class="Engines-header">
             <div class="Engine-header-row">
                 <a href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
@@ -47,13 +55,6 @@
         <div class="App-placeholder" data-files-target="placeholder" style="{{ files is empty ? '' : 'display : none' }}">
             <i class="fas fa-cloud-upload-alt App-placeholder-icon"></i>
             <p class="App-placeholder-text">Drop some files or folders to upload!</p>
-        </div>
-
-        <div class="Files-overlay-wrapper" data-files-target="overlay">
-            <div class="Files-overlay">
-                <i class="fas fa-file-upload App-placeholder-icon"></i>
-                <p class="App-placeholder-text" style="margin-bottom: -23px">Drop to upload!</p>
-            </div>
         </div>
 
         <div class="Files-progress" style="display: none">
