@@ -35,7 +35,7 @@ This project makes use of several Domain-Driven Design practices and other relat
 
 - [Webpack Encore](https://symfony.com/doc/current/frontend.html) to manage, process and bundle assets.
     - [Stimulus](https://stimulus.hotwired.dev/) as a light JavaScript framework.
-    - [Turbo](https://turbo.hotwired.dev/) to improve perceived performance.
+    - [Turbo](https://turbo.hotwired.dev/) to improve perceived performance by performing requests in the background and updating instead of reloading the page.
     
 - [Twig](https://twig.symfony.com/) To define and render templates.
     
