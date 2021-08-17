@@ -45,7 +45,20 @@ final class DoctrineEngineRepository implements EngineRepository
         );
     }
 
+    /** @noinspection PhpIncompatibleReturnTypeInspection */
+    public function readFileByEngineIdAndPath(Uuid $engine, string $path): ?EngineFile
+    {
+        return $this->fileRepository->findOneBy(
+            ['engine' => $engine, 'path' => $path]
+        );
+    }
+
     public function update(Engine $engine): void
+    {
+        $this->manager->flush();
+    }
+
+    public function updateFile($file): void
     {
         $this->manager->flush();
     }

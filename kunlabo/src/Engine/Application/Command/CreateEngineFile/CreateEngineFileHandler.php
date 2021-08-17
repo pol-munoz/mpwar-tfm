@@ -17,14 +17,21 @@ final class CreateEngineFileHandler implements CommandHandler
     {
         $engine = $this->repository->readById($command->getEngine());
 
-        if (!$engine) {
+        if ($engine === null) {
             throw new UnknownEngineException($command->getEngine());
         }
 
-        $file = $engine->addFile($command->getPath());
+        $file = $this->repository->readFileByEngineIdAndPath($engine->getId(), $command->getPath());
+
+        if ($file !== null) {
+            $engine->updateFile($file);
+            $this->repository->updateFile($file);
+        } else {
+            $file = $engine->addFile($command->getPath());
+            $this->repository->createFile($file);
+        }
 
         $this->repository->update($engine);
-        $this->repository->createFile($file);
 
         $this->eventBus->publish(...$engine->pullDomainEvents());
     }
