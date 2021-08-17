@@ -54,6 +54,10 @@
     overflow: hidden;
 }
 
+.Files-folder-closed {
+    margin-bottom: 0;
+}
+
 .Files-folder-closed .Files-folder-contents {
     height: 0;
 }

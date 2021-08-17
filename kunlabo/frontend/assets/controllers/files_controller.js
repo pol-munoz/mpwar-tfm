@@ -28,6 +28,7 @@ export default class extends Controller {
     }
 
     drop(event) {
+        this.dragCount = 0
         this.overlayTarget.style = ""
         event.preventDefault()
 
@@ -64,7 +65,7 @@ export default class extends Controller {
                     this.filesTarget.style = ""
                     this.uploaded++
                     this.updateUploading()
-                    this.renderFile(path)
+                    this.renderFile(path, file.name)
                 })
                 .catch(() => {
                     this.uploaded++
@@ -82,9 +83,54 @@ export default class extends Controller {
         }
     }
 
-    // TODO render uploaded file (if it doesn't exist yet!!!! use path as id???)
-    renderFile(path) {
+    renderFile(path, name) {
+        let file = document.getElementById(path + name)
 
+        if (file !== null) {
+            return
+        }
+
+        let parts = path.substr(1, path.length - 2).split("/")
+        let parent = this.filesTarget
+
+        if (parts[0] !== "") {
+            let i = 0
+            let p = "/" + parts[i]
+            let next = document.getElementById(p)
+            let last = parent
+
+            while (next != null) {
+                last = next
+                i++
+                p += "/" + parts[i]
+                next = document.getElementById(p)
+            }
+
+            parent = last
+
+            for (let j = i; j < parts.length; j++) {
+                let html = '<div class="Files-folder Files-folder-closed">\n' +
+                '    <div class="Files-folder-header">\n' +
+                '        <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>\n' +
+                '        <p class="Files-name"><strong>' + parts[j] + '</strong></p>\n' +
+                '    </div>\n' +
+                '    <div class="Files-folder-contents" id="' + p + '">\n' +
+                '    </div>\n' +
+                '</div>'
+                parent.appendChild(this.createElementFromHTML(html))
+                parent = document.getElementById(p)
+                p += "/" + parts[j]
+            }
+        }
+
+        let html = '<p class="Files-name" id="' + path + name + '">' + name + '</p>'
+        parent.appendChild(this.createElementFromHTML(html))
+    }
+    createElementFromHTML(string) {
+        let div = document.createElement('div')
+        div.innerHTML = string.trim()
+
+        return div.firstChild
     }
 
     updateUploading() {
