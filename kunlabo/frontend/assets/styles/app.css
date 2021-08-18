@@ -208,3 +208,8 @@ body {
     color: rgba(4, 9, 16, 0.4);
     text-align: center;
 }
+
+.App-columned {
+    display: grid;
+    grid-template-columns: 1fr 15vw 15vw;
+}

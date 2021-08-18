@@ -19,8 +19,6 @@
 }
 
 .Agents-list-header {
-    display: grid;
-    grid-template-columns: 1fr 15vw 15vw;
     padding: 10px 20px;
 }
 
@@ -38,8 +36,6 @@
 }
 
 .Agents-list-row {
-    display: grid;
-    grid-template-columns: 1fr 15vw 15vw;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 2em;

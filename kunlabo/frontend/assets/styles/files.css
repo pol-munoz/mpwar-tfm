@@ -94,9 +94,6 @@
 }
 
 .Files-file {
-    display: grid;
-    grid-template-columns: 1fr 15vw 15vw;
-    align-items: center;
     margin: 5px 0;
 }
 

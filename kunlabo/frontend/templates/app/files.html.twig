@@ -12,7 +12,7 @@
                 </div>
             </div>
         {% else %}
-            <div class="Files-file" id="{{ content }}">
+            <div class="App-columned Files-file" id="{{ content }}">
                 <p class="Files-text Files-name">{{ name }}</p>
                 <p class="Files-text Files-date">{{ files[content].created | ago }}</p>
                 <p class="Files-text Files-date">{{ files[content].modified | ago }}</p>

@@ -124,7 +124,7 @@ export default class extends Controller {
             }
         }
 
-        let html = '<div class="Files-file" id="' + path + name + '">\n' +
+        let html = '<div class="App-columned Files-file" id="' + path + name + '">\n' +
             '    <p class="Files-text Files-name">' + name + '</p>\n' +
             '    <p class="Files-text Files-date">Now</p>\n' +
             '    <p class="Files-text Files-date">Now</p>\n' +

@@ -31,13 +31,13 @@
                 <p class="App-placeholder-text">No agents yet. Create one!</p>
             </div>
         {% else %}
-                <div class="Agents-list-header">
+                <div class="App-columned Agents-list-header">
                     <p class="Agents-list-item"><strong>Name</strong></p>
                     <p class="Agents-list-item"><strong>Created</strong></p>
                     <p class="Agents-list-item"><strong>Modified</strong></p>
                 </div>
                 {% for agent in agents %}
-                    <a class="Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
+                    <a class="App-columned Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
                         <div class="Agents-list-item"><span>{{ agent.name }}</span></div>
                         <div class="Agents-list-item"><span>{{ agent.created | ago }}</span></div>
                         <div class="Agents-list-item"><span>{{ agent.modified | ago }}</span></div>
