@@ -113,7 +113,7 @@ export default class extends Controller {
                 let html = '<div class="Files-folder Files-folder-closed">\n' +
                 '    <div class="Files-folder-header">\n' +
                 '        <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>\n' +
-                '        <p class="Files-name"><strong>' + parts[j] + '</strong></p>\n' +
+                '        <p class="Files-text"><strong>' + parts[j] + '</strong></p>\n' +
                 '    </div>\n' +
                 '    <div class="Files-folder-contents" id="' + p + '">\n' +
                 '    </div>\n' +
