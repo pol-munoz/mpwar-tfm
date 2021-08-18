@@ -99,10 +99,12 @@ export default class extends Controller {
             let p = "/" + parts[i]
             let next = document.getElementById(p)
             let last = parent
+            let white = true
 
             while (next != null) {
-                last = next
                 i++
+                last = next
+                white = !white
                 p += "/" + parts[i]
                 next = document.getElementById(p)
             }
@@ -110,7 +112,7 @@ export default class extends Controller {
             parent = last
 
             for (let j = i; j < parts.length; j++) {
-                let html = '<div class="Files-folder Files-folder-closed">\n' +
+                let html = '<div class="Files-folder Files-folder-closed" style="background: ' + (white ? 'white' : '#F5F6F9') + '">\n' +
                 '    <div class="Files-folder-header">\n' +
                 '        <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>\n' +
                 '        <p class="Files-text"><strong>' + parts[j] + '</strong></p>\n' +
@@ -121,6 +123,7 @@ export default class extends Controller {
                 parent.appendChild(this.createElementFromHTML(html))
                 parent = document.getElementById(p)
                 p += "/" + parts[j]
+                white = !white
             }
         }
 

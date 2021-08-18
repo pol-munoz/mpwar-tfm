@@ -1,14 +1,14 @@
-{% macro folder(contents, files, path = "") %}
+{% macro folder(contents, files, path = "", white = true) %}
     {% for name, content in contents %}
         {% if content is iterable %}
             {% set p = path ~ "/" ~ name %}
-            <div class="Files-folder Files-folder-closed">
+            <div class="Files-folder Files-folder-closed" style="background: {{ white ? 'white' : '#F5F6F9' }}">
                 <div class="Files-folder-header">
                     <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
                     <p class="Files-text"><strong>{{ name }}</strong></p>
                 </div>
                 <div class="Files-folder-contents" id="{{ p }}">
-                    {{ _self.folder(content, files, p) }}
+                    {{ _self.folder(content, files, p, not white) }}
                 </div>
             </div>
         {% else %}

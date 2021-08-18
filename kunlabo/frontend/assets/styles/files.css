@@ -36,7 +36,7 @@
     padding: 5px 0 5px 10px;
     border-radius: 10px;
     background: rgba(255,255,255,0.3);
-    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.1);
+    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
 }
 
 .Files-folder .Files-folder {
