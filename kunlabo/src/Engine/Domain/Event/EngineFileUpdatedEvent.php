@@ -7,8 +7,8 @@ use Kunlabo\Shared\Domain\Event\DomainEvent;
 
 final class EngineFileUpdatedEvent extends DomainEvent
 {
-    public function __construct(EngineFile $engine)
+    public function __construct(EngineFile $engineFile)
     {
-        parent::__construct($engine->getId());
+        parent::__construct($engineFile->getId());
     }
 }

@@ -1,0 +1,66 @@
+.Agents-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 50px;
+    position: relative;
+}
+
+.Agents-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.Agents-form {
+    display: none;
+}
+
+.Agents-list-header {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+}
+
+.Agents-list-item {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin: 0;
+    justify-content: flex-end;
+    color: #040910;
+    overflow: hidden;
+}
+
+.Agents-list-item:first-of-type {
+    flex: 3;
+    justify-content: flex-start;
+}
+
+.Agents-list-row {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 2em;
+}
+
+.Agents-list-item > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.Agents-list-row:hover {
+    background: white;
+    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
+}
+
+.Agent-header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+}

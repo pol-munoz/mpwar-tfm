@@ -1,0 +1,48 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}Agents - Kunlabo{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('agents') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('agents') }}
+{% endblock %}
+
+{% block content %}
+    <div class="Agents-wrapper" data-controller="newEntity">
+        <div class="Agents-header">
+            <h1 class="App-title">Agents</h1>
+            <button class="App-button" data-action="newEntity#show" data-newEntity-target="button">New agent</button>
+            <form class="Agents-form" action="{{ path('web_agents') }}" method="post" autocomplete="off"
+                  data-newEntity-target="form" data-action="newEntity#submit">
+                <label class="App-label" for="name" style="display: none">Name</label>
+                <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"
+                       data-newEntity-target="input" data-action="keyup->newEntity#keyUp blur->newEntity#blur">
+            </form>
+        </div>
+
+        {% if agents is empty %}
+            <div class="App-placeholder">
+                <i class="fas fa-box-open App-placeholder-icon"></i>
+                <p class="App-placeholder-text">No agents yet. Create one!</p>
+            </div>
+        {% else %}
+                <div class="Agents-list-header">
+                    <p class="Agents-list-item"><strong>Name</strong></p>
+                    <p class="Agents-list-item"><strong>Created</strong></p>
+                    <p class="Agents-list-item"><strong>Modified</strong></p>
+                </div>
+                {% for agent in agents %}
+                    <a class="Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
+                        <div class="Agents-list-item"><span>{{ agent.name }}</span></div>
+                        <div class="Agents-list-item"><span>{{ agent.created | ago }}</span></div>
+                        <div class="Agents-list-item"><span>{{ agent.modified | ago }}</span></div>
+                    </a>
+                {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

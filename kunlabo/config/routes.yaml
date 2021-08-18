@@ -10,3 +10,8 @@ engine_controllers:
     resource: '../src/Engine/Infrastructure/Framework/Controller'
     type: annotation
     prefix: engines
+
+agent_controllers:
+    resource: '../src/Agent/Infrastructure/Framework/Controller'
+    type: annotation
+    prefix: agents

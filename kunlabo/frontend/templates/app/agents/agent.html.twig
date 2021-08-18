@@ -2,20 +2,20 @@
 
 {% extends 'app/base.html.twig' %}
 
-{% block title %}{{ engine.name }} - Kunlabo{% endblock %}
+{% block title %}{{ agent.name }} - Kunlabo{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('engines') }}
+    {{ encore_entry_link_tags('agents') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('engines') }}
+    {{ encore_entry_script_tags('agents') }}
 {% endblock %}
 
 {% block content %}
-    <div class="Engines-wrapper" data-controller="files"
+    <div class="Agents-wrapper" data-controller="files"
          data-action="dragenter->files#dragEnter dragover->files#drag dragleave->files#dragLeave drop->files#drop" >
 
         <div class="Files-overlay-wrapper" data-files-target="overlay">
@@ -25,10 +25,10 @@
             </div>
         </div>
 
-        <div class="Engines-header">
-            <div class="Engine-header-row">
-                <a href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
-                <h2 class="App-title">{{ engine.name }}</h2>
+        <div class="Agents-header">
+            <div class="Agent-header-row">
+                <a href="{{ path('web_agents') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
+                <h2 class="App-title">{{ agent.name }}</h2>
             </div>
         </div>
 

@@ -30,9 +30,7 @@ final class CreateEngineFileHandler implements CommandHandler
             $file = $engine->addFile($command->getPath());
             $this->repository->createFile($file);
         }
-
         $this->repository->update($engine);
-
         $this->eventBus->publish(...$engine->pullDomainEvents());
     }
 }
