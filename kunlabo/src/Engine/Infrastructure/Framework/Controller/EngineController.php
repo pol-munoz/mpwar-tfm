@@ -37,12 +37,15 @@ final class EngineController extends AbstractController
             $files = $queryBus->ask(SearchEngineFilesByEngineIdQuery::fromEngineId($uuid))->getEngineFiles();
 
             $output = [];
+            $items = [];
+
             foreach ($files as $file) {
                 $path = $file->getPath();
+                $items[$path] = $file;
                 Utils::expandPath($path, substr($path, 1), $output);
             }
 
-            return $this->render('app/engines/engine.html.twig', ['engine' => $engine, 'files' => $output]);
+            return $this->render('app/engines/engine.html.twig', ['engine' => $engine, 'paths' => $output, 'files' => $items]);
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }

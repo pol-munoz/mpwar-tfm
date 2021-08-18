@@ -19,15 +19,14 @@
 }
 
 .Engines-list-header {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 15vw 15vw;
     padding: 10px 20px;
 }
 
 .Engines-list-item {
     display: flex;
     flex-direction: row;
-    flex: 1;
     margin: 0;
     justify-content: flex-end;
     color: #040910;
@@ -35,13 +34,12 @@
 }
 
 .Engines-list-item:first-of-type {
-    flex: 3;
     justify-content: flex-start;
 }
 
 .Engines-list-row {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 15vw 15vw;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 2em;

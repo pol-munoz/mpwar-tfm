@@ -87,6 +87,7 @@ export default class extends Controller {
         let file = document.getElementById(path + name)
 
         if (file !== null) {
+            file.lastElementChild.innerHTML = 'Now'
             return
         }
 
@@ -123,7 +124,11 @@ export default class extends Controller {
             }
         }
 
-        let html = '<p class="Files-name" id="' + path + name + '">' + name + '</p>'
+        let html = '<div class="Files-file" id="' + path + name + '">\n' +
+            '    <p class="Files-text Files-name">' + name + '</p>\n' +
+            '    <p class="Files-text Files-date">Now</p>\n' +
+            '    <p class="Files-text Files-date">Now</p>\n' +
+            '</div>'
         parent.appendChild(this.createElementFromHTML(html))
     }
     createElementFromHTML(string) {

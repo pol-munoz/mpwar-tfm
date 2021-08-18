@@ -25,12 +25,13 @@
 .Files {
     display: flex;
     flex-direction: column;
+    padding: 0 20px;
 }
 
 .Files-folder {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin: 5px 0 10px;
 }
 
 .Files-folder-header {
@@ -55,16 +56,16 @@
 }
 
 .Files-folder-closed {
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 
 .Files-folder-closed .Files-folder-contents {
     height: 0;
 }
 
-.Files-name {
+.Files-text {
     color: #040910;
-    margin: 5px 0;
+    margin: 0;
 }
 
 .Files-name > strong {
@@ -90,4 +91,15 @@
     height: 10px;
     width: 0;
     transition: width 0.25s linear;
+}
+
+.Files-file {
+    display: grid;
+    grid-template-columns: 1fr 15vw 15vw;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.Files-date {
+    text-align: end;
 }

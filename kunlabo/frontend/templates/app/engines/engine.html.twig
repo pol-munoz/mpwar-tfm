@@ -32,11 +32,16 @@
             </div>
         </div>
 
-        <div class="Files" data-files-target="files" style="{{ files is empty ? 'display : none' : '' }}">
-            {{ folder(files) }}
+        <div class="Engines-list-header">
+            <p class="Engines-list-item"><strong>Name</strong></p>
+            <p class="Engines-list-item"><strong>Created</strong></p>
+            <p class="Engines-list-item"><strong>Modified</strong></p>
+        </div>
+        <div class="Files" data-files-target="files" style="{{ paths is empty ? 'display : none' : '' }}">
+            {{ folder(paths, files) }}
         </div>
 
-        <div class="App-placeholder" data-files-target="placeholder" style="{{ files is empty ? '' : 'display : none' }}">
+        <div class="App-placeholder" data-files-target="placeholder" style="{{ paths is empty ? '' : 'display : none' }}">
             <i class="fas fa-cloud-upload-alt App-placeholder-icon"></i>
             <p class="App-placeholder-text">Drop some files or folders to upload!</p>
         </div>

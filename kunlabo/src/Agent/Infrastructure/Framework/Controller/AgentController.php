@@ -37,12 +37,15 @@ final class AgentController extends AbstractController
             $files = $queryBus->ask(SearchAgentFilesByAgentIdQuery::fromAgentId($uuid))->getAgentFiles();
 
             $output = [];
+            $items = [];
+
             foreach ($files as $file) {
                 $path = $file->getPath();
+                $items[$path] = $file;
                 Utils::expandPath($path, substr($path, 1), $output);
             }
 
-            return $this->render('app/agents/agent.html.twig', ['agent' => $agent, 'files' => $output]);
+            return $this->render('app/agents/agent.html.twig', ['agent' => $agent, 'paths' => $output, 'files' => $items]);
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }

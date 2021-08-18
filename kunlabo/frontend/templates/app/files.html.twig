@@ -1,18 +1,22 @@
-{% macro folder(contents, path = "") %}
+{% macro folder(contents, files, path = "") %}
     {% for name, content in contents %}
         {% if content is iterable %}
             {% set p = path ~ "/" ~ name %}
             <div class="Files-folder Files-folder-closed">
                 <div class="Files-folder-header">
                     <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
-                    <p class="Files-name"><strong>{{ name }}</strong></p>
+                    <p class="Files-text"><strong>{{ name }}</strong></p>
                 </div>
                 <div class="Files-folder-contents" id="{{ p }}">
-                    {{ _self.folder(content, p) }}
+                    {{ _self.folder(content, files, p) }}
                 </div>
             </div>
         {% else %}
-            <p class="Files-name" id="{{ content }}">{{ name }}</p>
+            <div class="Files-file" id="{{ content }}">
+                <p class="Files-text Files-name">{{ name }}</p>
+                <p class="Files-text Files-date">{{ files[content].created | ago }}</p>
+                <p class="Files-text Files-date">{{ files[content].modified | ago }}</p>
+            </div>
         {% endif %}
     {% endfor %}
 {% endmacro %}
