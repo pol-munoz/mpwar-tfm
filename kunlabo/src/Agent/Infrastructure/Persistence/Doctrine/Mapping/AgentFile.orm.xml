@@ -5,8 +5,8 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <entity name="Kunlabo\Agent\Domain\AgentFile" table="agentfiles">
         <id name="id" type="entity_uuid" column="id"/>
-        <field name="agent" type="entity_uuid"/>
-        <field name="path" type="string" length="765" unique="true"/>
+        <field name="agentId" type="entity_uuid" column="agent"/>
+        <field name="path" type="text"/>
         <field name="created" type="datetime"/>
         <field name="modified" type="datetime"/>
     </entity>

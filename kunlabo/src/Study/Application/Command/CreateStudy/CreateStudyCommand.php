@@ -12,8 +12,8 @@ final class CreateStudyCommand implements Command
         private Uuid $uuid,
         private Name $name,
         private Uuid $owner,
-        private Uuid $engine,
-        private Uuid $agent,
+        private Uuid $engineId,
+        private Uuid $agentId,
     ) {
     }
 
@@ -21,15 +21,15 @@ final class CreateStudyCommand implements Command
         Uuid $uuid,
         string $name,
         Uuid $owner,
-        string $engine,
-        string $agent
+        string $engineId,
+        string $agentId
     ): self {
         return new self(
             $uuid,
             Name::fromRaw($name),
             $owner,
-            Uuid::fromRaw($engine),
-            Uuid::fromRaw($agent)
+            Uuid::fromRaw($engineId),
+            Uuid::fromRaw($agentId)
         );
     }
 
@@ -48,13 +48,13 @@ final class CreateStudyCommand implements Command
         return $this->owner;
     }
 
-    public function getEngine(): Uuid
+    public function getEngineId(): Uuid
     {
-        return $this->engine;
+        return $this->engineId;
     }
 
-    public function getAgent(): Uuid
+    public function getAgentId(): Uuid
     {
-        return $this->agent;
+        return $this->agentId;
     }
 }

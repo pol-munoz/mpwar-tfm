@@ -50,14 +50,14 @@ final class DoctrineEngineRepository implements EngineRepository
     public function readFileByEngineIdAndPath(Uuid $engine, string $path): ?EngineFile
     {
         return $this->fileRepository->findOneBy(
-            ['engine' => $engine, 'path' => $path]
+            ['engineId' => $engine, 'path' => $path]
         );
     }
 
     public function readFilesForEngineId(Uuid $engine): array
     {
         return $this->fileRepository->findBy(
-            ['engine' => $engine]
+            ['engineId' => $engine]
         );
     }
 

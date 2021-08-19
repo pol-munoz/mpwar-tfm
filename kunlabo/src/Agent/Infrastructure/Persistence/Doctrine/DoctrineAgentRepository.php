@@ -50,14 +50,14 @@ final class DoctrineAgentRepository implements AgentRepository
     public function readFileByAgentIdAndPath(Uuid $agent, string $path): ?AgentFile
     {
         return $this->fileRepository->findOneBy(
-            ['agent' => $agent, 'path' => $path]
+            ['agentId' => $agent, 'path' => $path]
         );
     }
 
     public function readFilesForAgentId(Uuid $agent): array
     {
         return $this->fileRepository->findBy(
-            ['agent' => $agent]
+            ['agentId' => $agent]
         );
     }
 

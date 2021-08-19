@@ -14,7 +14,7 @@ final class EngineFile extends Entity
         Uuid $id,
         DateTime $created,
         DateTime $modified,
-        private Uuid $engine,
+        private Uuid $engineId,
         private string $path
     ) {
         parent::__construct($id, $created, $modified);
@@ -22,15 +22,15 @@ final class EngineFile extends Entity
 
     public static function create(
         Uuid $id,
-        Uuid $owner,
+        Uuid $engineId,
         string $path
     ): self {
-        return new self($id, new DateTime(), new DateTime(), $owner, $path);
+        return new self($id, new DateTime(), new DateTime(), $engineId, $path);
     }
 
-    public function getEngine(): Uuid
+    public function getEngineId(): Uuid
     {
-        return $this->engine;
+        return $this->engineId;
     }
 
     public function getPath(): string

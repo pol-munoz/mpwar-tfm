@@ -16,8 +16,8 @@ final class Study extends NamedAggregateRoot
         DateTime $modified,
         Name $name,
         private Uuid $owner,
-        private Uuid $engine,
-        private Uuid $agent
+        private Uuid $engineId,
+        private Uuid $agentId
     ) {
         parent::__construct($id, $created, $modified, $name);
     }
@@ -26,10 +26,10 @@ final class Study extends NamedAggregateRoot
         Uuid $id,
         Name $name,
         Uuid $owner,
-        Uuid $engine,
-        Uuid $agent
+        Uuid $engineId,
+        Uuid $agentId
     ): self {
-        $study = new self($id, new DateTime(), new DateTime(), $name, $owner, $engine, $agent);
+        $study = new self($id, new DateTime(), new DateTime(), $name, $owner, $engineId, $agentId);
         $study->record(new StudyCreatedEvent($study));
 
         return $study;
@@ -40,13 +40,13 @@ final class Study extends NamedAggregateRoot
         return $this->owner;
     }
 
-    public function getEngine(): Uuid
+    public function getEngineId(): Uuid
     {
-        return $this->engine;
+        return $this->engineId;
     }
 
-    public function getAgent(): Uuid
+    public function getAgentId(): Uuid
     {
-        return $this->agent;
+        return $this->agentId;
     }
 }

@@ -87,7 +87,7 @@ export default class extends Controller {
         let file = document.getElementById(path + name)
 
         if (file !== null) {
-            file.lastElementChild.innerHTML = 'Now'
+            file.lastElementChild.innerHTML = 'now'
             return
         }
 
