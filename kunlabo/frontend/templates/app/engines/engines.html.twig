@@ -17,7 +17,7 @@
         <div class="Engines-header">
             <h1 class="App-title">Engines</h1>
             <button class="App-button" data-action="newEntity#show" data-newEntity-target="button">New engine</button>
-            <form class="Engines-form" action="{{ path('web_engines') }}" method="post" autocomplete="off"
+            <form class="Engines-form" action="{{ path('web_engines_post') }}" method="post" autocomplete="off"
                   data-newEntity-target="form" data-action="newEntity#submit">
                 <label class="App-label" for="name" style="display: none">Name</label>
                 <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"

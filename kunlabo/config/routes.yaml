@@ -15,3 +15,8 @@ agent_controllers:
     resource: '../src/Agent/Infrastructure/Framework/Controller'
     type: annotation
     prefix: agents
+
+study_controllers:
+    resource: '../src/Study/Infrastructure/Framework/Controller'
+    type: annotation
+    prefix: studies

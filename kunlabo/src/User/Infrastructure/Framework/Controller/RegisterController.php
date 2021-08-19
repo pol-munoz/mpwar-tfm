@@ -32,10 +32,10 @@ final class RegisterController extends AbstractController
         UserAuthenticatorInterface $authenticator,
         LoginAuthenticator $loginAuthenticator
     ): Response {
+        $uuid = Uuid::random();
         $name = $request->request->get('name', '');
         $email = $request->request->get('email', '');
         $password = $request->request->get('password', '');
-        $uuid = Uuid::random();
 
         try {
             $commandBus->dispatch(SignUpCommand::create($uuid, $name, $email, $password));

@@ -25,6 +25,7 @@ Encore
     .addEntry('landing', './assets/landing.js')
     .addEntry('engines', './assets/engines.js')
     .addEntry('agents', './assets/agents.js')
+    .addEntry('studies', './assets/studies.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

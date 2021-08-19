@@ -28,7 +28,7 @@ final class EngineFile extends Entity
         return new self($id, new DateTime(), new DateTime(), $owner, $path);
     }
 
-    public function getEngineId(): Uuid
+    public function getEngine(): Uuid
     {
         return $this->engine;
     }

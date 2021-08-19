@@ -52,7 +52,7 @@
     box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
 }
 
-.Engine-header-row {
+.Engines-header-row {
     display: flex;
     flex-direction: row;
     align-items: center;

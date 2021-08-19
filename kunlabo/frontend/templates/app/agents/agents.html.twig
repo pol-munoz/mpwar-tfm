@@ -17,7 +17,7 @@
         <div class="Agents-header">
             <h1 class="App-title">Agents</h1>
             <button class="App-button" data-action="newEntity#show" data-newEntity-target="button">New agent</button>
-            <form class="Agents-form" action="{{ path('web_agents') }}" method="post" autocomplete="off"
+            <form class="Agents-form" action="{{ path('web_agents_post') }}" method="post" autocomplete="off"
                   data-newEntity-target="form" data-action="newEntity#submit">
                 <label class="App-label" for="name" style="display: none">Name</label>
                 <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"

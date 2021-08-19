@@ -28,7 +28,7 @@ final class AgentFile extends Entity
         return new self($id, new DateTime(), new DateTime(), $owner, $path);
     }
 
-    public function getAgentId(): Uuid
+    public function getAgent(): Uuid
     {
         return $this->agent;
     }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Kunlabo\Study\Domain\Study" table="studies">
+        <id name="id" type="entity_uuid" column="id"/>
+        <embedded name="name" class="Kunlabo\Shared\Domain\ValueObject\Name" use-column-prefix="false"/>
+        <field name="owner" type="entity_uuid"/>
+        <field name="engine" type="entity_uuid"/>
+        <field name="agent" type="entity_uuid"/>
+        <field name="created" type="datetime"/>
+        <field name="modified" type="datetime"/>
+    </entity>
+</doctrine-mapping>

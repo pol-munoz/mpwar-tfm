@@ -41,9 +41,9 @@ final class AllAgentsController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
-        $owner = $security->getUser()->getId();
-        $name = $request->request->get('name', '');
         $uuid = Uuid::random();
+        $name = $request->request->get('name', '');
+        $owner = $security->getUser()->getId();
 
         try {
             $commandBus->dispatch(CreateAgentCommand::create($uuid, $name, $owner));
