@@ -1,3 +1,2 @@
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/agents.css';
-import './styles/files.css';
+import '../../assets/styles/study/survey.css';

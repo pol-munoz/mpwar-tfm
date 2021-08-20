@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Kunlabo\Participant\Domain\Participant" table="participants">
+        <id name="id" type="entity_uuid" column="id"/>
+        <field name="studyId" type="entity_uuid" column="studyId"/>
+        <embedded name="age" class="Kunlabo\Participant\Domain\ValueObject\Age" use-column-prefix="false"/>
+        <embedded name="handedness" class="Kunlabo\Participant\Domain\ValueObject\Handedness" use-column-prefix="false"/>
+        <field name="created" type="datetime"/>
+        <field name="modified" type="datetime"/>
+    </entity>
+</doctrine-mapping>

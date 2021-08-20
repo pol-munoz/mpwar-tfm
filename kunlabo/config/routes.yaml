@@ -1,22 +1,28 @@
-user_controllers:
-    resource: '../src/User/Infrastructure/Framework/Controller'
-    type: annotation
-
 shared_controllers:
     resource: '../src/Shared/Infrastructure/Framework/Controller'
     type: annotation
 
+user_controllers:
+    resource: '../src/User/Infrastructure/Framework/Controller'
+    type: annotation
+    prefix: app
+
 engine_controllers:
     resource: '../src/Engine/Infrastructure/Framework/Controller'
     type: annotation
-    prefix: engines
+    prefix: app/engines
 
 agent_controllers:
     resource: '../src/Agent/Infrastructure/Framework/Controller'
     type: annotation
-    prefix: agents
+    prefix: app/agents
 
 study_controllers:
     resource: '../src/Study/Infrastructure/Framework/Controller'
     type: annotation
-    prefix: studies
+    prefix: app/studies
+
+participant_controllers:
+    resource: '../src/Participant/Infrastructure/Framework/Controller'
+    type: annotation
+    prefix: study

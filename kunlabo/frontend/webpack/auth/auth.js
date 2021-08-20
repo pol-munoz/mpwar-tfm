@@ -1,6 +1,6 @@
-import './styles/auth.css';
+import '../../assets/styles/auth/auth.css';
 
 // start the Stimulus application
-import './bootstrap';
+import '../bootstrap';
 
 require('@fortawesome/fontawesome-free/css/all.min.css');

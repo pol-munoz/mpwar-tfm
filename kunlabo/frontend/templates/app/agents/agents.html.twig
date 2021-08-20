@@ -13,15 +13,15 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Agents-wrapper" data-controller="newEntity">
+    <div class="Agents-wrapper" data-controller="new-entity">
         <div class="Agents-header">
             <h1 class="App-title">Agents</h1>
-            <button class="App-button" data-action="newEntity#show" data-newEntity-target="button">New agent</button>
+            <button class="App-button" data-action="new-entity#show" data-new-entity-target="button">New agent</button>
             <form class="Agents-form" action="{{ path('web_agents_post') }}" method="post" autocomplete="off"
-                  data-newEntity-target="form" data-action="newEntity#submit">
+                  data-new-entity-target="form" data-action="new-entity#submit">
                 <label class="App-label" for="name" style="display: none">Name</label>
                 <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"
-                       data-newEntity-target="input" data-action="keyup->newEntity#keyUp blur->newEntity#blur">
+                       data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
             </form>
         </div>
 

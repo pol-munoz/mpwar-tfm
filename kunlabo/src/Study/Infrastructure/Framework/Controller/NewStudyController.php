@@ -3,8 +3,12 @@
 namespace Kunlabo\Study\Infrastructure\Framework\Controller;
 
 use DomainException;
+use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Agent\Application\Query\SearchAgentsByOwnerId\SearchAgentsByOwnerIdQuery;
+use Kunlabo\Agent\Domain\Exception\UnknownAgentException;
+use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Engine\Application\Query\SearchEnginesByOwnerId\SearchEnginesByOwnerIdQuery;
+use Kunlabo\Engine\Domain\Exception\UnknownEngineException;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
@@ -53,11 +57,25 @@ final class NewStudyController extends AbstractController
         $uuid = Uuid::random();
         $name = $request->request->get('name', '');
         $owner = $security->getUser()->getId();
-        $engine = $request->request->get('engine', '');
-        $agent = $request->request->get('agent', '');
+        $engineId = $request->request->get('engine', '');
+        $agentId = $request->request->get('agent', '');
 
         try {
-            $commandBus->dispatch(CreateStudyCommand::create($uuid, $name, $owner, $engine, $agent));
+            // MARK this kind of breaks the aggregate boundary
+            $engineQuery = FindEngineByIdQuery::fromString($engineId);
+            $engine = $queryBus->ask($engineQuery)->getEngine();
+            if ($engine === null) {
+                throw new UnknownEngineException($engineQuery->getId());
+            }
+
+            // MARK this kind of breaks the aggregate boundary
+            $agentQuery = FindAgentByIdQuery::fromString($agentId);
+            $agent = $queryBus->ask($agentQuery)->getAgent();
+            if ($agent === null) {
+                throw new UnknownAgentException($agentQuery->getId());
+            }
+
+            $commandBus->dispatch(CreateStudyCommand::create($uuid, $name, $owner, $engineId, $agentId));
 
             return new RedirectResponse($urlGenerator->generate('web_studies'), Response::HTTP_SEE_OTHER);
         } catch (DomainException $exception) {

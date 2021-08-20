@@ -4,10 +4,10 @@ namespace Kunlabo\User\Application\Command\SignUp;
 
 use Kunlabo\Shared\Application\Bus\Command\CommandHandler;
 use Kunlabo\Shared\Application\Bus\Event\DomainEventBus;
+use Kunlabo\User\Domain\ValueObject\Role;
 use Kunlabo\User\Domain\Exception\UserAlreadyExistsException;
 use Kunlabo\User\Domain\User;
 use Kunlabo\User\Domain\UserRepository;
-use Kunlabo\User\Domain\ValueObject\Role;
 
 final class SignUpHandler implements CommandHandler
 {

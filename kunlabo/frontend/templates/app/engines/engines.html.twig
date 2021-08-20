@@ -13,15 +13,15 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Engines-wrapper" data-controller="newEntity">
+    <div class="Engines-wrapper" data-controller="new-entity">
         <div class="Engines-header">
             <h1 class="App-title">Engines</h1>
-            <button class="App-button" data-action="newEntity#show" data-newEntity-target="button">New engine</button>
+            <button class="App-button" data-action="new-entity#show" data-new-entity-target="button">New engine</button>
             <form class="Engines-form" action="{{ path('web_engines_post') }}" method="post" autocomplete="off"
-                  data-newEntity-target="form" data-action="newEntity#submit">
+                  data-new-entity-target="form" data-action="new-entity#submit">
                 <label class="App-label" for="name" style="display: none">Name</label>
                 <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"
-                       data-newEntity-target="input" data-action="keyup->newEntity#keyUp blur->newEntity#blur">
+                       data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
             </form>
         </div>
 

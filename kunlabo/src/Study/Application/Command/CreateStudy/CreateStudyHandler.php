@@ -16,23 +16,12 @@ final class CreateStudyHandler implements CommandHandler
 {
     public function __construct(
         private DomainEventBus $eventBus,
-        private StudyRepository $repository,
-        private QueryBus $queryBus
+        private StudyRepository $repository
     ) {
     }
 
     public function __invoke(CreateStudyCommand $command): void
     {
-        $engine = $this->queryBus->ask(FindEngineByIdQuery::fromId($command->getEngineId()))->getEngine();
-        if ($engine === null) {
-            throw new UnknownEngineException($command->getEngineId());
-        }
-
-        $agent = $this->queryBus->ask(FindAgentByIdQuery::fromId($command->getAgentId()))->getAgent();
-        if ($agent === null) {
-            throw new UnknownAgentException($command->getEngineId());
-        }
-
         $study = Study::create(
             $command->getUuid(),
             $command->getName(),

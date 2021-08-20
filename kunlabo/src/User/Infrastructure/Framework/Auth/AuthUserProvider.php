@@ -2,15 +2,15 @@
 
 namespace Kunlabo\User\Infrastructure\Framework\Auth;
 
-use Kunlabo\User\Domain\UserRepository;
-use Kunlabo\User\Domain\ValueObject\Email;
+use Kunlabo\Shared\Application\Bus\Query\QueryBus;
+use Kunlabo\User\Application\Query\SearchUserByEmail\SearchUserByEmailQuery;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class AuthUserProvider implements UserProviderInterface
 {
-    public function __construct(private UserRepository $repository)
+    public function __construct(private QueryBus $queryBus)
     {
     }
 
@@ -31,7 +31,7 @@ final class AuthUserProvider implements UserProviderInterface
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $user = $this->repository->readByEmail(Email::fromRaw($identifier));
+        $user = $this->queryBus->ask(SearchUserByEmailQuery::create($identifier))->getUser();
 
         if ($user === null) {
             throw new UserNotFoundException();

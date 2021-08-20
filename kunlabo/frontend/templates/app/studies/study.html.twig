@@ -16,9 +16,15 @@
     <div class="Studies-wrapper">
         <div class="Studies-header">
             <div class="Studies-header-row">
-                <a href="{{ path('web_studies') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
+                <a href="{{ path('web_studies') }}" class="App-button-back">
+                    <h2 class="App-title"><i class="fa fa-chevron-left"></i></h2>
+                </a>
                 <h2 class="App-title">{{ study.name }}</h2>
             </div>
+            <button class="App-button" data-controller="clipboard" data-action="clipboard#copy"
+                    data-clipboard-text-value="{{ absolute_url(path('web_participant', {id: study.id })) }}">
+                Copy link
+            </button>
         </div>
     </div>
 {% endblock %}

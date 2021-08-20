@@ -22,5 +22,4 @@ final class FindUserByIdQuery implements Query
     {
         return $this->id;
     }
-
 }
