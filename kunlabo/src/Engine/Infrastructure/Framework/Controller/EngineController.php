@@ -4,6 +4,7 @@ namespace Kunlabo\Engine\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Engine\Application\Command\CreateEngineFile\CreateEngineFileCommand;
+use Kunlabo\Engine\Application\Command\SetEngineMainFile\SetEngineMainFileCommand;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Engine\Application\Query\SearchEngineFilesByEngineId\SearchEngineFilesByEngineIdQuery;
 use Kunlabo\Engine\Domain\EngineFile;
@@ -45,7 +46,15 @@ final class EngineController extends AbstractController
                 Utils::expandPath($path, substr($path, 1), $output);
             }
 
-            return $this->render('app/engines/engine.html.twig', ['engine' => $engine, 'paths' => $output, 'files' => $items]);
+            return $this->render(
+                'app/engines/engine.html.twig',
+                [
+                    'engine' => $engine,
+                    'paths' => $output,
+                    'files' => $items,
+                    'main' => $engine->getMain()
+                ]
+            );
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }
@@ -70,6 +79,20 @@ final class EngineController extends AbstractController
 
             $commandBus->dispatch(CreateEngineFileCommand::create($id, $path . $name));
         }
+
+        return new Response();
+    }
+
+    #[Route('/{id}/main', name: 'web_engines_set_main_post', methods: ['POST'])]
+    public function engineMainPost(
+        Request $request,
+        CommandBus $commandBus,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $main = $request->getContent();
+        $commandBus->dispatch(SetEngineMainFileCommand::create($id, $main));
 
         return new Response();
     }

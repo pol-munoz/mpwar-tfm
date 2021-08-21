@@ -75,6 +75,6 @@ final class ParticipantController extends AbstractController
         //$body = $request->toArray();
         $body = $request->getContent();
 
-        return new Response('', Response::HTTP_OK);
+        return new Response();
     }
 }

@@ -16,7 +16,7 @@
 
 {% block content %}
     <div class="Agents-wrapper" data-controller="files"
-         data-action="dragenter->files#dragEnter dragover->files#drag dragleave->files#dragLeave drop->files#drop" >
+         data-action="dragenter->files#dragEnter dragover->files#drag dragleave->files#dragLeave drop->files#drop click->files#closeMenuIfOutside">
 
         <div class="Files-overlay-wrapper" data-files-target="overlay">
             <div class="Files-overlay">
@@ -32,13 +32,19 @@
             </div>
         </div>
 
-        <div class="App-three-columns Agents-list-header">
+        <div class="App-four-columns-right Agents-list-header">
             <p class="Agents-list-item"><strong>Name</strong></p>
             <p class="Agents-list-item"><strong>Created</strong></p>
             <p class="Agents-list-item"><strong>Modified</strong></p>
         </div>
         <div class="Files" data-files-target="files" style="{{ paths is empty ? 'display : none' : '' }}">
-            {{ folder(paths, files) }}
+            {{ folder(paths, files, main) }}
+            <div class="Files-menu" data-files-target="menu" id="menu">
+                <div class="Files-menu-option" data-action="click->files#setAsMain">
+                    <i class="fas fa-fw fa-star Files-menu-option-icon"></i>
+                    <p class="Files-menu-option-text">Set as main</p>
+                </div>
+            </div>
         </div>
 
         <div class="App-placeholder" data-files-target="placeholder" style="{{ paths is empty ? '' : 'display : none' }}">

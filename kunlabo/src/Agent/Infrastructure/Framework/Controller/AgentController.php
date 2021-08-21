@@ -4,6 +4,7 @@ namespace Kunlabo\Agent\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Agent\Application\Command\CreateAgentFile\CreateAgentFileCommand;
+use Kunlabo\Agent\Application\Command\SetAgentMainFile\SetAgentMainFileCommand;
 use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Agent\Application\Query\SearchAgentFilesByAgentId\SearchAgentFilesByAgentIdQuery;
 use Kunlabo\Agent\Domain\AgentFile;
@@ -70,6 +71,20 @@ final class AgentController extends AbstractController
 
             $commandBus->dispatch(CreateAgentFileCommand::create($id, $path . $name));
         }
+
+        return new Response();
+    }
+
+    #[Route('/{id}/main', name: 'web_agents_set_main_post', methods: ['POST'])]
+    public function agentMainPost(
+        Request $request,
+        CommandBus $commandBus,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $main = $request->getContent();
+        $commandBus->dispatch(SetAgentMainFileCommand::create($id, $main));
 
         return new Response();
     }

@@ -1,21 +1,29 @@
-{% macro folder(contents, files, path = "", white = true) %}
+{% macro folder(contents, files, main, path = "", white = true) %}
     {% for name, content in contents %}
         {% if content is iterable %}
             {% set p = path ~ "/" ~ name %}
             <div class="Files-folder Files-folder-closed" style="background: {{ white ? 'white' : '#F5F6F9' }}">
                 <div class="Files-folder-header">
-                    <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
+                    <i class="fas fa-fw fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
                     <p class="Files-text"><strong>{{ name }}</strong></p>
                 </div>
                 <div class="Files-folder-contents" id="{{ p }}">
-                    {{ _self.folder(content, files, p, not white) }}
+                    {{ _self.folder(content, files, main, p, not white) }}
                 </div>
             </div>
         {% else %}
-            <div class="App-three-columns Files-file" id="{{ content }}">
-                <p class="Files-text Files-name">{{ name }}</p>
+            <div class="App-four-columns-right Files-file" id="{{ content }}">
+                {% if content == main %}
+                    <p class="Files-text Files-name" id="main">
+                        <i class="fas fa-fw fa-star Files-main-icon"></i>
+                        {{ name }}
+                    </p>
+                {% else %}
+                    <p class="Files-text Files-name">{{ name }}</p>
+                {% endif %}
                 <p class="Files-text Files-date">{{ files[content].created | ago }}</p>
                 <p class="Files-text Files-date">{{ files[content].modified | ago }}</p>
+                <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>
             </div>
         {% endif %}
     {% endfor %}

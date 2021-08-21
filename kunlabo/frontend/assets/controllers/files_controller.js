@@ -1,12 +1,14 @@
 import {Controller} from 'stimulus';
 
 export default class extends Controller {
-    static targets = ["overlay", "placeholder", "files", "progress"]
+    static targets = ["overlay", "placeholder", "files", "progress", "menu"]
 
     initialize() {
         this.uploading = 0
         this.uploaded = 0
         this.dragCount = 0
+        this.menuOpen = false
+        this.lastFile = null
     }
 
     dragEnter() {
@@ -67,9 +69,10 @@ export default class extends Controller {
                     this.updateUploading()
                     this.renderFile(path, file.name)
                 })
-                .catch(() => {
+                .catch(error => {
                     this.uploaded++
                     this.updateUploading()
+                    console.error(error.message)
                 })
             })
         }
@@ -114,7 +117,7 @@ export default class extends Controller {
             for (let j = i; j < parts.length; j++) {
                 let html = '<div class="Files-folder Files-folder-closed" style="background: ' + (white ? 'white' : '#F5F6F9') + '">\n' +
                 '    <div class="Files-folder-header">\n' +
-                '        <i class="fas fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>\n' +
+                '        <i class="fas fa-fw fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>\n' +
                 '        <p class="Files-text"><strong>' + parts[j] + '</strong></p>\n' +
                 '    </div>\n' +
                 '    <div class="Files-folder-contents" id="' + p + '">\n' +
@@ -127,13 +130,15 @@ export default class extends Controller {
             }
         }
 
-        let html = '<div class="App-three-columns Files-file" id="' + path + name + '">\n' +
+        let html = '<div class="App-four-columns-right Files-file" id="' + path + name + '">\n' +
             '    <p class="Files-text Files-name">' + name + '</p>\n' +
             '    <p class="Files-text Files-date">now</p>\n' +
             '    <p class="Files-text Files-date">now</p>\n' +
+            '    <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
             '</div>'
         parent.appendChild(this.createElementFromHTML(html))
     }
+
     createElementFromHTML(string) {
         let div = document.createElement('div')
         div.innerHTML = string.trim()
@@ -166,6 +171,55 @@ export default class extends Controller {
         } else {
             event.target.classList.replace('fa-folder', 'fa-folder-open')
             event.target.parentNode.parentNode.classList.remove('Files-folder-closed')
+        }
+    }
+
+    toggleFileMenu(event) {
+        if (this.menuOpen && event.target.parentNode.id === this.lastFile) {
+            this.closeMenu()
+        } else {
+            let bottom = event.target.getBoundingClientRect().bottom
+            let scroll = this.filesTarget.parentNode.parentNode.scrollTop
+            this.menuTarget.style = "display: flex; top: " + (bottom - 40 + scroll) + "px"
+            this.lastFile = event.target.parentNode.id
+        }
+
+        this.menuOpen = !this.menuOpen
+        event.stopPropagation()
+    }
+
+    closeMenu() {
+        this.menuTarget.style = ""
+        this.lastFile = null
+    }
+
+    setAsMain() {
+        let html = '<i class="fas fa-fw fa-star Files-main-icon"></i>'
+        let lastFile = document.getElementById(this.lastFile)
+        let lastName = lastFile.firstElementChild
+        let main = document.getElementById('main')
+
+        if (lastName.firstElementChild === null) {
+            fetch(window.location.href + '/main', {
+                method: 'POST',
+                body: this.lastFile,
+                credentials: 'include'
+            })
+            .then(() => {
+                main.id = ''
+                main.removeChild(main.firstElementChild)
+                lastName.innerHTML = html + lastName.innerHTML
+                lastFile.id = 'main'
+            })
+            .catch(error => console.error(error.message))
+        }
+        this.closeMenu()
+    }
+
+    closeMenuIfOutside(event) {
+        // A bit unsustainable sorry not sorry
+        if (event.target.id !== 'menu' && event.target.parentNode.id !== 'menu' && event.target.parentNode.parentNode.id !== 'menu') {
+            this.closeMenu()
         }
     }
 }

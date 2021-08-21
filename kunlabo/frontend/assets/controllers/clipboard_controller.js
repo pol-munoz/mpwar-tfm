@@ -5,9 +5,7 @@ export default class extends Controller {
 
     copy() {
         navigator.clipboard.writeText(this.textValue)
-            .then(
-                () => {},
-                error => console.error(error.message)
-            )
+            .then(() => {})
+            .catch(error => console.error(error.message))
     }
 }

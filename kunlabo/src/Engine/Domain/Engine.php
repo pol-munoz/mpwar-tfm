@@ -6,6 +6,7 @@ use DateTime;
 use Kunlabo\Engine\Domain\Event\EngineCreatedEvent;
 use Kunlabo\Engine\Domain\Event\EngineFileCreatedEvent;
 use Kunlabo\Engine\Domain\Event\EngineFileUpdatedEvent;
+use Kunlabo\Engine\Domain\Event\EngineMainPathSetEvent;
 use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
@@ -16,7 +17,8 @@ final class Engine extends NamedAggregateRoot {
         DateTime $created,
         DateTime $modified,
         Name $name,
-        private Uuid $owner
+        private Uuid $owner,
+        private string $main
     ) {
         parent::__construct($id, $created, $modified, $name);
     }
@@ -26,7 +28,7 @@ final class Engine extends NamedAggregateRoot {
         Name $name,
         Uuid $owner
     ): self {
-        $engine = new self($id, new DateTime(), new DateTime(), $name, $owner);
+        $engine = new self($id, new DateTime(), new DateTime(), $name, $owner, '/index.html');
         $engine->record(new EngineCreatedEvent($engine));
 
         return $engine;
@@ -35,6 +37,18 @@ final class Engine extends NamedAggregateRoot {
     public function getOwner(): Uuid
     {
         return $this->owner;
+    }
+
+    public function getMain(): string
+    {
+        return $this->main;
+    }
+
+    public function setMain(string $path): void
+    {
+        $this->main = $path;
+        $this->update();
+        $this->record(new EngineMainPathSetEvent($this));
     }
 
     public function addFile(string $path): EngineFile
@@ -57,6 +71,6 @@ final class Engine extends NamedAggregateRoot {
 
     public function getMainUrl(): string
     {
-        return EngineFile::BASE_PATH . $this->id . '/index.html';
+        return EngineFile::BASE_PATH . $this->id . $this->main;
     }
 }
