@@ -2,6 +2,7 @@ import {Controller} from 'stimulus';
 
 export default class extends Controller {
     static targets = ["overlay", "placeholder", "files", "progress", "menu"]
+    static values = { main: String }
 
     initialize() {
         this.uploading = 0
@@ -90,7 +91,7 @@ export default class extends Controller {
         let file = document.getElementById(path + name)
 
         if (file !== null) {
-            file.lastElementChild.innerHTML = 'now'
+            file.lastElementChild.previousElementSibling.innerHTML = 'now'
             return
         }
 
@@ -130,12 +131,27 @@ export default class extends Controller {
             }
         }
 
-        let html = '<div class="App-four-columns-right Files-file" id="' + path + name + '">\n' +
-            '    <p class="Files-text Files-name">' + name + '</p>\n' +
-            '    <p class="Files-text Files-date">now</p>\n' +
-            '    <p class="Files-text Files-date">now</p>\n' +
-            '    <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
-            '</div>'
+        let full = path + name
+        let html
+
+        if (full === this.mainValue) {
+            html = '<div class="App-four-columns-right Files-file" id="' + full + '">\n' +
+                '    <p class="Files-text Files-name" id="main">\n' +
+                '        <i class="fas fa-fw fa-star Files-main-icon"></i>\n' +
+                '        ' + name + '\n' +
+                '    </p>\n' +
+                '    <p class="Files-text Files-date">now</p>\n' +
+                '    <p class="Files-text Files-date">now</p>\n' +
+                '    <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
+                '</div>'
+        } else {
+            html = '<div class="App-four-columns-right Files-file" id="' + full + '">\n' +
+                '    <p class="Files-text Files-name">' + name + '</p>\n' +
+                '    <p class="Files-text Files-date">now</p>\n' +
+                '    <p class="Files-text Files-date">now</p>\n' +
+                '    <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
+                '</div>'
+        }
         parent.appendChild(this.createElementFromHTML(html))
     }
 

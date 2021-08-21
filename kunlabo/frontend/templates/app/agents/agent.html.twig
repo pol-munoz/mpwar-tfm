@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Agents-wrapper" data-controller="files"
+    <div class="Agents-wrapper" data-controller="files" data-files-main-value="{{ agent.main }}"
          data-action="dragenter->files#dragEnter dragover->files#drag dragleave->files#dragLeave drop->files#drop click->files#closeMenuIfOutside">
 
         <div class="Files-overlay-wrapper" data-files-target="overlay">
