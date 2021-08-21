@@ -168,6 +168,7 @@ body {
 
 .App-input {
     padding: 5px 10px;
+    margin: 0 0 0 10px;
     border-radius: 2em;
     outline: none;
     border: 1px solid white;
@@ -234,7 +235,7 @@ body {
 
 .App-four-columns-left {
     display: grid;
-    grid-template-columns: 50px 1fr 15vw 15vw;
+    grid-template-columns: 35px 1fr 15vw 15vw;
 }
 
 .App-error {

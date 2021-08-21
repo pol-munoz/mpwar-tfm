@@ -7,6 +7,7 @@ use Kunlabo\Agent\Domain\Event\AgentCreatedEvent;
 use Kunlabo\Agent\Domain\Event\AgentFileCreatedEvent;
 use Kunlabo\Agent\Domain\Event\AgentFileUpdatedEvent;
 use Kunlabo\Agent\Domain\Event\AgentMainPathSetEvent;
+use Kunlabo\Agent\Domain\ValueObject\AgentKind;
 use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
@@ -18,6 +19,7 @@ final class Agent extends NamedAggregateRoot {
         DateTime $modified,
         Name $name,
         private Uuid $owner,
+        private AgentKind $kind,
         private string $main
     ) {
         parent::__construct($id, $created, $modified, $name);
@@ -26,10 +28,10 @@ final class Agent extends NamedAggregateRoot {
     public static function create(
         Uuid $id,
         Name $name,
-        Uuid $owner
+        Uuid $owner,
+        AgentKind $kind,
     ): self {
-        // TODO change to main.py if type is ai (actually, just ask the valueobject)
-        $agent = new self($id, new DateTime(), new DateTime(), $name, $owner, '/index.html');
+        $agent = new self($id, new DateTime(), new DateTime(), $name, $owner, $kind, $kind->getDefaultFile());
         $agent->record(new AgentCreatedEvent($agent));
 
         return $agent;
@@ -38,6 +40,11 @@ final class Agent extends NamedAggregateRoot {
     public function getOwner(): Uuid
     {
         return $this->owner;
+    }
+
+    public function getKind(): AgentKind
+    {
+        return $this->kind;
     }
 
     public function getMain(): string

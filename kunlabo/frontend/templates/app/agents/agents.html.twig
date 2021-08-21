@@ -13,16 +13,31 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Agents-wrapper" data-controller="new-entity">
+    <div class="Agents-wrapper">
         <div class="Agents-header">
             <h1 class="App-title">Agents</h1>
-            <button class="App-button" data-action="new-entity#show" data-new-entity-target="button">New agent</button>
-            <form class="Agents-form" action="{{ path('web_agents_post') }}" method="post" autocomplete="off"
-                  data-new-entity-target="form" data-action="new-entity#submit">
-                <label class="App-label" for="name" style="display: none">Name</label>
-                <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"
-                       data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
-            </form>
+            <div class="Agents-header-row">
+                <div class="Agents-header-row" data-controller="new-entity">
+                    <button class="App-button" data-action="new-entity#show">New human agent</button>
+                    <form class="Agents-form" action="{{ path('web_agents_post') }}" method="post" autocomplete="off"
+                          data-new-entity-target="form" data-action="new-entity#submit">
+                        <label class="App-label" for="name" style="display: none">Name</label>
+                        <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="40"
+                               data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
+                        <input type="hidden" name="kind" value="human">
+                    </form>
+                </div>
+                <div class="Agents-header-row" data-controller="new-entity">
+                    <button class="App-button" data-action="new-entity#show">New AI agent</button>
+                    <form class="Agents-form" action="{{ path('web_agents_post') }}" method="post" autocomplete="off"
+                          data-new-entity-target="form" data-action="new-entity#submit">
+                        <label class="App-label" for="name" style="display: none">Name</label>
+                        <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="40"
+                               data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
+                        <input type="hidden" name="kind" value="ai">
+                    </form>
+                </div>
+            </div>
         </div>
 
         {% if agents is empty %}
@@ -31,13 +46,17 @@
                 <p class="App-placeholder-text">No agents yet. Create one!</p>
             </div>
         {% else %}
-                <div class="App-three-columns Agents-list-header">
+                <div class="App-four-columns-left Agents-list-header">
+                    <p class="Agents-list-item"><strong></strong></p>
                     <p class="Agents-list-item"><strong>Name</strong></p>
                     <p class="Agents-list-item"><strong>Created</strong></p>
                     <p class="Agents-list-item"><strong>Modified</strong></p>
                 </div>
                 {% for agent in agents %}
-                    <a class="App-three-columns Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
+                    <a class="App-four-columns-left Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
+                        <div class="Agents-list-item">
+                            <i class="fas fa-fw fa-{{ agent.kind == 'human' ? 'user' : 'robot' }} Agents-list-icon"></i>
+                        </div>
                         <div class="Agents-list-item"><span>{{ agent.name }}</span></div>
                         <div class="Agents-list-item"><span>{{ agent.created | ago }}</span></div>
                         <div class="Agents-list-item"><span>{{ agent.modified | ago }}</span></div>

@@ -1,17 +1,15 @@
 import { Controller } from 'stimulus';
 
 export default class extends Controller {
-    static targets = ["button", "form", "input"]
+    static targets = ["form", "input"]
 
     show() {
         this.formTarget.style = "display: flex"
-        this.buttonTarget.style = "display: none"
         this.inputTarget.focus()
     }
 
     hide() {
         this.formTarget.style = ""
-        this.buttonTarget.style = ""
     }
 
     keyUp(event) {

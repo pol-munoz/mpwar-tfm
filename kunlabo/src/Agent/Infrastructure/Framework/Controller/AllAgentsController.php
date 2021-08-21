@@ -44,9 +44,10 @@ final class AllAgentsController extends AbstractController
         $uuid = Uuid::random();
         $name = $request->request->get('name', '');
         $owner = $security->getUser()->getId();
+        $kind = $request->request->get('kind', '');
 
         try {
-            $commandBus->dispatch(CreateAgentCommand::create($uuid, $name, $owner));
+            $commandBus->dispatch(CreateAgentCommand::create($uuid, $name, $owner, $kind));
 
             return new RedirectResponse($request->getUri(), Response::HTTP_SEE_OTHER);
         } catch (DomainException $exception) {

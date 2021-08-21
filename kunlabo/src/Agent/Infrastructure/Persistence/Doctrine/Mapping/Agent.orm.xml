@@ -8,6 +8,7 @@
         <embedded name="name" class="Kunlabo\Shared\Domain\ValueObject\Name" use-column-prefix="false"/>
         <field name="main" type="text"/>
         <field name="owner" type="entity_uuid"/>
+        <embedded name="kind" class="Kunlabo\Agent\Domain\ValueObject\AgentKind" use-column-prefix="false"/>
         <field name="created" type="datetime"/>
         <field name="modified" type="datetime"/>
     </entity>

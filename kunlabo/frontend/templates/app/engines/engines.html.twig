@@ -16,11 +16,11 @@
     <div class="Engines-wrapper" data-controller="new-entity">
         <div class="Engines-header">
             <h1 class="App-title">Engines</h1>
-            <button class="App-button" data-action="new-entity#show" data-new-entity-target="button">New engine</button>
+            <button class="App-button" data-action="new-entity#show">New engine</button>
             <form class="Engines-form" action="{{ path('web_engines_post') }}" method="post" autocomplete="off"
                   data-new-entity-target="form" data-action="new-entity#submit">
                 <label class="App-label" for="name" style="display: none">Name</label>
-                <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="35"
+                <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="40"
                        data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
             </form>
         </div>

@@ -2,6 +2,7 @@
 
 namespace Kunlabo\Agent\Application\Command\CreateAgent;
 
+use Kunlabo\Agent\Domain\ValueObject\AgentKind;
 use Kunlabo\Shared\Application\Bus\Command\Command;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
@@ -12,18 +13,21 @@ final class CreateAgentCommand implements Command
         private Uuid $uuid,
         private Name $name,
         private Uuid $owner,
+        private AgentKind $kind,
     ) {
     }
 
     public static function create(
         Uuid $uuid,
         string $name,
-        Uuid $owner
+        Uuid $owner,
+        string $kind
     ): self {
         return new self(
             $uuid,
             Name::fromRaw($name),
-            $owner
+            $owner,
+            AgentKind::fromRaw($kind)
         );
     }
 
@@ -40,5 +44,10 @@ final class CreateAgentCommand implements Command
     public function getOwner(): Uuid
     {
         return $this->owner;
+    }
+
+    public function getKind(): AgentKind
+    {
+        return $this->kind;
     }
 }

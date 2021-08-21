@@ -14,7 +14,7 @@ final class CreateAgentHandler implements CommandHandler
 
     public function __invoke(CreateAgentCommand $command): void
     {
-        $agent = Agent::create($command->getUuid(), $command->getName(), $command->getOwner());
+        $agent = Agent::create($command->getUuid(), $command->getName(), $command->getOwner(), $command->getKind());
 
         $this->repository->create($agent);
 

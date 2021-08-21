@@ -12,10 +12,16 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    position: relative;
 }
 
 .Agents-form {
     display: none;
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    background: #f2f2f2;
+    padding: 10px 0;
 }
 
 .Agents-list-header {
@@ -31,20 +37,26 @@
     overflow: hidden;
 }
 
-.Agents-list-item:first-of-type {
+.Agents-list-item:first-of-type, .Agents-list-item:nth-of-type(2) {
     justify-content: flex-start;
-}
-
-.Agents-list-row {
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 2em;
 }
 
 .Agents-list-item > span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.Agents-list-icon {
+    align-self: center;
+    margin-bottom: 2px;
+    color: #040910;
+}
+
+.Agents-list-row {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 2em;
 }
 
 .Agents-list-row:hover {
