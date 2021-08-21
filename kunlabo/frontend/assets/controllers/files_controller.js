@@ -151,7 +151,7 @@ export default class extends Controller {
                     this.uploaded = 0
                     this.uploading = 0
                 }
-            }, 1000)
+            }, 500)
         } else {
             this.progressTarget.parentNode.style = ""
             this.progressTarget.style = "width: " + ((this.uploaded / this.uploading) * 100) + "%"

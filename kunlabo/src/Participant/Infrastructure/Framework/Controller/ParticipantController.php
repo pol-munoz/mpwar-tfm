@@ -8,6 +8,7 @@ use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,5 +47,33 @@ final class ParticipantController extends AbstractController
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
 
         return $this->render('study/study.html.twig', ['study' => $study, 'engine' => $engine]);
+    }
+
+    #[Route('/{id}', name: 'web_participant_post', methods: ['POST'])]
+    public function participantPost(
+        Request $request,
+        QueryBus $queryBus,
+        SessionInterface $session,
+        string $id
+    ): Response {
+        // MARK this kind of breaks the aggregate boundary
+        $studyId = Uuid::fromRaw($id);
+        $study = $queryBus->ask(FindStudyByIdQuery::fromId($studyId))->getStudy();
+
+        if ($study === null) {
+            throw $this->createNotFoundException();
+        }
+
+        if (!$session->has(self::STUDIES_SESSION_KEY) || !array_key_exists(
+                $id,
+                $session->get(self::STUDIES_SESSION_KEY)
+            )) {
+            return new Response('No participant', Response::HTTP_FORBIDDEN);
+        }
+
+        $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
+        $body = $request->toArray();
+
+        return new Response('', Response::HTTP_OK);
     }
 }
