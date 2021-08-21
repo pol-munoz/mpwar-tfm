@@ -70,9 +70,10 @@ final class AgentController extends AbstractController
         if ($file) {
             $full = AgentFile::BASE_PATH . $id . $path;
             $name = $file->getClientOriginalName();
-            $file->move($full, $name);
 
             $commandBus->dispatch(CreateAgentFileCommand::create($id, $path . $name));
+
+            $file->move($full, $name);
         }
 
         return new Response();
