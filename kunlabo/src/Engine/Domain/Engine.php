@@ -54,4 +54,9 @@ final class Engine extends NamedAggregateRoot {
         $this->update();
         $this->record(new EngineFileUpdatedEvent($file));
     }
+
+    public function getMainUrl(): string
+    {
+        return EngineFile::BASE_PATH . $this->id . '/index.html';
+    }
 }

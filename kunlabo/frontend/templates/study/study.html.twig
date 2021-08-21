@@ -3,5 +3,5 @@
 {% block title %}{{ study.name }} - Kunlabo{% endblock %}
 
 {% block body %}
-
+    <iframe class="Study-frame" src="{{ asset(engine.mainUrl) }}" title="{{ study.name }}"></iframe>
 {% endblock %}

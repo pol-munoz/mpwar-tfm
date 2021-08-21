@@ -2,6 +2,7 @@
 
 namespace Kunlabo\Participant\Infrastructure\Framework\Controller;
 
+use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
@@ -40,8 +41,10 @@ final class ParticipantController extends AbstractController
             );
         }
 
+        $engine = $queryBus->ask(FindEngineByIdQuery::fromId($study->getEngineId()))->getEngine();
+
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
 
-        return $this->render('study/study.html.twig', ['study' => $study]);
+        return $this->render('study/study.html.twig', ['study' => $study, 'engine' => $engine]);
     }
 }

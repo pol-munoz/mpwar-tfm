@@ -77,11 +77,26 @@ body {
 .Survey-radio-group {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin: 0 10px 30px;
+    margin: 0 10px 30px 15px;
 }
 
 .Survey-radio-option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin: 5px 0;
+    flex: 1;
+}
+
+.Survey-radio-option > input {
+    margin: 0 5px 0 0;
+    cursor: pointer;
+}
+
+.Survey-radio-option > label {
+    flex: 1;
+    margin: 0 10px 0 0;
+    cursor: pointer;
 }
 
 .Survey-button {
