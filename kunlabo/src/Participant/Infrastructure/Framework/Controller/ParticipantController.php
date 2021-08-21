@@ -72,7 +72,8 @@ final class ParticipantController extends AbstractController
         }
 
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
-        $body = $request->toArray();
+        //$body = $request->toArray();
+        $body = $request->getContent();
 
         return new Response('', Response::HTTP_OK);
     }

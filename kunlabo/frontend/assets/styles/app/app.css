@@ -222,7 +222,7 @@ body {
     text-align: center;
 }
 
-.App-columned {
+.App-three-columns {
     display: grid;
     grid-template-columns: 1fr 15vw 15vw;
 }

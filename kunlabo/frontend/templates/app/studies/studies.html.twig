@@ -30,13 +30,13 @@
                 <p class="App-placeholder-text">No studies yet. Create one!</p>
             </div>
         {% else %}
-            <div class="App-columned Studies-list-header">
+            <div class="App-three-columns Studies-list-header">
                 <p class="Studies-list-item"><strong>Name</strong></p>
                 <p class="Studies-list-item"><strong>Created</strong></p>
                 <p class="Studies-list-item"><strong>Modified</strong></p>
             </div>
             {% for study in studies %}
-                <a class="App-columned Studies-list-row" href="{{ path('web_studies_by_id', {id: study.id}) }}">
+                <a class="App-three-columns Studies-list-row" href="{{ path('web_studies_by_id', {id: study.id}) }}">
                     <div class="Studies-list-item"><span>{{ study.name }}</span></div>
                     <div class="Studies-list-item"><span>{{ study.created | ago }}</span></div>
                     <div class="Studies-list-item"><span>{{ study.modified | ago }}</span></div>
