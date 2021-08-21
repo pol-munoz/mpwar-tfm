@@ -195,8 +195,7 @@ export default class extends Controller {
 
     setAsMain() {
         let html = '<i class="fas fa-fw fa-star Files-main-icon"></i>'
-        let lastFile = document.getElementById(this.lastFile)
-        let lastName = lastFile.firstElementChild
+        let lastName = document.getElementById(this.lastFile).firstElementChild
         let main = document.getElementById('main')
 
         if (lastName.firstElementChild === null) {
@@ -209,7 +208,7 @@ export default class extends Controller {
                 main.id = ''
                 main.removeChild(main.firstElementChild)
                 lastName.innerHTML = html + lastName.innerHTML
-                lastFile.id = 'main'
+                lastName.id = 'main'
             })
             .catch(error => console.error(error.message))
         }

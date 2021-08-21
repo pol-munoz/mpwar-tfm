@@ -46,7 +46,10 @@ final class AgentController extends AbstractController
                 Utils::expandPath($path, substr($path, 1), $output);
             }
 
-            return $this->render('app/agents/agent.html.twig', ['agent' => $agent, 'paths' => $output, 'files' => $items]);
+            return $this->render(
+                'app/agents/agent.html.twig',
+                ['agent' => $agent, 'paths' => $output, 'files' => $items]
+            );
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }

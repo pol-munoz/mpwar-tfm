@@ -48,12 +48,7 @@ final class EngineController extends AbstractController
 
             return $this->render(
                 'app/engines/engine.html.twig',
-                [
-                    'engine' => $engine,
-                    'paths' => $output,
-                    'files' => $items,
-                    'main' => $engine->getMain()
-                ]
+                ['engine' => $engine, 'paths' => $output, 'files' => $items]
             );
         } catch (DomainException) {
             throw $this->createNotFoundException();
