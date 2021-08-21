@@ -6,6 +6,7 @@
     <entity name="Kunlabo\Participant\Domain\Participant" table="participants">
         <id name="id" type="entity_uuid" column="id"/>
         <field name="studyId" type="entity_uuid" column="studyId"/>
+        <embedded name="name" column="nickname" class="Kunlabo\Shared\Domain\ValueObject\Name" use-column-prefix="false"/>
         <embedded name="age" class="Kunlabo\Participant\Domain\ValueObject\Age" use-column-prefix="false"/>
         <embedded name="gender" class="Kunlabo\Participant\Domain\ValueObject\Gender" use-column-prefix="false"/>
         <embedded name="handedness" class="Kunlabo\Participant\Domain\ValueObject\Handedness" use-column-prefix="false"/>

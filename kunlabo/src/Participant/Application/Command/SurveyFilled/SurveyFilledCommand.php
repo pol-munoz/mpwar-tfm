@@ -6,6 +6,7 @@ use Kunlabo\Participant\Domain\ValueObject\Age;
 use Kunlabo\Participant\Domain\ValueObject\Gender;
 use Kunlabo\Participant\Domain\ValueObject\Handedness;
 use Kunlabo\Shared\Application\Bus\Command\Command;
+use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
 final class SurveyFilledCommand implements Command
@@ -13,6 +14,7 @@ final class SurveyFilledCommand implements Command
     private function __construct(
         private Uuid $uuid,
         private Uuid $surveyId,
+        private Name $nickname,
         private Age $age,
         private Gender $gender,
         private Handedness $handedness,
@@ -22,6 +24,7 @@ final class SurveyFilledCommand implements Command
     public static function create(
         Uuid $uuid,
         string $surveyId,
+        string $nickname,
         int $age,
         string $gender,
         string $handedness
@@ -29,6 +32,7 @@ final class SurveyFilledCommand implements Command
         return new self(
             $uuid,
             Uuid::fromRaw($surveyId),
+            Name::fromRaw($nickname),
             Age::fromRaw($age),
             Gender::fromRaw($gender),
             Handedness::fromRaw($handedness)
@@ -43,6 +47,11 @@ final class SurveyFilledCommand implements Command
     public function getSurveyId(): Uuid
     {
         return $this->surveyId;
+    }
+
+    public function getNickname(): Name
+    {
+        return $this->nickname;
     }
 
     public function getAge(): Age

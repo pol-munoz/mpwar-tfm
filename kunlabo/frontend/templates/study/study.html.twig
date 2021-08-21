@@ -3,5 +3,8 @@
 {% block title %}{{ study.name }} - Kunlabo{% endblock %}
 
 {% block body %}
-    <iframe class="Study-frame" src="{{ asset(engine.mainUrl) }}" title="{{ study.name }}"></iframe>
+    <iframe class="Study-frame" src="{{ asset(engine.mainUrl) }}" title="{{ study.name }}" data-controller="iframe"
+            data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/engines/{{ study.id }}/{{ participant }}"
+            data-iframe-mercure-value="{{ mercure }}"
+            data-iframe-sub-value="onEngineMessage" data-iframe-pub-value="sendAgentMessage"></iframe>
 {% endblock %}

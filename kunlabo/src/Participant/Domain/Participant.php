@@ -8,32 +8,36 @@ use Kunlabo\Participant\Domain\ValueObject\Age;
 use Kunlabo\Participant\Domain\ValueObject\Gender;
 use Kunlabo\Participant\Domain\ValueObject\Handedness;
 use Kunlabo\Shared\Domain\Aggregate\AggregateRoot;
+use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
+use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-final class Participant extends AggregateRoot
+final class Participant extends NamedAggregateRoot
 {
     public function __construct(
         Uuid $id,
         DateTime $created,
         DateTime $modified,
+        Name $name,
         private Uuid $studyId,
         private Age $age,
         private Gender $gender,
         private Handedness $handedness
     )
     {
-        parent::__construct($id, $created, $modified);
+        parent::__construct($id, $created, $modified, $name);
     }
 
     public static function create(
         Uuid $id,
         Uuid $studyId,
+        Name $name,
         Age $age,
         Gender $gender,
         Handedness $handedness
     ): self {
 
-        $participant = new self($id, new DateTime(), new DateTime(), $studyId, $age, $gender, $handedness);
+        $participant = new self($id, new DateTime(), new DateTime(), $name, $studyId, $age, $gender, $handedness);
         $participant->record(new ParticipantFilledSurveyEvent($participant));
 
         return $participant;

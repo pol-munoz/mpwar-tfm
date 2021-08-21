@@ -1,0 +1,29 @@
+{% extends 'app/studies/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('studies') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('studies') }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="Studies-wrapper">
+        <div class="Studies-header">
+            <div class="Studies-header-row">
+                <a href="{{ path('web_studies_by_id', {id: study.id}) }}" class="App-button-back">
+                    <h2 class="App-title"><i class="fa fa-chevron-left"></i></h2>
+                </a>
+                <h2 class="App-title">Human agent</h2>
+            </div>
+        </div>
+        <iframe class="Studies-frame" src="{{ asset(agent.mainUrl) }}" title="{{ study.name }}" data-controller="iframe"
+                data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/agents/{{ study.id }}/{{ participant }}"
+                data-iframe-mercure-value="{{ mercure }}"
+                data-iframe-sub-value="onEngineMessage" data-iframe-pub-value="sendAgentMessage"></iframe>
+    </div>
+{% endblock %}

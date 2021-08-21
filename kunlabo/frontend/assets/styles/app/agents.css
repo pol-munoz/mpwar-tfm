@@ -37,7 +37,11 @@
     overflow: hidden;
 }
 
-.Agents-list-item:first-of-type, .Agents-list-item:nth-of-type(2) {
+.Agents-list-item:first-of-type {
+    justify-content: flex-start;
+}
+
+.App-four-columns-left > .Agents-list-item:nth-of-type(2) {
     justify-content: flex-start;
 }
 

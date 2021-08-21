@@ -10,7 +10,25 @@ services:
             - ./ops/nginx/default.conf:/etc/nginx/conf.d/default.conf
         working_dir: /var/www/kunlabo
         depends_on:
+            - mercure
+
+    mercure:
+        image: dunglas/mercure:v0.12.1
+        depends_on:
             - php
+        environment:
+            SERVER_NAME: ':80'
+            MERCURE_PUBLISHER_JWT_KEY: ${JWT_SECRET_KEY}
+            MERCURE_SUBSCRIBER_JWT_KEY: ${JWT_SECRET_KEY}
+            MERCURE_EXTRA_DIRECTIVES: |
+                cors_origins http://localhost:8080
+                anonymous
+                subscriptions
+        ports:
+            - 9090:80
+        volumes:
+            - ./volumes/mercure/data:/data
+            - ./volumes/mercure/config:/config
 
     php:
         build: ./ops/php-fpm
@@ -24,6 +42,7 @@ services:
             DB_PORT: 3306
             DB_NAME: ${MYSQL_DATABASE}
             DB_VERSION: 8.0.26
+            MERCURE_PUBLIC_URL: http://localhost:9090/.well-known/mercure
 
     mysql:
         image: mysql:8.0.26
@@ -34,6 +53,6 @@ services:
             MYSQL_PASSWORD: ~
             MYSQL_ROOT_PASSWORD: ~
         ports:
-            - 3360:3306
+            - 3306:3306
         volumes:
             - ./volumes/db/data:/var/lib/mysql

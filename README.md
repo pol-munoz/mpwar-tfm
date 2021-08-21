@@ -7,18 +7,11 @@
    - MYSQL_USER = "Name of the MySQL user the application will use."
    - MYSQL_PASSWORD = "Password for the MySQL user the application will use."
    - MYSQL_ROOT_PASSWORD = "Password to set up for the MySQL root user."
+   - JWT_SECRET_KEY = "256-bit key used to generate the Mercure JWTs."
     
 2. To set up the project for the first time, use the `make run` command in the root directory. Docker needs to be installed and running.
     - From this point onwards, using the `make start` command in the root directory is enough.
 
-## Deployment
-
-Make sure to:
-- In regards to the `kunlabo` Symfony project:
-    - [Generate production secrets](https://symfony.com/doc/current/configuration/secrets.html) for the `DB_USER` and `DB_PASSWORD` environment variables, which should match the 
-    previously defined `MYSQL_USER` and `MYSQL_PASSWORD`, respectively.
-    - [Generate production assets](https://symfony.com/doc/current/frontend/encore/simple-example.html#configuring-encore-webpack) by running `make assets@prod`.
-      
 ## Architecture
 
 This project makes use of several Domain-Driven Design practices and other related concepts. Specifically, the project follows the Hexagonal Architecture pattern, and uses Command Query Responsibility Segregation. 
@@ -37,6 +30,20 @@ This project makes use of several Domain-Driven Design practices and other relat
     - [Stimulus](https://stimulus.hotwired.dev/) as a light JavaScript framework.
     - [Turbo](https://turbo.hotwired.dev/) to improve perceived performance by performing requests in the background and updating instead of reloading the page.
     
+- [Mercure](https://mercure.rocks/) For server->client communication.
+  
 - [Twig](https://twig.symfony.com/) To define and render templates.
     
 - [FontAwesome](https://fontawesome.com/) for icons.
+
+
+## Deployment
+
+Make sure to:
+- In regards to the `kunlabo` Symfony project:
+    - [Generate production secrets](https://symfony.com/doc/current/configuration/secrets.html) for the `DB_USER`, `DB_PASSWORD` and `JWT_SECRET` environment variables, which should match the
+      previously defined `MYSQL_USER`, `MYSQL_PASSWORD` and `JWT_SECRET_KEY`, respectively.
+    - [Generate production assets](https://symfony.com/doc/current/frontend/encore/simple-example.html#configuring-encore-webpack) by running `make assets@prod`.
+- In regards to the `Mercure` hub:
+    - Review configured URLs in the dcokcer-compose file, both for CORS and the public URL.
+    

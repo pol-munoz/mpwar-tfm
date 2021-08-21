@@ -64,12 +64,13 @@ final class ParticipantSurveyController extends AbstractController
 
         $uuid = Uuid::random();
 
+        $nickname = $request->request->get('nickname', '');
         $age = $request->request->get('age', 0);
         $gender = $request->request->get('gender', '');
         $handedness = $request->request->get('handedness', '');
 
         try {
-            $commandBus->dispatch(SurveyFilledCommand::create($uuid, $id, $age, $gender, $handedness));
+            $commandBus->dispatch(SurveyFilledCommand::create($uuid, $id, $nickname, $age, $gender, $handedness));
 
             $arr = [];
             if ($session->has(ParticipantController::STUDIES_SESSION_KEY)) {
@@ -89,6 +90,7 @@ final class ParticipantSurveyController extends AbstractController
                     [
                         'id' => $id,
                         'error' => $exception->getMessage(),
+                        'nickname' => $nickname,
                         'age' => $age,
                         'gender' => $gender,
                         'handedness' => $handedness

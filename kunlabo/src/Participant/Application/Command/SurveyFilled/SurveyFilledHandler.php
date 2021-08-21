@@ -10,7 +10,8 @@ use Kunlabo\Shared\Application\Bus\Event\DomainEventBus;
 
 final class SurveyFilledHandler implements CommandHandler
 {
-    public function __construct(private DomainEventBus $eventBus, private ParticipantRepository $repository) {
+    public function __construct(private DomainEventBus $eventBus, private ParticipantRepository $repository)
+    {
     }
 
     public function __invoke(SurveyFilledCommand $command): void
@@ -19,7 +20,14 @@ final class SurveyFilledHandler implements CommandHandler
             throw new ParticipantAlreadyExistsException();
         }
 
-        $participant = Participant::create($command->getUuid(), $command->getSurveyId(), $command->getAge(), $command->getGender(), $command->getHandedness());
+        $participant = Participant::create(
+            $command->getUuid(),
+            $command->getSurveyId(),
+            $command->getNickname(),
+            $command->getAge(),
+            $command->getGender(),
+            $command->getHandedness()
+        );
 
         $this->repository->create($participant);
 

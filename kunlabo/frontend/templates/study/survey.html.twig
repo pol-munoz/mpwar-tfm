@@ -21,6 +21,9 @@
                 <h1 class="Survey-title">Hi!</h1>
                 <h2 class="Survey-subtitle">We need some data for the study</h2>
             </div>
+            <label class="Survey-label" for="nickname">Nickname</label>
+            <input class="Survey-input" name="nickname" type="text" id="nickname" value="{{ nickname ?? '' }}" required>
+
             <label class="Survey-label" for="age">Age</label>
             <input class="Survey-input" name="age" type="number" id="age" value="{{ age ?? '' }}" min="1" max="150" required>
 

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -46,7 +48,10 @@ final class ParticipantController extends AbstractController
 
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
 
-        return $this->render('study/study.html.twig', ['study' => $study, 'engine' => $engine]);
+        return $this->render(
+            'study/study.html.twig',
+            ['study' => $study, 'engine' => $engine, 'participant' => $participant]
+        );
     }
 
     #[Route('/{id}', name: 'web_participant_post', methods: ['POST'])]
@@ -54,6 +59,7 @@ final class ParticipantController extends AbstractController
         Request $request,
         QueryBus $queryBus,
         SessionInterface $session,
+        HubInterface $hub,
         string $id
     ): Response {
         // MARK this kind of breaks the aggregate boundary
@@ -72,8 +78,14 @@ final class ParticipantController extends AbstractController
         }
 
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
-        //$body = $request->toArray();
-        $body = $request->getContent();
+        $body = $request->toArray();
+
+        // MARK DDD this?
+        $update = new Update(
+            'http://kunlabo.com/agents/' . $id . '/' . $participant,
+            json_encode($body)
+        );
+        $hub->publish($update);
 
         return new Response();
     }
