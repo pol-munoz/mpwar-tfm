@@ -35,4 +35,9 @@ final class AgentKind extends StringValueObject
         }
         return '';
     }
+
+    public function isHuman(): bool
+    {
+        return $this->raw === self::HUMAN_KIND;
+    }
 }
