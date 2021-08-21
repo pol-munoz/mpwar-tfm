@@ -13,4 +13,54 @@
 {% endblock %}
 
 {% block body %}
+    {# TODO Form with age selector (number input), gender and handedness 3-value radio buttons #}
+    <img class="Survey-logo" height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
+    <main class="Survey-wrapper">
+        <form class="Survey-form" action="{{ path('web_participant_survey_post', {id: id}) }}" method="post" autocomplete="on">
+            <div class="Survey-header">
+                <h1 class="Survey-title">Hi!</h1>
+                <h2 class="Survey-subtitle">We need some data for the study</h2>
+            </div>
+            <label class="Survey-label" for="age">Age</label>
+            <input class="Survey-input" name="age" type="number" id="age" value="{{ age ?? '' }}" min="1" max="150" required>
+
+            <p class="Survey-label">Gender</p>
+            <div class="Survey-radio-group">
+                <div class="Survey-radio-option">
+                    <input type="radio" id="male" name="gender" value="male" required>
+                    <label for="male">Male</label>
+                </div>
+                <div class="Survey-radio-option">
+                    <input type="radio" id="female" name="gender" value="female" required>
+                    <label for="female">Female</label>
+                </div>
+                <div class="Survey-radio-option">
+                    <input type="radio" id="nb" name="gender" value="nb" required>
+                    <label for="nb">Non-Binary</label>
+                </div>
+            </div>
+
+            <p class="Survey-label">Handedness</p>
+            <div class="Survey-radio-group">
+                <div class="Survey-radio-option">
+                    <input type="radio" id="right" name="handedness" value="right" required>
+                    <label for="right">Right</label>
+                </div>
+                <div class="Survey-radio-option">
+                    <input type="radio" id="left" name="handedness" value="left" required>
+                    <label for="left">Left</label>
+                </div>
+                <div class="Survey-radio-option">
+                    <input type="radio" id="ambidextrous" name="handedness" value="ambidextrous" required>
+                    <label for="ambidextrous">Ambidextrous</label>
+                </div>
+            </div>
+
+            <input class="Survey-button" type="submit" value="Submit">
+
+            {% if error is defined %}
+                <p class="Survey-error">{{ error }}</p>
+            {% endif %}
+        </form>
+    </main>
 {% endblock %}

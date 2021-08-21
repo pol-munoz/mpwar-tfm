@@ -21,6 +21,8 @@ final class ParticipantSurveyController extends AbstractController
     #[Route('/{id}/survey', name: 'web_participant_survey', methods: ['GET'])]
     public function survey(
         QueryBus $queryBus,
+        SessionInterface $session,
+        UrlGeneratorInterface $urlGenerator,
         string $id
     ): Response {
         // MARK this kind of breaks the aggregate boundary
@@ -31,7 +33,16 @@ final class ParticipantSurveyController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('study/survey.html.twig');
+        if ($session->has(ParticipantController::STUDIES_SESSION_KEY) && array_key_exists(
+                $id,
+                $session->get(ParticipantController::STUDIES_SESSION_KEY)
+            )) {
+            return new RedirectResponse(
+                $urlGenerator->generate('web_participant', ['id' => $id]), Response::HTTP_SEE_OTHER
+            );
+        }
+
+        return $this->render('study/survey.html.twig', ['id' => $id]);
     }
 
     #[Route('/{id}/survey', name: 'web_participant_survey_post', methods: ['POST'])]
@@ -76,6 +87,7 @@ final class ParticipantSurveyController extends AbstractController
                 $this->renderView(
                     'study/survey.html.twig',
                     [
+                        'id' => $id,
                         'error' => $exception->getMessage(),
                         'age' => $age,
                         'gender' => $gender,

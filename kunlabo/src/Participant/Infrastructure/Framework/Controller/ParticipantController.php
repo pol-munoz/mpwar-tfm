@@ -40,7 +40,8 @@ final class ParticipantController extends AbstractController
             );
         }
 
-        // TODO remove user id here
-        return $this->render('study/study.html.twig', ['study' => $study, 'participant' => $session->get(self::STUDIES_SESSION_KEY)[$id]]);
+        $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
+
+        return $this->render('study/study.html.twig', ['study' => $study]);
     }
 }

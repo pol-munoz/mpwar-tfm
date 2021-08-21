@@ -1,0 +1,108 @@
+html {
+    background: #EFF3FB;
+}
+
+body {
+    margin: 0;
+    background: #EFF3FB;
+    background: linear-gradient(180deg, #EFF3FB 0%, #AEC5EA 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Survey-logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.Survey-wrapper {
+    background: white;
+    padding: 40px;
+    border-radius: 35px;
+    box-shadow: 0 5px 10px rgba(29, 61, 112, 0.2);
+    width: 440px;
+    margin: 50px;
+}
+
+.Survey-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.Survey-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Survey-title, .Survey-subtitle {
+    margin: 0;
+    color: #040910;
+}
+
+.Survey-title {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.Survey-subtitle {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.Survey-label {
+    font-size: 1em;
+    padding: 0 15px;
+    margin: 0 1px 2px;
+    color: #040910;
+}
+
+.Survey-input {
+    display: flex;
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 2em;
+    outline: none;
+    border: 1px solid white;
+    background: #fafafa;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    color: #040910;
+    margin-bottom: 30px;
+}
+
+.Survey-radio-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 0 10px 30px;
+}
+
+.Survey-radio-option {
+    margin: 5px 0;
+}
+
+.Survey-button {
+    margin: 10px 0 0;
+    border: 1px solid #1d3d70;
+    background: #264F92;
+    color: white;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 15px;
+    border-radius: 2em;
+    cursor: pointer;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.2);
+}
+
+.Survey-button:hover {
+    background: #28549A;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.4);
+}
+
+.Survey-button:active {
+    background: #244B8A;
+    box-shadow: inset 0 1px 4px rgba(239, 243, 251, 0.3);
+}
