@@ -13,7 +13,6 @@
 {% endblock %}
 
 {% block body %}
-    {# TODO Form with age selector (number input), gender and handedness 3-value radio buttons #}
     <img class="Survey-logo" height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
     <main class="Survey-wrapper">
         <form class="Survey-form" action="{{ path('web_participant_survey_post', {id: id}) }}" method="post" autocomplete="on">
