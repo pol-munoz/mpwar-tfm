@@ -5,13 +5,13 @@ export default class extends Controller {
     static values = { mercure: String, topic: String, pub: String, sub: String }
 
     initialize() {
-        this.iframeTarget.contentWindow[this.pubValue] = (message) => {
+        this.iframeTarget.contentWindow[this.pubValue] = (body, actions = ['message']) => {
             fetch(window.parent.location.href, {
                 method: 'POST',
-                body: JSON.stringify(message)
+                body: JSON.stringify({ actions, body })
             })
-                .then(() => {})
-                .catch(error => console.error(error.message))
+            .then(() => {})
+            .catch(error => console.error(error.message))
         }
 
         const eventSource = new EventSource(this.mercureValue + '?topic=' + encodeURIComponent(this.topicValue));

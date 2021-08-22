@@ -25,7 +25,7 @@
             <p class="Studies-participant">{{ participant.name }} ({{ participant.age.raw }}, {{ participant.gender }}, {{ participant.handedness }})</p>
         </div>
         <iframe class="Studies-frame" src="{{ asset(agent.mainUrl) }}" title="{{ study.name }}" data-controller="iframe"
-                data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/agents/{{ study.id }}/{{ participant.id }}"
+                data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/agent/{{ study.id }}/{{ participant.id }}"
                 data-iframe-mercure-value="{{ mercure }}"
                 data-iframe-sub-value="onAgentMessage" data-iframe-pub-value="sendEngineMessage"></iframe>
     </div>

@@ -3,8 +3,10 @@
 namespace Kunlabo\Study\Infrastructure\Framework\Controller;
 
 use DomainException;
+use Kunlabo\Action\Application\Command\NewActions\NewActionsCommand;
 use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Participant\Application\Query\FindParticipantById\FindParticipantByIdQuery;
+use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
@@ -12,8 +14,6 @@ use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class HumanStudyController extends AbstractController
@@ -56,9 +56,10 @@ final class HumanStudyController extends AbstractController
     }
 
     #[Route('/human/{id}/{participant}', name: 'web_studies_human_post', methods: ['POST'])]
-    public function humanPost(  Request $request,
+    public function humanPost(
+        Request $request,
+        CommandBus $commandBus,
         QueryBus $queryBus,
-        HubInterface $hub,
         string $id,
         string $participant
     ): Response {
@@ -76,13 +77,18 @@ final class HumanStudyController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $body = $request->toArray();
-        // MARK DDD this?
-        $update = new Update(
-            'http://kunlabo.com/engines/' . $id . '/' . $participant,
-            json_encode($body)
-        );
-        $hub->publish($update);
+        $array = $request->toArray();
+        $actions = $array['actions'];
+        $body = $array['body'];
+
+        $commandBus->dispatch(NewActionsCommand::create(
+            $id,
+            $participant,
+            'agent',
+            'engine',
+            $actions,
+            $body
+        ));
 
         return new Response();
     }

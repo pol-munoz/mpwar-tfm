@@ -2,7 +2,9 @@
 
 namespace Kunlabo\Participant\Infrastructure\Framework\Controller;
 
+use Kunlabo\Action\Application\Command\NewActions\NewActionsCommand;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
+use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
@@ -12,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -56,9 +57,9 @@ final class ParticipantController extends AbstractController
     #[Route('/{id}', name: 'web_participant_post', methods: ['POST'])]
     public function participantPost(
         Request $request,
+        CommandBus $commandBus,
         QueryBus $queryBus,
         SessionInterface $session,
-        HubInterface $hub,
         string $id
     ): Response {
         $studyId = Uuid::fromRaw($id);
@@ -76,14 +77,19 @@ final class ParticipantController extends AbstractController
         }
 
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
-        $body = $request->toArray();
 
-        // MARK DDD this?
-        $update = new Update(
-            'http://kunlabo.com/agents/' . $id . '/' . $participant,
-            json_encode($body)
-        );
-        $hub->publish($update);
+        $array = $request->toArray();
+        $actions = $array['actions'];
+        $body = $array['body'];
+
+        $commandBus->dispatch(NewActionsCommand::create(
+            $id,
+            $participant,
+            'engine',
+            'agent',
+            $actions,
+            $body
+        ));
 
         return new Response();
     }
