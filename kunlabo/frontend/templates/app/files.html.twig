@@ -23,7 +23,7 @@
                 {% endif %}
                 <p class="Files-text Files-date">{{ files[content].created | ago }}</p>
                 <p class="Files-text Files-date">{{ files[content].modified | ago }}</p>
-                <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>
+                <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->files#toggleFileMenu"></i>
             </div>
         {% endif %}
     {% endfor %}

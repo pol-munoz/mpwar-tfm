@@ -228,6 +228,11 @@ body {
     grid-template-columns: 1fr 15vw 15vw;
 }
 
+.App-six-columns-right {
+    display: grid;
+    grid-template-columns: 1fr 5vw 9vw 12vw 15vw 60px;
+}
+
 .App-four-columns-right {
     display: grid;
     grid-template-columns: 1fr 15vw 15vw 60px;
@@ -245,4 +250,56 @@ body {
     font-size: 0.8em;
     border-radius: 2em;
     margin: 20px 0 0;
+}
+
+
+.App-kebab-button {
+    color: #1d3d70;
+    margin: 0 10px;
+    cursor: pointer;
+    align-self: center;
+    justify-self: flex-end;
+}
+
+.App-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    z-index: 5;
+    background: white;
+    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.App-menu-option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #eaeaea;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.App-menu-option:hover {
+    background: #f8f8f8;
+}
+
+.App-menu-option:active {
+    background: #f0f0f0;
+}
+
+.App-menu-option:last-of-type {
+    border-bottom: none;
+}
+
+.App-menu-option-icon {
+    color: #1d3d70;
+    margin-right: 10px;
+}
+
+.App-menu-option-text {
+    color: #040910;
+    margin: 0;
 }

@@ -61,14 +61,12 @@ final class NewStudyController extends AbstractController
         $agentId = $request->request->get('agent', '');
 
         try {
-            // MARK this kind of breaks the aggregate boundary
             $engineQuery = FindEngineByIdQuery::fromString($engineId);
             $engine = $queryBus->ask($engineQuery)->getEngine();
             if ($engine === null) {
                 throw new UnknownEngineException($engineQuery->getId());
             }
 
-            // MARK this kind of breaks the aggregate boundary
             $agentQuery = FindAgentByIdQuery::fromString($agentId);
             $agent = $queryBus->ask($agentQuery)->getAgent();
             if ($agent === null) {

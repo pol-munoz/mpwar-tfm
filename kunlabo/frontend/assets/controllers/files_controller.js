@@ -142,14 +142,14 @@ export default class extends Controller {
                 '    </p>\n' +
                 '    <p class="Files-text Files-date">now</p>\n' +
                 '    <p class="Files-text Files-date">now</p>\n' +
-                '    <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
+                '    <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
                 '</div>'
         } else {
             html = '<div class="App-four-columns-right Files-file" id="' + full + '">\n' +
                 '    <p class="Files-text Files-name">' + name + '</p>\n' +
                 '    <p class="Files-text Files-date">now</p>\n' +
                 '    <p class="Files-text Files-date">now</p>\n' +
-                '    <i class="fas fa-ellipsis-v fa-fw Files-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
+                '    <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->files#toggleFileMenu"></i>\n' +
                 '</div>'
         }
         parent.appendChild(this.createElementFromHTML(html))
@@ -196,17 +196,17 @@ export default class extends Controller {
         } else {
             let bottom = event.target.getBoundingClientRect().bottom
             let scroll = this.filesTarget.parentNode.parentNode.scrollTop
-            this.menuTarget.style = "display: flex; top: " + (bottom - 40 + scroll) + "px"
+            this.menuTarget.style = "display: flex; right: 70px; top: " + (bottom - 40 + scroll) + "px"
             this.lastFile = event.target.parentNode.id
-        }
 
-        this.menuOpen = !this.menuOpen
-        event.stopPropagation()
+            this.menuOpen = true
+        }
     }
 
     closeMenu() {
         this.menuTarget.style = ""
         this.lastFile = null
+        this.menuOpen = false
     }
 
     setAsMain() {
@@ -233,7 +233,11 @@ export default class extends Controller {
 
     closeMenuIfOutside(event) {
         // A bit unsustainable sorry not sorry
-        if (event.target.id !== 'menu' && event.target.parentNode.id !== 'menu' && event.target.parentNode.parentNode.id !== 'menu') {
+        if (!event.target.classList.contains('App-menu') &&
+            !event.target.classList.contains('App-menu-option') &&
+            !event.target.classList.contains('App-menu-option-icon') &&
+            !event.target.classList.contains('App-menu-option-text') &&
+            !event.target.classList.contains('App-kebab-button')) {
             this.closeMenu()
         }
     }

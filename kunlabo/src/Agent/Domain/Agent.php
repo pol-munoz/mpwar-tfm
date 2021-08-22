@@ -76,4 +76,9 @@ final class Agent extends NamedAggregateRoot {
         $this->update();
         $this->record(new AgentFileUpdatedEvent($file));
     }
+
+    public function getMainUrl(): string
+    {
+        return AgentFile::BASE_PATH . $this->id . $this->main;
+    }
 }

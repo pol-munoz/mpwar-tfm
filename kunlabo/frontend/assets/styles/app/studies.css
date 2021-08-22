@@ -48,6 +48,24 @@
     box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
 }
 
+.Studies-participant-list-row {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 2em;
+    position: relative;
+}
+
+.Studies-participant {
+    color: #040910;
+    margin: 0;
+}
+
+.Studies-frame {
+    flex: 1;
+    border: 1px solid #1d3d70;
+    border-radius: 10px;
+}
+
 .Studies-header-row {
     display: flex;
     flex-direction: row;

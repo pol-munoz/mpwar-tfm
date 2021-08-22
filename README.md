@@ -30,7 +30,7 @@ This project makes use of several Domain-Driven Design practices and other relat
     - [Stimulus](https://stimulus.hotwired.dev/) as a light JavaScript framework.
     - [Turbo](https://turbo.hotwired.dev/) to improve perceived performance by performing requests in the background and updating instead of reloading the page.
     
-- [Mercure](https://mercure.rocks/) For server->client communication.
+- [Mercure](https://mercure.rocks/) For realtime server->client communication.
   
 - [Twig](https://twig.symfony.com/) To define and render templates.
     

@@ -3,6 +3,8 @@
 namespace Kunlabo\Study\Infrastructure\Framework\Controller;
 
 use DomainException;
+use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
+use Kunlabo\Participant\Application\Query\SearchParticipantsByStudyId\SearchParticipantsByStudyIdQuery;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
@@ -28,7 +30,15 @@ final class StudyController extends AbstractController
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('app/studies/study.html.twig', ['study' => $study]);
+            $agent = $queryBus->ask(FindAgentByIdQuery::fromId($study->getAgentId()))->getAgent();
+            $human = $agent->getKind()->isHuman();
+
+            $participants = $queryBus->ask(SearchParticipantsByStudyIdQuery::create($uuid))->getParticipants();
+
+            return $this->render(
+                'app/studies/study.html.twig',
+                ['study' => $study, 'participants' => $participants, 'human' => $human]
+            );
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }

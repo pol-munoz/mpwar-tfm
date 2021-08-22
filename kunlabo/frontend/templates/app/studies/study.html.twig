@@ -13,18 +13,58 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Studies-wrapper">
+    <div class="Studies-wrapper" data-controller="menu" data-action="click->menu#closeMenuIfOutside">
         <div class="Studies-header">
             <div class="Studies-header-row">
                 <a href="{{ path('web_studies') }}" class="App-button-back">
                     <h2 class="App-title"><i class="fa fa-chevron-left"></i></h2>
                 </a>
-                <h2 class="App-title">{{ study.name }}</h2>
+                <h2 class="App-title">Participants - {{ study.name }}</h2>
             </div>
             <button class="App-button" data-controller="clipboard" data-action="clipboard#copy"
                     data-clipboard-text-value="{{ absolute_url(path('web_participant', {id: study.id })) }}">
                 Copy link
             </button>
         </div>
+
+        {% if participants is empty %}
+            <div class="App-placeholder">
+                <i class="fas fa-users App-placeholder-icon"></i>
+                <p class="App-placeholder-text">No participants yet. Share your link!</p>
+            </div>
+        {% else %}
+            <div class="App-six-columns-right Studies-list-header">
+                <p class="Studies-list-item"><strong>Nickname</strong></p>
+                <p class="Studies-list-item"><strong>Age</strong></p>
+                <p class="Studies-list-item"><strong>Gender</strong></p>
+                <p class="Studies-list-item"><strong>Handedness</strong></p>
+                <p class="Studies-list-item"><strong>Last active</strong></p>
+            </div>
+            {% for participant in participants %}
+                <div class="App-six-columns-right Studies-participant-list-row" id="{{ participant.id }}">
+                    <div class="Studies-list-item"><span>{{ participant.name }}</span></div>
+                    <div class="Studies-list-item"><span>{{ participant.age.raw }}</span></div>
+                    <div class="Studies-list-item"><span>{{ participant.gender }}</span></div>
+                    <div class="Studies-list-item"><span>{{ participant.handedness }}</span></div>
+                    <div class="Studies-list-item"><span>{{ participant.modified | ago }}</span></div>
+
+                    <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->menu#toggleMenu"></i>
+
+                    <div class="App-menu">
+                        {% if human %}
+                            <a class="App-menu-option" href="{{ path('web_studies_human', {id: study.id, participant: participant.id}) }}">
+                                <i class="fas fa-fw fa-brain App-menu-option-icon"></i>
+                                <p class="App-menu-option-text">Human agent</p>
+                            </a>
+                        {% endif %}
+
+                        <a class="App-menu-option" href="">
+                            <i class="fas fa-fw fa-clipboard-list App-menu-option-icon"></i>
+                            <p class="App-menu-option-text">Download logs</p>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

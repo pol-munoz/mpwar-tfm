@@ -28,4 +28,12 @@ final class DoctrineParticipantRepository implements ParticipantRepository
     {
         return $this->repository->find($id);
     }
+
+    public function readAllForStudy(Uuid $study): array
+    {
+        return $this->repository->findBy(
+            ['studyId' => $study],
+            ['modified' => 'DESC']
+        );
+    }
 }

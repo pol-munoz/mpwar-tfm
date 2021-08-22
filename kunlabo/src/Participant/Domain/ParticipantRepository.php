@@ -9,4 +9,5 @@ interface ParticipantRepository
     public function create(Participant $participant): void;
 
     public function readById(Uuid $id): ?Participant;
+    public function readAllForStudy(Uuid $study): array;
 }

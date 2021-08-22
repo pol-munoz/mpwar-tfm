@@ -25,7 +25,6 @@ final class ParticipantSurveyController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         string $id
     ): Response {
-        // MARK this kind of breaks the aggregate boundary
         $studyId = Uuid::fromRaw($id);
         $study = $queryBus->ask(FindStudyByIdQuery::fromId($studyId))->getStudy();
 
@@ -54,7 +53,6 @@ final class ParticipantSurveyController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         string $id
     ): Response {
-        // MARK this kind of breaks the aggregate boundary
         $studyId = Uuid::fromRaw($id);
         $study = $queryBus->ask(FindStudyByIdQuery::fromId($studyId))->getStudy();
 
