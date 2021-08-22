@@ -7,8 +7,8 @@ use Kunlabo\Shared\Domain\ValueObject\StringValueObject;
 
 final class ActionKind extends StringValueObject
 {
-    const MESSAGE = 'message';
-    const LOG = 'log';
+    const MESSAGE = 'MESSAGE';
+    const LOG = 'LOG';
     const ACTIONS = [self::MESSAGE, self::LOG];
 
     public static function fromRaw(string $raw): self
