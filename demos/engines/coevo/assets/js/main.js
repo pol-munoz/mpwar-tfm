@@ -2,7 +2,6 @@ let last
 
 window.addEventListener('load', () => {
     document.getElementById('button').addEventListener('click', () => {
-        console.log(KunlaboAction)
         last = Date.now()
         sendAgentMessage({test: "test"})
     })
