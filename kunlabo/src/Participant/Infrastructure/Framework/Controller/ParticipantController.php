@@ -3,6 +3,7 @@
 namespace Kunlabo\Participant\Infrastructure\Framework\Controller;
 
 use Kunlabo\Action\Application\Command\NewActions\NewActionsCommand;
+use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
@@ -76,20 +77,39 @@ final class ParticipantController extends AbstractController
             return new Response('No participant', Response::HTTP_FORBIDDEN);
         }
 
+        $agent = $queryBus->ask(FindAgentByIdQuery::fromId($study->getAgentId()))->getAgent();
+
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
 
         $array = $request->toArray();
         $actions = $array['actions'];
         $body = $array['body'];
 
-        $commandBus->dispatch(NewActionsCommand::create(
-            $id,
-            $participant,
-            'engine',
-            'agent',
-            $actions,
-            $body
-        ));
+        if ($agent->getKind()->isHuman()) {
+            $commandBus->dispatch(NewActionsCommand::create(
+                $id,
+                $participant,
+                'engine',
+                'agent',
+                $actions,
+                $body
+            ));
+        } else {
+            $commandBus->dispatch(NewActionsCommand::create(
+                $id,
+                $participant,
+                'engine',
+                'agent',
+                $actions,
+                $body,
+                [
+                    'study' => $id,
+                    'participant' => $participant,
+                    'agent' => $agent->getId()->getRaw(),
+                    'file' => $agent->getMain(),
+                ]
+            ));
+        }
 
         return new Response();
     }

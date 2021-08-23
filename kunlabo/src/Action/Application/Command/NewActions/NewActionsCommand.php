@@ -14,7 +14,8 @@ final class NewActionsCommand implements Command
         private string $source,
         private string $destination,
         private array $kinds,
-        private array $body
+        private array $body,
+        private array $extras
     ) {
     }
 
@@ -24,7 +25,8 @@ final class NewActionsCommand implements Command
         string $source,
         string $destination,
         array $actions,
-        array $body
+        array $body,
+        array $extras = []
     ): self {
         $kinds = [];
 
@@ -38,7 +40,8 @@ final class NewActionsCommand implements Command
             $source,
             $destination,
             $kinds,
-            $body
+            $body,
+            $extras
         );
     }
 
@@ -70,5 +73,10 @@ final class NewActionsCommand implements Command
     public function getBody(): array
     {
         return $this->body;
+    }
+
+    public function getExtras(): array
+    {
+        return $this->extras;
     }
 }

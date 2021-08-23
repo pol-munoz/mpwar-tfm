@@ -92,5 +92,4 @@ final class HumanStudyController extends AbstractController
 
         return new Response();
     }
-
 }

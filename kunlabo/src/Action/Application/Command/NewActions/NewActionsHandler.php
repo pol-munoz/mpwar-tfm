@@ -24,7 +24,8 @@ final class NewActionsHandler implements CommandHandler
                 $kind,
                 $command->getSource(),
                 $command->getDestination(),
-                $command->getBody()
+                $command->getBody(),
+                $command->getExtras()
             );
 
             if ($kind->isMessage()) {
@@ -34,5 +35,4 @@ final class NewActionsHandler implements CommandHandler
             }
         }
     }
-
 }

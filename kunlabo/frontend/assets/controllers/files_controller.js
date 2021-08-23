@@ -221,8 +221,10 @@ export default class extends Controller {
                 credentials: 'include'
             })
             .then(() => {
-                main.id = ''
-                main.removeChild(main.firstElementChild)
+                if (main) {
+                    main.id = ''
+                    main.removeChild(main.firstElementChild)
+                }
                 lastName.innerHTML = html + lastName.innerHTML
                 lastName.id = 'main'
             })
@@ -233,7 +235,8 @@ export default class extends Controller {
 
     closeMenuIfOutside(event) {
         // A bit unsustainable sorry not sorry
-        if (!event.target.classList.contains('App-menu') &&
+        if (this.menuOpen &&
+            !event.target.classList.contains('App-menu') &&
             !event.target.classList.contains('App-menu-option') &&
             !event.target.classList.contains('App-menu-option-icon') &&
             !event.target.classList.contains('App-menu-option-text') &&

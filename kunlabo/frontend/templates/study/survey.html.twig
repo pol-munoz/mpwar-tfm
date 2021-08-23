@@ -15,7 +15,7 @@
 {% block body %}
     <img class="Survey-logo" height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
     <main class="Survey-wrapper">
-        <form class="Survey-form" action="{{ path('web_participant_survey_post', {id: id}) }}" method="post" autocomplete="on">
+        <form class="Survey-form" action="{{ path('web_participant_survey_post', {id: id}) }}" method="post" autocomplete="off">
             <div class="Survey-header">
                 <h1 class="Survey-title">Hi!</h1>
                 <h2 class="Survey-subtitle">We need some data for the study</h2>

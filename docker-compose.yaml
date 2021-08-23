@@ -12,10 +12,27 @@ services:
         depends_on:
             - mercure
 
+    python:
+        build:
+            context: ./
+            dockerfile: ./ops/python/Dockerfile
+        command: python -u ./kunlabo/main.py
+        volumes:
+            - ./kunlabo/public/uploads/agents:/usr/src/kunlabo/agents
+            - ./python/main.py:/usr/src/kunlabo/main.py
+        environment:
+            HUB_URL: http://mercure/.well-known/mercure
+        working_dir: /usr/src
+        depends_on:
+            - mercure
+
     mercure:
         image: dunglas/mercure:v0.12.1
-        depends_on:
-            - php
+        ports:
+            - 9090:80
+        volumes:
+            - ./volumes/mercure/data:/data
+            - ./volumes/mercure/config:/config
         environment:
             SERVER_NAME: ':80'
             MERCURE_PUBLISHER_JWT_KEY: ${JWT_SECRET_KEY}
@@ -24,35 +41,33 @@ services:
                 cors_origins http://localhost:8080
                 anonymous
                 subscriptions
-        ports:
-            - 9090:80
-        volumes:
-            - ./volumes/mercure/data:/data
-            - ./volumes/mercure/config:/config
+        depends_on:
+            - php
 
     php:
         build: ./ops/php-fpm
         volumes:
             - ./kunlabo:/var/www/kunlabo
         working_dir: /var/www/kunlabo
-        depends_on:
-            - mysql
         environment:
             DB_HOST: mysql
             DB_PORT: 3306
             DB_NAME: ${MYSQL_DATABASE}
             DB_VERSION: 8.0.26
+            MERCURE_URL: http://mercure/.well-known/mercure
             MERCURE_PUBLIC_URL: http://localhost:9090/.well-known/mercure
+        depends_on:
+            - mysql
 
     mysql:
         image: mysql:8.0.26
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        ports:
+            - 3306:3306
+        volumes:
+            - ./volumes/db/data:/var/lib/mysql
         environment:
             MYSQL_DATABASE: ~
             MYSQL_USER: ~
             MYSQL_PASSWORD: ~
             MYSQL_ROOT_PASSWORD: ~
-        ports:
-            - 3306:3306
-        volumes:
-            - ./volumes/db/data:/var/lib/mysql

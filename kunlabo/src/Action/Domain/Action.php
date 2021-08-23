@@ -18,7 +18,8 @@ final class Action extends Entity
         private ActionKind $kind,
         private string $source,
         private string $destination,
-        private array $body
+        private array $body,
+        private array $extras
     ) {
         parent::__construct($id, $created, $modified);
     }
@@ -29,7 +30,8 @@ final class Action extends Entity
         ActionKind $kind,
         string $source,
         string $destination,
-        array $body
+        array $body,
+        array $extras = []
     ): self {
         return new self(
             Uuid::random(),
@@ -40,7 +42,8 @@ final class Action extends Entity
             $kind,
             $source,
             $destination,
-            $body
+            $body,
+            $extras
         );
     }
 
@@ -72,5 +75,15 @@ final class Action extends Entity
     public function getBody(): array
     {
         return $this->body;
+    }
+
+    public function getExtras(): array
+    {
+        return $this->extras;
+    }
+
+    public function hasExtras(): bool
+    {
+        return !empty($this->extras);
     }
 }

@@ -8,7 +8,6 @@ use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Engine\Domain\Exception\UnknownEngineException;
 use Kunlabo\Shared\Application\Bus\Command\CommandHandler;
 use Kunlabo\Shared\Application\Bus\Event\DomainEventBus;
-use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Study\Domain\Study;
 use Kunlabo\Study\Domain\StudyRepository;
 
