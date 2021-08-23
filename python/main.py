@@ -27,7 +27,7 @@ def handle_message(data):
             'actions': ['MESSAGE'],
             'body': result
         }
-        response = requests.post(url, json=post)
+        requests.post(url, json=post)
 
 
 updates = SSEClient(
@@ -38,5 +38,6 @@ updates = SSEClient(
 for update in updates:
     if update.data:
         data = json.loads(update.data)
-        process = Process(target=handle_message, args=(data,))
-        process.start()
+        if 'extras' in data:
+            process = Process(target=handle_message, args=(data,))
+            process.start()

@@ -85,7 +85,7 @@
 .Files-progress {
     display: flex;
     flex-direction: row;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     height: 10px;
