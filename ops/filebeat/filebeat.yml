@@ -1,0 +1,12 @@
+filebeat.inputs:
+    -   type: log
+        paths:
+            - /var/log/kunlabo/*.log
+
+output.logstash:
+    hosts: [ "logstash:5044" ]
+    index: "kunlabo-logs"
+
+processors:
+    -   drop_fields:
+            fields: ["agent", "ecs", "host", "input", "log", "version"]

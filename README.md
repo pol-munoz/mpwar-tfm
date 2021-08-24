@@ -22,28 +22,20 @@ This project makes use of several Domain-Driven Design practices and other relat
     - [Symfony Security](https://symfony.com/doc/current/security.html) to manage user accounts with the [new authenticator system](https://symfony.com/doc/current/security/authenticator_manager.html).
     - [Symfony Messenger](https://symfony.com/doc/current/messenger.html) to implement Command, Query and Domain Event buses.
 
+- [Ramsey UUID](https://uuid.ramsey.dev/en/stable/) to provide UUID-v4 unique entity identifiers.
+  
 - [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) as the Object-Relational-Mapper.
 
-- [Ramsey UUID](https://uuid.ramsey.dev/en/stable/) to provide UUID-v4 unique entity identifiers.
+- [Mercure](https://mercure.rocks/) for realtime server->client communication.
+
+- [Monolog](https://seldaek.github.io/monolog/) to write study logs to a file (in bulk).
+
+- [Elastic Stack](https://www.elastic.co/elastic-stack/) to efficiently structure and index logs from said file.
 
 - [Webpack Encore](https://symfony.com/doc/current/frontend.html) to manage, process and bundle assets.
     - [Stimulus](https://stimulus.hotwired.dev/) as a light JavaScript framework.
     - [Turbo](https://turbo.hotwired.dev/) to improve perceived performance by performing requests in the background and updating instead of reloading the page.
-    
-- [Mercure](https://mercure.rocks/) For realtime server->client communication.
-  
-- [Twig](https://twig.symfony.com/) To define and render templates.
-    
+
+- [Twig](https://twig.symfony.com/) to define and render templates.
+
 - [FontAwesome](https://fontawesome.com/) for icons.
-
-
-## Deployment
-
-Make sure to:
-- In regards to the `kunlabo` Symfony project:
-    - [Generate production secrets](https://symfony.com/doc/current/configuration/secrets.html) for the `DB_USER`, `DB_PASSWORD` and `JWT_SECRET` environment variables, which should match the
-      previously defined `MYSQL_USER`, `MYSQL_PASSWORD` and `JWT_SECRET_KEY`, respectively.
-    - [Generate production assets](https://symfony.com/doc/current/frontend/encore/simple-example.html#configuring-encore-webpack) by running `make assets@prod`.
-- In regards to the `Mercure` hub:
-    - Review configured URLs in the dcokcer-compose file, both for CORS and the public URL.
-    

@@ -3,7 +3,7 @@ let last
 window.addEventListener('load', () => {
     document.getElementById('button').addEventListener('click', () => {
         last = Date.now()
-        sendAgentMessage({test: "test"})
+        sendAgentMessage({test: "test"}, [KunlaboAction.MESSAGE, KunlaboAction.LOG])
     })
 })
 

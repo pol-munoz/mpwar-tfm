@@ -10,6 +10,7 @@ def handle_message(data):
     url = 'http://nginx/ai/' + data['extras']['study'] + '/' + data['extras']['participant']
     path = './kunlabo/agents/' + data['extras']['agent'] + data['extras']['file']
     file = path.split('/')[-1]
+    folder = path[:-len(file)]
     body = data['body']
 
     if file.endswith('.py'):
@@ -20,6 +21,7 @@ def handle_message(data):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
+    os.chdir(folder)
     result = module.on_agent_message(body)
 
     if result:

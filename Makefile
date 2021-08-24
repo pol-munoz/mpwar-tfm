@@ -4,12 +4,12 @@ UNBOLD=\x1B[0m
 .PHONY: start
 start:
 	@echo "🎬 ${BOLD}Starting application${UNBOLD}..."
-	@docker compose up -d
+	@docker compose -f docker-compose.yaml -f docker-compose.elk.yaml up -d
 
 .PHONY: stop
 stop:
-	@echo "🛑 ${BOLD}Stopping application${UNBOLD}..."
-	@docker compose down
+	@echo "🛑 ${BOLD}Stopping everything${UNBOLD}..."
+	@docker compose -f docker-compose.elk.yaml -f docker-compose.yaml down
 
 .PHONY: install@php
 install@php:
