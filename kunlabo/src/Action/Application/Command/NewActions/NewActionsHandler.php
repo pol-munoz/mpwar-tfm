@@ -3,13 +3,13 @@
 namespace Kunlabo\Action\Application\Command\NewActions;
 
 use Kunlabo\Action\Domain\Action;
-use Kunlabo\Action\Domain\LogService;
+use Kunlabo\Action\Domain\LoggerService;
 use Kunlabo\Action\Domain\MessageService;
 use Kunlabo\Shared\Application\Bus\Command\CommandHandler;
 
 final class NewActionsHandler implements CommandHandler
 {
-    public function __construct(private MessageService $message, private LogService $log)
+    public function __construct(private MessageService $message, private LoggerService $log)
     {
     }
 

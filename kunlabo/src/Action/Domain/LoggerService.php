@@ -2,7 +2,7 @@
 
 namespace Kunlabo\Action\Domain;
 
-interface LogService
+interface LoggerService
 {
     public function logAction(Action $action): void;
 }

@@ -3,10 +3,10 @@
 namespace Kunlabo\Action\Infrastructure;
 
 use Kunlabo\Action\Domain\Action;
-use Kunlabo\Action\Domain\LogService;
+use Kunlabo\Action\Domain\LoggerService;
 use Psr\Log\LoggerInterface;
 
-final class MonologLogService implements LogService
+final class MonologLoggerService implements LoggerService
 {
     private LoggerInterface $logger;
 
