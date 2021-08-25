@@ -52,13 +52,16 @@
 
                     <div class="App-menu">
                         {% if human %}
-                            <a class="App-menu-option" href="{{ path('web_studies_human', {id: study.id, participant: participant.id}) }}">
+                            <a class="App-menu-option"
+                               href="{{ path('web_studies_human', {id: study.id, participant: participant.id}) }}">
                                 <i class="fas fa-fw fa-brain App-menu-option-icon"></i>
                                 <p class="App-menu-option-text">Human agent</p>
                             </a>
                         {% endif %}
 
-                        <a class="App-menu-option" href="">
+                        <a class="App-menu-option"
+                           href="{{ path('web_logs_by_participant', {id: study.id, participant: participant.id}) }}"
+                           download="{{ participant.name }}.json">
                             <i class="fas fa-fw fa-clipboard-list App-menu-option-icon"></i>
                             <p class="App-menu-option-text">Download logs</p>
                         </a>
