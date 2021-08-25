@@ -11,7 +11,6 @@ use Kunlabo\Engine\Domain\EngineFile;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\Utils;
-use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,14 +27,13 @@ final class EngineController extends AbstractController
         try {
             $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
-            $uuid = Uuid::fromRaw($id);
-            $engine = $queryBus->ask(FindEngineByIdQuery::fromId($uuid))->getEngine();
+            $engine = $queryBus->ask(FindEngineByIdQuery::create($id))->getEngine();
 
             if ($engine === null) {
                 throw $this->createNotFoundException();
             }
 
-            $files = $queryBus->ask(SearchEngineFilesByEngineIdQuery::fromEngineId($uuid))->getEngineFiles();
+            $files = $queryBus->ask(SearchEngineFilesByEngineIdQuery::create($id))->getEngineFiles();
 
             $output = [];
             $items = [];

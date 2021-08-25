@@ -61,13 +61,13 @@ final class NewStudyController extends AbstractController
         $agentId = $request->request->get('agent', '');
 
         try {
-            $engineQuery = FindEngineByIdQuery::fromString($engineId);
+            $engineQuery = FindEngineByIdQuery::create($engineId);
             $engine = $queryBus->ask($engineQuery)->getEngine();
             if ($engine === null) {
                 throw new UnknownEngineException($engineQuery->getId());
             }
 
-            $agentQuery = FindAgentByIdQuery::fromString($agentId);
+            $agentQuery = FindAgentByIdQuery::create($agentId);
             $agent = $queryBus->ask($agentQuery)->getAgent();
             if ($agent === null) {
                 throw new UnknownAgentException($agentQuery->getId());

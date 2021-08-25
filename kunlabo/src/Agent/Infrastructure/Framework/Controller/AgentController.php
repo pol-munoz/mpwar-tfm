@@ -11,7 +11,6 @@ use Kunlabo\Agent\Domain\AgentFile;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\Utils;
-use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,14 +27,13 @@ final class AgentController extends AbstractController
         try {
             $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
-            $uuid = Uuid::fromRaw($id);
-            $agent = $queryBus->ask(FindAgentByIdQuery::fromId($uuid))->getAgent();
+            $agent = $queryBus->ask(FindAgentByIdQuery::create($id))->getAgent();
 
             if ($agent === null) {
                 throw $this->createNotFoundException();
             }
 
-            $files = $queryBus->ask(SearchAgentFilesByAgentIdQuery::fromAgentId($uuid))->getAgentFiles();
+            $files = $queryBus->ask(SearchAgentFilesByAgentIdQuery::create($id))->getAgentFiles();
 
             $output = [];
             $items = [];

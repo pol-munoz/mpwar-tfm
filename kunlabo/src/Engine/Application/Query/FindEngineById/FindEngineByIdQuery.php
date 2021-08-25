@@ -11,14 +11,7 @@ final class FindEngineByIdQuery implements Query
     {
     }
 
-    public static function fromId(Uuid $id): self
-    {
-        return new self(
-            $id
-        );
-    }
-
-    public static function fromString(string $id): self
+    public static function create(string $id): self
     {
         return new self(
             Uuid::fromRaw($id)

@@ -11,10 +11,10 @@ final class SearchAgentFilesByAgentIdQuery implements Query
     {
     }
 
-    public static function fromAgentId(Uuid $agentId): self
+    public static function create(string $agentId): self
     {
         return new self(
-            $agentId
+            Uuid::fromRaw($agentId)
         );
     }
 

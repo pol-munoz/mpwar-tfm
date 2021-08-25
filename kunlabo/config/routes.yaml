@@ -26,3 +26,8 @@ participant_controllers:
     resource: '../src/Participant/Infrastructure/Framework/Controller'
     type: annotation
     prefix: study
+
+log_controllers:
+    resource: '../src/Log/Infrastructure/Framework/Controller'
+    type: annotation
+    prefix: logs

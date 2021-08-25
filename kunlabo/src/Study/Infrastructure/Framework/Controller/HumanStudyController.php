@@ -8,7 +8,6 @@ use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Participant\Application\Query\FindParticipantById\FindParticipantByIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
-use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +26,7 @@ final class HumanStudyController extends AbstractController
         try {
             $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
-            $study = $queryBus->ask(FindStudyByIdQuery::fromId(Uuid::fromRaw($id)))->getStudy();
+            $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
             if ($study === null) {
                 throw $this->createNotFoundException();
@@ -39,7 +38,7 @@ final class HumanStudyController extends AbstractController
                 throw $this->createNotFoundException();
             }
 
-            $agent = $queryBus->ask(FindAgentByIdQuery::fromId($study->getAgentId()))->getAgent();
+            $agent = $queryBus->ask(FindAgentByIdQuery::create($study->getAgentId()))->getAgent();
             $human = $agent->getKind()->isHuman();
 
             if (!$human) {
@@ -65,7 +64,7 @@ final class HumanStudyController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
-        $study = $queryBus->ask(FindStudyByIdQuery::fromId(Uuid::fromRaw($id)))->getStudy();
+        $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         if ($study === null) {
             throw $this->createNotFoundException();

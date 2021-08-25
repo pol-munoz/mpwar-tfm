@@ -25,8 +25,7 @@ final class ParticipantSurveyController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         string $id
     ): Response {
-        $studyId = Uuid::fromRaw($id);
-        $study = $queryBus->ask(FindStudyByIdQuery::fromId($studyId))->getStudy();
+        $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         if ($study === null) {
             throw $this->createNotFoundException();
@@ -53,8 +52,7 @@ final class ParticipantSurveyController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         string $id
     ): Response {
-        $studyId = Uuid::fromRaw($id);
-        $study = $queryBus->ask(FindStudyByIdQuery::fromId($studyId))->getStudy();
+        $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         if ($study === null) {
             throw $this->createNotFoundException();

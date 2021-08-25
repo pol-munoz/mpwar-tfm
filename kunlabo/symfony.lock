@@ -85,6 +85,15 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "elasticsearch/elasticsearch": {
+        "version": "v7.14.0"
+    },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.1.2"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
@@ -126,6 +135,9 @@
     },
     "ramsey/uuid": {
         "version": "4.2.1"
+    },
+    "react/promise": {
+        "version": "v2.8.0"
     },
     "symfony/amqp-messenger": {
         "version": "v5.3.4"

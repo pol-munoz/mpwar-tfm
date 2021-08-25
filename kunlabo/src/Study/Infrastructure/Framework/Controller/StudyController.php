@@ -6,7 +6,6 @@ use DomainException;
 use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Participant\Application\Query\SearchParticipantsByStudyId\SearchParticipantsByStudyIdQuery;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
-use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,17 +22,16 @@ final class StudyController extends AbstractController
         try {
             $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
-            $uuid = Uuid::fromRaw($id);
-            $study = $queryBus->ask(FindStudyByIdQuery::fromId($uuid))->getStudy();
+            $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
             if ($study === null) {
                 throw $this->createNotFoundException();
             }
 
-            $agent = $queryBus->ask(FindAgentByIdQuery::fromId($study->getAgentId()))->getAgent();
+            $agent = $queryBus->ask(FindAgentByIdQuery::create($study->getAgentId()))->getAgent();
             $human = $agent->getKind()->isHuman();
 
-            $participants = $queryBus->ask(SearchParticipantsByStudyIdQuery::create($uuid))->getParticipants();
+            $participants = $queryBus->ask(SearchParticipantsByStudyIdQuery::create($id))->getParticipants();
 
             return $this->render(
                 'app/studies/study.html.twig',

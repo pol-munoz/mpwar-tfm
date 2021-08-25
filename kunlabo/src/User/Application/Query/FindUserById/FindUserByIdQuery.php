@@ -11,10 +11,10 @@ final class FindUserByIdQuery implements Query
     {
     }
 
-    public static function fromId(Uuid $id): self
+    public static function create(string $id): self
     {
         return new self(
-            $id
+            Uuid::fromRaw($id)
         );
     }
 

@@ -11,10 +11,10 @@ final class SearchEngineFilesByEngineIdQuery implements Query
     {
     }
 
-    public static function fromEngineId(Uuid $engineId): self
+    public static function create(string $engineId): self
     {
         return new self(
-            $engineId
+            Uuid::fromRaw($engineId)
         );
     }
 

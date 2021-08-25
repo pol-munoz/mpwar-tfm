@@ -7,14 +7,12 @@ use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
-use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -29,8 +27,7 @@ final class ParticipantController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         string $id
     ): Response {
-        $studyId = Uuid::fromRaw($id);
-        $study = $queryBus->ask(FindStudyByIdQuery::fromId($studyId))->getStudy();
+        $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         if ($study === null) {
             throw $this->createNotFoundException();
@@ -45,7 +42,7 @@ final class ParticipantController extends AbstractController
             );
         }
 
-        $engine = $queryBus->ask(FindEngineByIdQuery::fromId($study->getEngineId()))->getEngine();
+        $engine = $queryBus->ask(FindEngineByIdQuery::create($study->getEngineId()))->getEngine();
 
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
 
@@ -63,8 +60,7 @@ final class ParticipantController extends AbstractController
         SessionInterface $session,
         string $id
     ): Response {
-        $studyId = Uuid::fromRaw($id);
-        $study = $queryBus->ask(FindStudyByIdQuery::fromId($studyId))->getStudy();
+        $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         if ($study === null) {
             throw $this->createNotFoundException();
@@ -77,7 +73,7 @@ final class ParticipantController extends AbstractController
             return new Response('No participant', Response::HTTP_FORBIDDEN);
         }
 
-        $agent = $queryBus->ask(FindAgentByIdQuery::fromId($study->getAgentId()))->getAgent();
+        $agent = $queryBus->ask(FindAgentByIdQuery::create($study->getAgentId()))->getAgent();
 
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
 

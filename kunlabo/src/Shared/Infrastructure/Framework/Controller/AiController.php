@@ -6,7 +6,6 @@ use Kunlabo\Action\Application\Command\NewActions\NewActionsCommand;
 use Kunlabo\Participant\Application\Query\FindParticipantById\FindParticipantByIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
-use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +22,7 @@ final class AiController extends AbstractController
         string $id,
         string $participant
     ): Response {
-        $study = $queryBus->ask(FindStudyByIdQuery::fromId(Uuid::fromRaw($id)))->getStudy();
+        $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         if ($study === null) {
             throw $this->createNotFoundException();
