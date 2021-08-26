@@ -13,7 +13,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Engines-wrapper" data-controller="new-entity">
+    <div class="Engines-wrapper" data-controller="new-entity menu" data-action="click->menu#closeMenuIfOutside"
+         data-menu-delete-message-value="Are you sure you want to delete this engine? This will remove any studies that use it.">
         <div class="Engines-header">
             <h1 class="App-title">Engines</h1>
             <button class="App-button" data-action="new-entity#show">New engine</button>
@@ -31,17 +32,30 @@
                 <p class="App-placeholder-text">No engines yet. Create one!</p>
             </div>
         {% else %}
-                <div class="App-three-columns Engines-list-header">
+                <div class="App-four-columns-right Engines-list-header">
                     <p class="Engines-list-item"><strong>Name</strong></p>
                     <p class="Engines-list-item"><strong>Created</strong></p>
                     <p class="Engines-list-item"><strong>Modified</strong></p>
                 </div>
                 {% for engine in engines %}
-                    <a class="App-three-columns Engines-list-row" href="{{ path('web_engines_by_id', {id: engine.id}) }}">
-                        <div class="Engines-list-item"><span>{{ engine.name }}</span></div>
-                        <div class="Engines-list-item"><span>{{ engine.created | ago }}</span></div>
-                        <div class="Engines-list-item"><span>{{ engine.modified | ago }}</span></div>
-                    </a>
+                    <div class="App-menu-wrapper" id="{{ engine.id }}">
+                        <a class="App-four-columns-right Engines-list-row" href="{{ path('web_engines_by_id', {id: engine.id}) }}">
+                            <div class="Engines-list-item"><span>{{ engine.name }}</span></div>
+                            <div class="Engines-list-item"><span>{{ engine.created | ago }}</span></div>
+                            <div class="Engines-list-item"><span>{{ engine.modified | ago }}</span></div>
+
+                            <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->menu#toggleMenu"></i>
+                        </a>
+
+                        <div class="App-menu">
+                            <a class="App-menu-option" data-action="click->menu#confirm"
+                               data-name="{{ engine.name }}"
+                               href="{{ path('web_engines_delete', {id: engine.id}) }}">
+                                <i class="fas fa-fw fa-trash-alt App-menu-option-icon App-menu-option-danger"></i>
+                                <p class="App-menu-option-text App-menu-option-danger">Delete engine</p>
+                            </a>
+                        </div>
+                    </div>
                 {% endfor %}
         {% endif %}
     </div>

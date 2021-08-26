@@ -36,4 +36,24 @@ final class DoctrineStudyRepository implements StudyRepository
             ['modified' => 'DESC']
         );
     }
+
+    public function readAllByAgentId(Uuid $agentId): array
+    {
+        return $this->repository->findBy(
+            ['agentId' => $agentId]
+        );
+    }
+
+    public function readAllByEngineId(Uuid $engineId): array
+    {
+        return $this->repository->findBy(
+            ['engineId' => $engineId]
+        );
+    }
+
+    public function delete(Study $study): void
+    {
+        $this->manager->remove($study);
+        $this->manager->flush();
+    }
 }

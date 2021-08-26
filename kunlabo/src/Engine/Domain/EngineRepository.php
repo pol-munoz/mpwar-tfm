@@ -16,4 +16,7 @@ interface EngineRepository
 
     public function update(Engine $engine): void;
     public function updateFile($file): void;
+
+    public function delete(Engine $engine): void;
+    public function deleteFile(EngineFile $file): void;
 }

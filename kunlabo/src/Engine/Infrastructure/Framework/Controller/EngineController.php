@@ -4,6 +4,8 @@ namespace Kunlabo\Engine\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Engine\Application\Command\CreateEngineFile\CreateEngineFileCommand;
+use Kunlabo\Engine\Application\Command\DeleteEngine\DeleteEngineCommand;
+use Kunlabo\Engine\Application\Command\DeleteEngineFile\DeleteEngineFileCommand;
 use Kunlabo\Engine\Application\Command\SetEngineMainFile\SetEngineMainFileCommand;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Engine\Application\Query\SearchEngineFilesByEngineId\SearchEngineFilesByEngineIdQuery;
@@ -13,9 +15,11 @@ use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\Utils;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class EngineController extends AbstractController
 {
@@ -77,7 +81,7 @@ final class EngineController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{id}/main', name: 'web_engines_set_main_post', methods: ['POST'])]
+    #[Route('/{id}/file/main', name: 'web_engines_main_file_post', methods: ['POST'])]
     public function engineMainPost(
         Request $request,
         CommandBus $commandBus,
@@ -87,6 +91,33 @@ final class EngineController extends AbstractController
 
         $main = $request->getContent();
         $commandBus->dispatch(SetEngineMainFileCommand::create($id, $main));
+
+        return new Response();
+    }
+
+    #[Route('/{id}/delete', name: 'web_engines_delete', methods: ['GET'])]
+    public function engineDelete(
+        CommandBus $commandBus,
+        UrlGeneratorInterface $urlGenerator,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $commandBus->dispatch(DeleteEngineCommand::create($id));
+
+        return new RedirectResponse($urlGenerator->generate('web_engines'), Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/file/delete', name: 'web_engines_delete_file_post', methods: ['POST'])]
+    public function engineDeleteFilePost(
+        Request $request,
+        CommandBus $commandBus,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $path = $request->getContent();
+        $commandBus->dispatch(DeleteEngineFileCommand::create($id, $path));
 
         return new Response();
     }

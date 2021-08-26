@@ -4,6 +4,8 @@ namespace Kunlabo\Agent\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Agent\Application\Command\CreateAgentFile\CreateAgentFileCommand;
+use Kunlabo\Agent\Application\Command\DeleteAgent\DeleteAgentCommand;
+use Kunlabo\Agent\Application\Command\DeleteAgentFile\DeleteAgentFileCommand;
 use Kunlabo\Agent\Application\Command\SetAgentMainFile\SetAgentMainFileCommand;
 use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Agent\Application\Query\SearchAgentFilesByAgentId\SearchAgentFilesByAgentIdQuery;
@@ -13,9 +15,11 @@ use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\Utils;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class AgentController extends AbstractController
 {
@@ -77,7 +81,7 @@ final class AgentController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{id}/main', name: 'web_agents_set_main_post', methods: ['POST'])]
+    #[Route('/{id}/file/main', name: 'web_agents_main_file_post', methods: ['POST'])]
     public function agentMainPost(
         Request $request,
         CommandBus $commandBus,
@@ -87,6 +91,34 @@ final class AgentController extends AbstractController
 
         $main = $request->getContent();
         $commandBus->dispatch(SetAgentMainFileCommand::create($id, $main));
+
+        return new Response();
+    }
+
+    #[Route('/{id}/delete', name: 'web_agents_delete', methods: ['GET'])]
+    public function engineDelete(
+        CommandBus $commandBus,
+        UrlGeneratorInterface $urlGenerator,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $commandBus->dispatch(DeleteAgentCommand::create($id));
+
+        return new RedirectResponse($urlGenerator->generate('web_agents'), Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/{id}/file/delete', name: 'web_agents_delete_file_post', methods: ['POST'])]
+    public function engineDeletePost(
+        Request $request,
+        CommandBus $commandBus,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $path = $request->getContent();
+        $commandBus->dispatch(DeleteAgentFileCommand::create($id, $path));
 
         return new Response();
     }

@@ -16,4 +16,7 @@ interface AgentRepository
 
     public function update(Agent $agent): void;
     public function updateFile($file): void;
+
+    public function delete(Agent $agent): void;
+    public function deleteFile(AgentFile $file): void;
 }

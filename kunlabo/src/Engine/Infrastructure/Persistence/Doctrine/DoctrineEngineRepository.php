@@ -7,6 +7,7 @@ use Doctrine\Persistence\ObjectRepository;
 use Kunlabo\Engine\Domain\Engine;
 use Kunlabo\Engine\Domain\EngineFile;
 use Kunlabo\Engine\Domain\EngineRepository;
+use Kunlabo\Shared\Domain\Utils;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
 final class DoctrineEngineRepository implements EngineRepository
@@ -68,6 +69,23 @@ final class DoctrineEngineRepository implements EngineRepository
 
     public function updateFile($file): void
     {
+        $this->manager->flush();
+    }
+
+    public function delete(Engine $engine): void
+    {
+        // Ok this is a bit more misplaced than the file thing
+        Utils::fullyDeleteDir(EngineFile::BASE_PATH . $engine->getId());
+
+        $this->manager->remove($engine);
+        $this->manager->flush();
+    }
+
+    public function deleteFile(EngineFile $file): void
+    {
+        // Doing a whole multirepo setup for just one line would be weird
+        unlink($file->getUrl());
+        $this->manager->remove($file);
         $this->manager->flush();
     }
 }

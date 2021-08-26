@@ -4,7 +4,9 @@ namespace Kunlabo\Agent\Domain;
 
 use DateTime;
 use Kunlabo\Agent\Domain\Event\AgentCreatedEvent;
+use Kunlabo\Agent\Domain\Event\AgentDeletedEvent;
 use Kunlabo\Agent\Domain\Event\AgentFileCreatedEvent;
+use Kunlabo\Agent\Domain\Event\AgentFileDeletedEvent;
 use Kunlabo\Agent\Domain\Event\AgentFileUpdatedEvent;
 use Kunlabo\Agent\Domain\Event\AgentMainPathSetEvent;
 use Kunlabo\Agent\Domain\ValueObject\AgentKind;
@@ -80,5 +82,20 @@ final class Agent extends NamedAggregateRoot {
     public function getMainUrl(): string
     {
         return AgentFile::BASE_PATH . $this->id . $this->main;
+    }
+
+    public function deleteFile(AgentFile $file): void
+    {
+        if ($this->main === $file->getPath()) {
+            $this->main = $this->kind->getDefaultFile();
+        }
+
+        $this->update();
+        $this->record(new AgentFileDeletedEvent($file));
+    }
+
+    public function delete(): void
+    {
+        $this->record(new AgentDeletedEvent($this));
     }
 }

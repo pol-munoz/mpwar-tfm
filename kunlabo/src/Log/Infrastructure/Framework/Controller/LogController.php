@@ -4,6 +4,7 @@ namespace Kunlabo\Log\Infrastructure\Framework\Controller;
 
 use Kunlabo\Log\Application\Query\SearchLogsByStudyAndParticipant\SearchLogsByStudyAndParticipantQuery;
 use Kunlabo\Participant\Application\Query\FindParticipantById\FindParticipantByIdQuery;
+use Kunlabo\Participant\Application\Query\SearchParticipantsByStudyId\SearchParticipantsByStudyIdQuery;
 use Kunlabo\Participant\Domain\Participant;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
@@ -16,7 +17,7 @@ final class LogController extends AbstractController
 {
 
     #[Route('/{id}/{participant}', name: 'web_logs_by_participant', methods: ['GET'])]
-    public function participant(
+    public function participantLogs(
         QueryBus $queryBus,
         string $id,
         string $participant
@@ -36,6 +37,33 @@ final class LogController extends AbstractController
         $results = $queryBus->ask(SearchLogsByStudyAndParticipantQuery::create($id, $participant))->getLogs();
 
         $response = new JsonResponse($this->participantLogsToArray($p, $results));
+        $response->setEncodingOptions( $response->getEncodingOptions() | JSON_PRETTY_PRINT );
+
+        return $response;
+    }
+
+    #[Route('/{id}', name: 'web_logs_by_study', methods: ['GET'])]
+    public function studyLogs(
+        QueryBus $queryBus,
+        string $id
+    ): Response {
+        $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
+
+        if ($study === null) {
+            throw $this->createNotFoundException();
+        }
+
+        $participants = $queryBus->ask(SearchParticipantsByStudyIdQuery::create($id))->getParticipants();
+
+        $response = [];
+
+        foreach ($participants as $participant) {
+            $results = $queryBus->ask(SearchLogsByStudyAndParticipantQuery::create($id, $participant->getId()->getRaw()))->getLogs();
+
+            $response[] = $this->participantLogsToArray($participant, $results);
+        }
+
+        $response = new JsonResponse($response);
         $response->setEncodingOptions( $response->getEncodingOptions() | JSON_PRETTY_PRINT );
 
         return $response;

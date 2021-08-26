@@ -243,6 +243,11 @@ body {
     grid-template-columns: 35px 1fr 15vw 15vw;
 }
 
+.App-five-columns {
+    display: grid;
+    grid-template-columns: 35px 1fr 15vw 15vw 60px;
+}
+
 .App-error {
     color: white;
     background: #DB3B3B;
@@ -261,15 +266,16 @@ body {
     justify-self: flex-end;
 }
 
+.App-menu-wrapper {
+    position: relative;
+}
+
 .App-menu {
     display: none;
     flex-direction: column;
     position: absolute;
     z-index: 5;
-    background: white;
-    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
     border-radius: 5px;
-    overflow: hidden;
 }
 
 .App-menu-option {
@@ -280,17 +286,29 @@ body {
     border-bottom: 1px solid #eaeaea;
     cursor: pointer;
     text-decoration: none;
+    background: white;
+    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
 }
 
 .App-menu-option:hover {
-    background: #f8f8f8;
+    box-shadow: 0 1px 6px rgba(29, 61, 112, 0.2);
+    transform: scale(1.05);
+    border-bottom: 1px solid white;
 }
 
 .App-menu-option:active {
-    background: #f0f0f0;
+    transform: scale(1);
 }
 
-.App-menu-option:last-of-type {
+.App-menu-option:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.App-menu-option:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     border-bottom: none;
 }
 
@@ -302,4 +320,8 @@ body {
 .App-menu-option-text {
     color: #040910;
     margin: 0;
+}
+
+.App-menu-option-danger {
+    color: #8D4F2F;
 }

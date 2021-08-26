@@ -37,4 +37,9 @@ final class EngineFile extends Entity
     {
         return $this->path;
     }
+
+    public function getUrl(): string
+    {
+        return self::BASE_PATH . $this->engineId->getRaw() . $this->path;
+    }
 }

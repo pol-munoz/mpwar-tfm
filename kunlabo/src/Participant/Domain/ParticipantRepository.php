@@ -10,4 +10,6 @@ interface ParticipantRepository
 
     public function readById(Uuid $id): ?Participant;
     public function readAllForStudy(Uuid $study): array;
+
+    public function delete(Participant $participant): void;
 }

@@ -13,7 +13,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Agents-wrapper">
+    <div class="Agents-wrapper" data-controller="menu" data-action="click->menu#closeMenuIfOutside"
+         data-menu-delete-message-value="Are you sure you want to delete this agent? This will remove any studies that use it.">
         <div class="Agents-header">
             <h1 class="App-title">Agents</h1>
             <div class="Agents-header-row">
@@ -46,20 +47,33 @@
                 <p class="App-placeholder-text">No agents yet. Create one!</p>
             </div>
         {% else %}
-                <div class="App-three-columns Agents-list-header">
+                <div class="App-four-columns-right Agents-list-header">
                     <p class="Agents-list-item"><strong>Name</strong></p>
                     <p class="Agents-list-item"><strong>Created</strong></p>
                     <p class="Agents-list-item"><strong>Modified</strong></p>
                 </div>
                 {% for agent in agents %}
-                    <a class="App-four-columns-left Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
-                        <div class="Agents-list-item">
-                            <i class="fas fa-fw fa-{{ agent.kind == 'human' ? 'user' : 'robot' }} Agents-list-icon"></i>
+                    <div class="App-menu-wrapper" id="{{ agent.id }}">
+                        <a class="App-five-columns Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
+                            <div class="Agents-list-item">
+                                <i class="fas fa-fw fa-{{ agent.kind == 'human' ? 'user' : 'robot' }} Agents-list-icon"></i>
+                            </div>
+                            <div class="Agents-list-item"><span>{{ agent.name }}</span></div>
+                            <div class="Agents-list-item"><span>{{ agent.created | ago }}</span></div>
+                            <div class="Agents-list-item"><span>{{ agent.modified | ago }}</span></div>
+
+                            <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->menu#toggleMenu"></i>
+                        </a>
+
+                        <div class="App-menu">
+                            <a class="App-menu-option" data-action="click->menu#confirm"
+                               data-name="{{ agent.name }}"
+                               href="{{ path('web_agents_delete', {id: agent.id}) }}">
+                                <i class="fas fa-fw fa-trash-alt App-menu-option-icon App-menu-option-danger"></i>
+                                <p class="App-menu-option-text App-menu-option-danger">Delete agent</p>
+                            </a>
                         </div>
-                        <div class="Agents-list-item"><span>{{ agent.name }}</span></div>
-                        <div class="Agents-list-item"><span>{{ agent.created | ago }}</span></div>
-                        <div class="Agents-list-item"><span>{{ agent.modified | ago }}</span></div>
-                    </a>
+                    </div>
                 {% endfor %}
         {% endif %}
     </div>

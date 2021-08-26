@@ -4,6 +4,8 @@ namespace Kunlabo\Shared\Domain;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 final class Utils
 {
@@ -28,6 +30,21 @@ final class Utils
                 $output[$arr[0]] = [];
             }
             self::expandPath($original, $arr[1], $output[$arr[0]]);
+        }
+    }
+
+    public static function fullyDeleteDir(string $dir): void
+    {
+        if (file_exists($dir)) {
+            $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+            );
+            foreach ($files as $fileinfo) {
+                $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+                $todo($fileinfo->getRealPath());
+            }
+            rmdir($dir);
         }
     }
 }

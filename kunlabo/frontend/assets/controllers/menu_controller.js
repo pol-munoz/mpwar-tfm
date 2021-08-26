@@ -2,6 +2,8 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
 
+    static values = { deleteMessage: String }
+
     initialize() {
         this.menuOpen = false
         this.last = null
@@ -14,13 +16,15 @@ export default class extends Controller {
             this.closeMenu()
         }
 
-        let parent = event.target.parentNode
+        let parent = event.target.parentNode.parentNode
 
         if (parent.id !== last) {
-            parent.lastElementChild.style = "display: flex; right: 70px; top: 0"
+            parent.lastElementChild.style = "display: flex; right: 30px; top: 40px"
             this.last = parent.id
             this.menuOpen = true
         }
+
+        event.preventDefault()
     }
 
     closeMenu() {
@@ -39,6 +43,18 @@ export default class extends Controller {
             !event.target.classList.contains('App-menu-option-text') &&
             !event.target.classList.contains('App-kebab-button')) {
             this.closeMenu()
+        }
+    }
+
+    confirm(event) {
+        let target = event.target
+
+        if (!target.dataset.name) {
+            target = target.parentNode
+        }
+
+        if (!confirm(this.deleteMessageValue + '\n\n"' + target.dataset.name + '"')) {
+            event.preventDefault()
         }
     }
 }

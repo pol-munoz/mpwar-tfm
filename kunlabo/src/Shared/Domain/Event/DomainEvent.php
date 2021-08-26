@@ -17,9 +17,9 @@ abstract class DomainEvent
         $this->occurredOn = $occurredOn ?: Utils::dateToString(new DateTimeImmutable());
     }
 
-    public function getAggregateId(): string
+    public function getAggregateId(): Uuid
     {
-        return $this->aggregateId->getRaw();
+        return $this->aggregateId;
     }
 
     public function getEventId(): string

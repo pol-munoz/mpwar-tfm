@@ -4,7 +4,9 @@ namespace Kunlabo\Engine\Domain;
 
 use DateTime;
 use Kunlabo\Engine\Domain\Event\EngineCreatedEvent;
+use Kunlabo\Engine\Domain\Event\EngineDeletedEvent;
 use Kunlabo\Engine\Domain\Event\EngineFileCreatedEvent;
+use Kunlabo\Engine\Domain\Event\EngineFileDeletedEvent;
 use Kunlabo\Engine\Domain\Event\EngineFileUpdatedEvent;
 use Kunlabo\Engine\Domain\Event\EngineMainPathSetEvent;
 use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
@@ -72,5 +74,20 @@ final class Engine extends NamedAggregateRoot {
     public function getMainUrl(): string
     {
         return EngineFile::BASE_PATH . $this->id . $this->main;
+    }
+
+    public function deleteFile(EngineFile $file): void
+    {
+        if ($this->main === $file->getPath()) {
+            $this->main = '/index.html';
+        }
+
+        $this->update();
+        $this->record(new EngineFileDeletedEvent($file));
+    }
+
+    public function delete(): void
+    {
+        $this->record(new EngineDeletedEvent($this));
     }
 }

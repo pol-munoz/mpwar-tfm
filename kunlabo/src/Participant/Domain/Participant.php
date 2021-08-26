@@ -3,6 +3,7 @@
 namespace Kunlabo\Participant\Domain;
 
 use DateTime;
+use Kunlabo\Participant\Domain\Event\ParticipantDeletedEvent;
 use Kunlabo\Participant\Domain\Event\ParticipantFilledSurveyEvent;
 use Kunlabo\Participant\Domain\ValueObject\Age;
 use Kunlabo\Participant\Domain\ValueObject\Gender;
@@ -61,5 +62,10 @@ final class Participant extends NamedAggregateRoot
     public function getHandedness(): Handedness
     {
         return $this->handedness;
+    }
+
+    public function delete(): void
+    {
+        $this->record(new ParticipantDeletedEvent($this));
     }
 }

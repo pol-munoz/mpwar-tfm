@@ -7,6 +7,7 @@ use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 use Kunlabo\Study\Domain\Event\StudyCreatedEvent;
+use Kunlabo\Study\Domain\Event\StudyDeletedEvent;
 
 final class Study extends NamedAggregateRoot
 {
@@ -48,5 +49,10 @@ final class Study extends NamedAggregateRoot
     public function getAgentId(): Uuid
     {
         return $this->agentId;
+    }
+
+    public function delete(): void
+    {
+        $this->record(new StudyDeletedEvent($this));
     }
 }

@@ -36,4 +36,10 @@ final class DoctrineParticipantRepository implements ParticipantRepository
             ['modified' => 'DESC']
         );
     }
+
+    public function delete(Participant $participant): void
+    {
+        $this->manager->remove($participant);
+        $this->manager->flush();
+    }
 }

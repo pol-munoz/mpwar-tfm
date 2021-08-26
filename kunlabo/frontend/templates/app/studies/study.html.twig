@@ -13,7 +13,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Studies-wrapper" data-controller="menu" data-action="click->menu#closeMenuIfOutside">
+    <div class="Studies-wrapper" data-controller="menu" data-action="click->menu#closeMenuIfOutside"
+         data-menu-delete-message-value="Are you sure you want to delete this participant? This will remove their logs.">
         <div class="Studies-header">
             <div class="Studies-header-row">
                 <a href="{{ path('web_studies') }}" class="App-button-back">
@@ -41,15 +42,16 @@
                 <p class="Studies-list-item"><strong>Last active</strong></p>
             </div>
             {% for participant in participants %}
-                <div class="App-six-columns-right Studies-participant-list-row" id="{{ participant.id }}">
-                    <div class="Studies-list-item"><span>{{ participant.name }}</span></div>
-                    <div class="Studies-list-item"><span>{{ participant.age.raw }}</span></div>
-                    <div class="Studies-list-item"><span>{{ participant.gender }}</span></div>
-                    <div class="Studies-list-item"><span>{{ participant.handedness }}</span></div>
-                    <div class="Studies-list-item"><span>{{ participant.modified | ago }}</span></div>
+                <div class="App-menu-wrapper" id="{{ participant.id }}">
+                    <div class="App-six-columns-right Studies-participant-list-row">
+                        <div class="Studies-list-item"><span>{{ participant.name }}</span></div>
+                        <div class="Studies-list-item"><span>{{ participant.age.raw }}</span></div>
+                        <div class="Studies-list-item"><span>{{ participant.gender }}</span></div>
+                        <div class="Studies-list-item"><span>{{ participant.handedness }}</span></div>
+                        <div class="Studies-list-item"><span>{{ participant.modified | ago }}</span></div>
 
-                    <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->menu#toggleMenu"></i>
-
+                        <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->menu#toggleMenu"></i>
+                    </div>
                     <div class="App-menu">
                         {% if human %}
                             <a class="App-menu-option"
@@ -64,6 +66,12 @@
                            download="{{ participant.name }}.json">
                             <i class="fas fa-fw fa-clipboard-list App-menu-option-icon"></i>
                             <p class="App-menu-option-text">Download logs</p>
+                        </a>
+                        <a class="App-menu-option" data-action="click->menu#confirm"
+                           data-name="{{ study.name }}"
+                           href="{{ path('web_studies_participant_delete', {id: study.id, participant: participant.id}) }}">
+                            <i class="fas fa-fw fa-trash-alt App-menu-option-icon App-menu-option-danger"></i>
+                            <p class="App-menu-option-text App-menu-option-danger">Delete participant</p>
                         </a>
                     </div>
                 </div>

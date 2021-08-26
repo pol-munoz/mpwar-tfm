@@ -7,6 +7,8 @@ use Doctrine\Persistence\ObjectRepository;
 use Kunlabo\Agent\Domain\Agent;
 use Kunlabo\Agent\Domain\AgentFile;
 use Kunlabo\Agent\Domain\AgentRepository;
+use Kunlabo\Engine\Domain\EngineFile;
+use Kunlabo\Shared\Domain\Utils;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
 final class DoctrineAgentRepository implements AgentRepository
@@ -68,6 +70,23 @@ final class DoctrineAgentRepository implements AgentRepository
 
     public function updateFile($file): void
     {
+        $this->manager->flush();
+    }
+
+    public function deleteFile(AgentFile $file): void
+    {
+        // Doing a whole multirepo setup for just one line would be weird
+        unlink($file->getUrl());
+        $this->manager->remove($file);
+        $this->manager->flush();
+    }
+
+    public function delete(Agent $agent): void
+    {
+        // Ok this is a bit more misplaced than the file thing
+        Utils::fullyDeleteDir(AgentFile::BASE_PATH . $agent->getId());
+
+        $this->manager->remove($agent);
         $this->manager->flush();
     }
 }

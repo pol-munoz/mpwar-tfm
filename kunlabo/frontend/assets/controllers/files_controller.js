@@ -215,7 +215,7 @@ export default class extends Controller {
         let main = document.getElementById('main')
 
         if (lastName.firstElementChild === null) {
-            fetch(window.location.href + '/main', {
+            fetch(window.location.href + '/file/main', {
                 method: 'POST',
                 body: this.lastFile,
                 credentials: 'include'
@@ -227,6 +227,36 @@ export default class extends Controller {
                 }
                 lastName.innerHTML = html + lastName.innerHTML
                 lastName.id = 'main'
+            })
+            .catch(error => console.error(error.message))
+        }
+        this.closeMenu()
+    }
+
+    delete() {
+        let file = this.lastFile
+        if (confirm('Are you sure you want to delete this file?\n\n"' + this.lastFile + '"')) {
+            fetch(window.location.href + '/file/delete', {
+                method: 'POST',
+                body: file,
+                credentials: 'include'
+            })
+            .then(() => {
+                let element = document.getElementById(file)
+                let parent = element.parentElement
+
+                parent.removeChild(element)
+
+                while (!parent.classList.contains('Files') && parent.childElementCount === 0) {
+                    element = parent.parentElement
+                    parent = parent.parentElement.parentElement
+                    parent.removeChild(element)
+                }
+
+                if (parent.classList.contains('Files') && parent.childElementCount === 1) {
+                    parent.style.display = "none"
+                    this.placeholderTarget.style = "display: flex"
+                }
             })
             .catch(error => console.error(error.message))
         }

@@ -41,7 +41,7 @@
     justify-content: flex-start;
 }
 
-.App-four-columns-left > .Agents-list-item:nth-of-type(2) {
+.App-five-columns > .Agents-list-item:nth-of-type(2) {
     justify-content: flex-start;
 }
 
