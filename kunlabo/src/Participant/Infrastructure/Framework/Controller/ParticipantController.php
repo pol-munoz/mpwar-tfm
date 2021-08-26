@@ -5,6 +5,7 @@ namespace Kunlabo\Participant\Infrastructure\Framework\Controller;
 use Kunlabo\Action\Application\Command\NewActions\NewActionsCommand;
 use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
+use Kunlabo\Participant\Application\Command\UpdateParticipant\UpdateParticipantCommand;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
@@ -73,9 +74,11 @@ final class ParticipantController extends AbstractController
             return new Response('No participant', Response::HTTP_FORBIDDEN);
         }
 
-        $agent = $queryBus->ask(FindAgentByIdQuery::create($study->getAgentId()))->getAgent();
-
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
+
+        $commandBus->dispatch(UpdateParticipantCommand::create($participant, $id));
+
+        $agent = $queryBus->ask(FindAgentByIdQuery::create($study->getAgentId()))->getAgent();
 
         $array = $request->toArray();
         $actions = $array['actions'];

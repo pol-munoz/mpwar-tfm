@@ -42,4 +42,9 @@ final class DoctrineParticipantRepository implements ParticipantRepository
         $this->manager->remove($participant);
         $this->manager->flush();
     }
+
+    public function update(Participant $participant): void
+    {
+        $this->manager->flush();
+    }
 }

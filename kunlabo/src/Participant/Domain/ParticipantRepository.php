@@ -12,4 +12,6 @@ interface ParticipantRepository
     public function readAllForStudy(Uuid $study): array;
 
     public function delete(Participant $participant): void;
+
+    public function update(Participant $participant): void;
 }
