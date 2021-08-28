@@ -1,0 +1,168 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Room-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.Room-ai-tools input[type="checkbox"]:disabled {
+    filter: brightness(0.6) contrast(10);
+}
+
+.Room-ai-tools input[type="range"]:disabled {
+    filter: brightness(0.5);
+}
+
+.Room-ai-slider-column {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.Room-ai-slider-tags {
+    justify-content: space-between;
+    font-size: 0.8em;
+}
+
+#shapeLabTools {
+    height: 40px;
+    background-color: #252525;
+    width: 880px;
+    padding: 0px 10px 0px 10px;
+    display: table-cell;
+    vertical-align: middle;
+    
+}
+
+#shapeLabTools > * {
+    font-size: 11px;
+    margin-right: 14px;
+    position: relative;
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+#shapeLabTools > input, select {
+    cursor: pointer;
+}
+
+#modeTitle{
+    color:white;
+    font-size: 12px;
+    font-weight: bold;
+    border-right: 1px solid white;
+    padding-right: 20px;
+}
+
+.btn{
+    background-color: white !important;
+    color: #252525 !important;
+    border-radius: 0.5em;
+    padding:4px 12px 4px 12px;
+}
+
+.btn:disabled, #shapeLabTools > *:disabled {
+    opacity: 0.6;
+    filter: contrast(0.4);
+    cursor: default !important;
+}
+
+.btnDark{
+    background-color: #252525 !important;
+    color: white !important;
+    border-radius: 0.5em;
+    padding:4px 12px 4px 12px;
+    border: none;
+}
+
+
+#adminBar {
+    margin-top: -4px;
+    height: 40px;
+    background-color: #252525;
+    width: 890px;
+    padding: 0px 0px 0px 10px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#adminTools > *, #adminBar > *{
+    font-size: 11px;
+    position: relative;
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+#adminTools > input, select {
+    margin-right: 14px;
+    cursor: pointer;
+}
+
+#userStatus{
+    padding: 0px 20px 0px 0px;
+}
+
+#userTools {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Room-suggestion {
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.Room-suggestion canvas {
+    margin: 5px 10px;
+}
+
+.Room-ai-placeholder {
+    text-align: center;
+    font-size: 0.8em;
+    color: #999999;
+    min-width: 270px;
+}
+
+.Room-side-column {
+    display: flex;
+    flex-direction: column;
+    width: 608px;
+}
+
+.Room-side-title {
+    text-align: center;
+    background-color: #A8E1E0;
+    padding: 10px;
+    margin: 0;
+}
+
+.Room-ai-tools {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#aiSuggestions {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}

@@ -1,0 +1,71 @@
+
+.Button-radio-label:hover {
+    background-color: #d0ecec;
+}
+
+.Button-radio:checked + .Button-radio-label {
+    background-color: #7DCBCB;
+    color: white
+}
+
+.Button {
+    margin: 5px;
+    padding: 15px;
+    border: 2px solid #3FB2B2;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #3FB2B2;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline-width: 0;
+}
+
+.Button:hover {
+    filter: brightness(0.95);
+}
+
+.Button:active {
+    filter: brightness(0.9);
+}
+
+.Button-small {
+    padding: 8px;
+    font-size: 0.9rem;
+}
+
+.Button-smallest {
+    padding: 6px;
+    font-size: 0.7rem;
+}
+
+.Input {
+    background: #F9F9F9;
+    margin: 5px;
+    padding: 15px;
+    border: 2px solid #3FB2B2;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #3FB2B2;
+    text-transform: uppercase;
+    outline-width: 0;
+
+}
+
+.Input::placeholder {
+    color: #7DCBCB;
+}
+
+.Button-submit {
+    background-color: #3FB2B2;
+    color: white;
+}
+
+.Button-cancel{
+    border-color: #B23F3F;
+    color: #B23F3F;
+}
+
+.Button:disabled {
+    cursor: default;
+    filter: grayscale(1) opacity(0.3);
+}
