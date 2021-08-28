@@ -26,7 +26,7 @@
         </div>
         <iframe class="Studies-frame" src="{{ asset(agent.mainUrl) }}" title="{{ study.name }}" data-controller="iframe"
                 data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/agent/{{ study.id }}/{{ participant.id }}"
-                data-iframe-mercure-value="{{ mercure }}"
+                data-iframe-mercure-value="{{ mercure }}" data-iframe-persist-value="/persisted/{{ study.id }}/{{ participant.id }}.json"
                 data-iframe-sub-value="onAgentMessage" data-iframe-pub-value="sendEngineMessage"></iframe>
     </div>
 {% endblock %}

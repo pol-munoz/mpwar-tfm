@@ -9,7 +9,8 @@ final class ActionKind extends StringValueObject
 {
     const MESSAGE = 'MESSAGE';
     const LOG = 'LOG';
-    const ACTIONS = [self::MESSAGE, self::LOG];
+    const PERSIST = 'PERSIST';
+    const ACTIONS = [self::MESSAGE, self::LOG, self::PERSIST];
 
     public static function fromRaw(string $raw): self
     {
@@ -32,5 +33,10 @@ final class ActionKind extends StringValueObject
     public function isLog(): bool
     {
         return $this->raw === self::LOG;
+    }
+
+    public function isPersist(): bool
+    {
+        return $this->raw === self::PERSIST;
     }
 }

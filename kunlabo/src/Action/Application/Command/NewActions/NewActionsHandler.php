@@ -5,11 +5,12 @@ namespace Kunlabo\Action\Application\Command\NewActions;
 use Kunlabo\Action\Domain\Action;
 use Kunlabo\Action\Domain\LoggerService;
 use Kunlabo\Action\Domain\MessageService;
+use Kunlabo\Action\Domain\PersistService;
 use Kunlabo\Shared\Application\Bus\Command\CommandHandler;
 
 final class NewActionsHandler implements CommandHandler
 {
-    public function __construct(private MessageService $message, private LoggerService $log)
+    public function __construct(private MessageService $message, private LoggerService $log, private PersistService $persist)
     {
     }
 
@@ -32,6 +33,8 @@ final class NewActionsHandler implements CommandHandler
                 $this->message->messageAction($action);
             } else if ($kind->isLog()) {
                 $this->log->logAction($action);
+            } else if ($kind->isPersist()) {
+                $this->persist->persistAction($action);
             }
         }
     }

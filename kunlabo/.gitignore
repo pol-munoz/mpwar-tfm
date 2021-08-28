@@ -13,6 +13,7 @@
 /frontend/node_modules/
 /public/build/
 /public/uploads/
+/public/persisted/
 /frontend/npm-debug.log
 /frontend/yarn-error.log
 ###< symfony/webpack-encore-bundle ###

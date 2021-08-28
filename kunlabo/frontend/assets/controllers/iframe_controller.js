@@ -2,12 +2,13 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
     static targets = ["iframe"]
-    static values = { mercure: String, topic: String, pub: String, sub: String }
+    static values = { mercure: String, topic: String, pub: String, sub: String, persist: String }
 
     initialize() {
         const KunlaboAction = {
             MESSAGE: 'MESSAGE',
             LOG: 'LOG',
+            PERSIST: 'PERSIST',
         }
         Object.freeze(KunlaboAction)
 
@@ -25,6 +26,14 @@ export default class extends Controller {
             .then(() => {})
             .catch(error => console.error(error.message))
         }
+
+        this.iframeTarget.contentWindow.addEventListener('load', () => {
+            window.setTimeout(() => {
+                fetch(this.persistValue)
+                    .then(result => { result.json().then(data => this.iframeTarget.contentWindow.onPersistLoaded(data))})
+                    .catch(error => console.error(error.message))
+            }, 0)
+        })
 
         this.iframeTarget.contentWindow.KunlaboAction = KunlaboAction
 
