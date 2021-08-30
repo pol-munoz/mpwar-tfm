@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coevo Physics - a cooperative enviroment with AI agents</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="Gerard Serra " name="author">
+    <meta content="This enviroment allows humans to collaborate with other humans or artificial agents to create 2D shapes that solve multiple physics problems ">
+    <meta content="artificial intelligence, codesign, generative design, collaboration, AI, coevolution, evolutionary, design" name="keywords">
+
+    <link href="assets/css/room.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/form.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/main.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="Room-wrapper">
+        <main>
+            <div id="contextualTools">
+                <div id="shapeLabTools">
+                    <span id="modeTitle"></span>
+                    <input style="display: none;" class="editTool" type="button" id="shapeLabPrev" name="previous" value="◄">
+                    <input style="display: none;" class="editTool" type="button" id="shapeLabNext" name="next" value="►">
+                    <select class="editTool" id="editionMode">
+                        <option value="rotate">Rotate block</option>
+                        <option value="move">Move area</option>
+                    </select>
+                    <input class="editTool" type="button" id="shapeLabEdit" name="edit" value="Edit">
+                    <input class="editTool" type="button" id="shapeLabClear" name="clear" value="Clear">
+                    <input style="display: none;" class="editTool btn" type="button" id="shapeLabNew" name="new" value="+ Add new">
+                    <input style="display: none;" class="editTool btn" type="button" id="shapeLabClone" name="new" value="Clone">
+                    <input class="editTool" type="button" id="shapeLabRemove" name="remove" value="-">
+                    <input class="editTool" type="button" id="shapeLabAdd" name="add" value="+">
+                </div>
+            </div>
+            <div id="canvasContainer">
+                <div id="infoShapeLab">
+                    <div id="instructionsPanel">
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminBar" style="display: none;">
+                <span id="adminText"></span>
+                <span>User is: <b id="userStatus">-</b></span>
+                <div id="adminTools">
+                    <input style="display: none;" class="editTool btn" type="button" id="shapeLabPull" name="pull" value="Pull from user">
+                    <input style="display: none;" class="editTool btn" type="button" id="shapeLabPush" name="push" value="Push to user">
+                </div>
+            </div>
+        </main>
+        <div class="Room-side-column">
+            <h4 class="Room-side-title">AI Suggestions</h4>
+            <div class="Room-ai-tools">
+                
+                <div style="display: flex; flex-direction: column; margin-right: 50px;">
+                    <h4 style="margin: 5px 0;">Similarity</h4>
+                    <div class="Room-ai-slider-column">
+                        <input type="range" min="1" max="2" value="1" id="aiSimilarity">
+                        <div class="Row Room-ai-slider-tags"">
+                            <p>Similar</p>
+                            <p>Novel</p>
+                        </div>  
+                    </div>
+                </div>
+                <p>
+                    <input type="checkbox" id="aiChange" name="aiChange" value="change" checked>
+                    <label for="allowChange"> Let AI change my pieces</label>
+                </p>
+            </div>
+            <div id="userBar" style="display: none;">
+                <h4 id="userText" style="text-align: center;"></h4>
+                <div id="userTools">
+                    <input style="display: none;" class="Button Button-smallest" type="button" id="shapeLabAccept" name="accept" value="Accept">
+                    <input style="display: none;" class="Button Button-smallest Button-cancel" type="button" id="shapeLabReject" name="reject" value="Reject">
+                    <input style="display: none;" class="Button Button-smallest Button-submit" type="button" id="shapeLabEndTurn" name="endturn" value="End turn">
+                </div>
+            </div>
+
+            <p class="Room-ai-placeholder" id="aiPlaceholder" style="display: none;">Generating Suggestions...</p>
+            <div id="aiSuggestions">
+                
+            </div>
+
+        </div>
+    </section>
+
+    <script src="config.js"></script>
+    <script src="assets/js/room.js"></script>
+
+    <script src="assets/lib/p5.min.js"></script>
+    <script src="assets/lib/box2d-html5.js"></script>
+    <script src="assets/lib/box2d-helper.js"></script>
+    <script src="assets/lib/matter.min.js"></script>
+
+    <script src="assets/js/utils.js"></script>
+
+    <script src="assets/js/shapeLab/logger.js"></script>
+    <script src="assets/js/shapeLab/suggestions.js"></script>
+    <script src="assets/js/shapeLab/shapeLab.js"></script>
+    <script src="assets/js/shapeLab/roboChain.js"></script>
+    <script src="assets/js/shapeLab/IKRobot.js"></script>
+
+    <script src="assets/js/proposals/dna.js"></script>
+    <script src="assets/js/proposals/ga.js"></script>
+    <script src="assets/js/proposals/creature.js"></script>
+    <script src="assets/js/proposals/supercreature.js"></script>
+    
+    <script src="assets/js/objects.js"></script>
+    <script src="assets/js/goals.js"></script>
+    <script src="assets/js/scenario.js"></script>
+
+    <script src="assets/js/shapeLab/sketch.js"></script>
+    <script src="assets/js/shapeLab/controller.js"></script>
+    <script src="assets/js/shapeLab/view.js"></script>
+
+</body>
+</html>

@@ -91,6 +91,8 @@ class ShapeLab{
     delete upload.parts
     delete upload.partsCom
 
+    upload.size = upload.dna.genes.length
+
     if (path === 'suggestions') {
       updateSuggestion(to, upload)
     } else {

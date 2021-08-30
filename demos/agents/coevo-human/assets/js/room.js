@@ -16,6 +16,7 @@ const meta = {
 function onPersistLoaded(data) {
     for (let index in data.creatures) {
         if (data.creatures.hasOwnProperty(index)) {
+            data.creatures[index].dna.genes = data.creatures[index].dna.genes.slice(0, data.creatures[index].size)
             updateCreature(index, data.creatures[index])
         }
     }
