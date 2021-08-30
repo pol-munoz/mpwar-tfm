@@ -228,7 +228,7 @@ export default class extends Controller {
         let main = document.getElementById('main')
 
         if (lastName.firstElementChild === null) {
-            fetch(window.location.href + '/file/main', {
+            fetch(this.injectBeforeId('file/main/'), {
                 method: 'POST',
                 body: this.lastFile,
                 credentials: 'include'
@@ -249,7 +249,7 @@ export default class extends Controller {
     delete() {
         let file = this.lastFile
         if (confirm('Are you sure you want to delete this file?\n\n"' + this.lastFile + '"')) {
-            fetch(window.location.href + '/file/delete', {
+            fetch(this.injectBeforeId('file/delete/'), {
                 method: 'POST',
                 body: file,
                 credentials: 'include'
@@ -286,5 +286,13 @@ export default class extends Controller {
             !event.target.classList.contains('App-kebab-button')) {
             this.closeMenu()
         }
+    }
+
+    injectBeforeId(prefix) {
+        let path = window.location.href
+        let parts = path.split('/')
+        let id = parts[parts.length - 1]
+
+        return path.slice(0, -(id.length)) + prefix + id
     }
 }

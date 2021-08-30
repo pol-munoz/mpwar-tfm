@@ -6,6 +6,7 @@ use Kunlabo\Action\Application\Command\NewActions\NewActionsCommand;
 use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
 use Kunlabo\Participant\Application\Command\UpdateParticipant\UpdateParticipantCommand;
+use Kunlabo\Participant\Application\Query\FindParticipantById\FindParticipantByIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
@@ -34,18 +35,22 @@ final class ParticipantController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if (!$session->has(self::STUDIES_SESSION_KEY) || !array_key_exists(
-                $id,
-                $session->get(self::STUDIES_SESSION_KEY)
-            )) {
+        if (!$session->has(self::STUDIES_SESSION_KEY) ||
+            !array_key_exists($id, $session->get(self::STUDIES_SESSION_KEY))) {
+            return new RedirectResponse(
+                $urlGenerator->generate('web_participant_survey', ['id' => $id]), Response::HTTP_SEE_OTHER
+            );
+        }
+        $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
+
+        $p = $queryBus->ask(FindParticipantByIdQuery::create($participant))->getParticipant();
+        if ($p === null) {
             return new RedirectResponse(
                 $urlGenerator->generate('web_participant_survey', ['id' => $id]), Response::HTTP_SEE_OTHER
             );
         }
 
         $engine = $queryBus->ask(FindEngineByIdQuery::create($study->getEngineId()))->getEngine();
-
-        $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
 
         return $this->render(
             'study/study.html.twig',
@@ -67,14 +72,17 @@ final class ParticipantController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if (!$session->has(self::STUDIES_SESSION_KEY) || !array_key_exists(
-                $id,
-                $session->get(self::STUDIES_SESSION_KEY)
-            )) {
+        if (!$session->has(self::STUDIES_SESSION_KEY) ||
+            !array_key_exists($id, $session->get(self::STUDIES_SESSION_KEY))) {
             return new Response('No participant', Response::HTTP_FORBIDDEN);
         }
 
         $participant = $session->get(self::STUDIES_SESSION_KEY)[$id];
+
+        $p = $queryBus->ask(FindParticipantByIdQuery::create($participant))->getParticipant();
+        if ($p === null) {
+            return new Response('No participant', Response::HTTP_FORBIDDEN);
+        }
 
         $commandBus->dispatch(UpdateParticipantCommand::create($participant, $id));
 
@@ -85,29 +93,33 @@ final class ParticipantController extends AbstractController
         $body = $array['body'];
 
         if ($agent->getKind()->isHuman()) {
-            $commandBus->dispatch(NewActionsCommand::create(
-                $id,
-                $participant,
-                'engine',
-                'agent',
-                $actions,
-                $body
-            ));
+            $commandBus->dispatch(
+                NewActionsCommand::create(
+                    $id,
+                    $participant,
+                    'engine',
+                    'agent',
+                    $actions,
+                    $body
+                )
+            );
         } else {
-            $commandBus->dispatch(NewActionsCommand::create(
-                $id,
-                $participant,
-                'engine',
-                'agent',
-                $actions,
-                $body,
-                [
-                    'study' => $id,
-                    'participant' => $participant,
-                    'agent' => $agent->getId()->getRaw(),
-                    'file' => $agent->getMain(),
-                ]
-            ));
+            $commandBus->dispatch(
+                NewActionsCommand::create(
+                    $id,
+                    $participant,
+                    'engine',
+                    'agent',
+                    $actions,
+                    $body,
+                    [
+                        'study' => $id,
+                        'participant' => $participant,
+                        'agent' => $agent->getId()->getRaw(),
+                        'file' => $agent->getMain(),
+                    ]
+                )
+            );
         }
 
         return new Response();

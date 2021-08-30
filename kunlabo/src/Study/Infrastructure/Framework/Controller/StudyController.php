@@ -46,7 +46,7 @@ final class StudyController extends AbstractController
         }
     }
 
-    #[Route('/{id}/{participant}/delete', name: 'web_studies_participant_delete', methods: ['GET'])]
+    #[Route('/delete/{id}/{participant}', name: 'web_studies_participant_delete', methods: ['GET'])]
     public function participantDelete(
         CommandBus $commandBus,
         UrlGeneratorInterface $urlGenerator,

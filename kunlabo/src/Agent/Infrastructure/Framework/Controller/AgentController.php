@@ -81,7 +81,7 @@ final class AgentController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{id}/file/main', name: 'web_agents_main_file_post', methods: ['POST'])]
+    #[Route('/file/main/{id}', name: 'web_agents_main_file_post', methods: ['POST'])]
     public function agentMainPost(
         Request $request,
         CommandBus $commandBus,
@@ -95,7 +95,7 @@ final class AgentController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{id}/delete', name: 'web_agents_delete', methods: ['GET'])]
+    #[Route('/delete/{id}', name: 'web_agents_delete', methods: ['GET'])]
     public function engineDelete(
         CommandBus $commandBus,
         UrlGeneratorInterface $urlGenerator,
@@ -109,7 +109,7 @@ final class AgentController extends AbstractController
     }
 
 
-    #[Route('/{id}/file/delete', name: 'web_agents_delete_file_post', methods: ['POST'])]
+    #[Route('/file/delete/{id}', name: 'web_agents_delete_file_post', methods: ['POST'])]
     public function engineDeletePost(
         Request $request,
         CommandBus $commandBus,

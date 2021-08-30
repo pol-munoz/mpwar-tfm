@@ -5,6 +5,8 @@ export default class extends Controller {
     static values = { mercure: String, topic: String, pub: String, sub: String, persist: String }
 
     initialize() {
+        this.reloading = false
+
         const KunlaboAction = {
             MESSAGE: 'MESSAGE',
             LOG: 'LOG',
@@ -23,14 +25,25 @@ export default class extends Controller {
                 method: 'POST',
                 body: JSON.stringify({ actions, body })
             })
-            .then(() => {})
+            .then(response => {
+                if (response.status > 400) {
+                    if (!this.reloading) {
+                        this.reloading = true
+                        location.reload()
+                    }
+                }
+            })
             .catch(error => console.error(error.message))
         }
 
         this.iframeTarget.contentWindow.addEventListener('load', () => {
             window.setTimeout(() => {
                 fetch(this.persistValue)
-                    .then(result => { result.json().then(data => this.iframeTarget.contentWindow.onPersistLoaded(data))})
+                    .then(response => {
+                        if (response.status === 200) {
+                            response.json().then(data => this.iframeTarget.contentWindow.onPersistLoaded(data))
+                        }
+                    })
                     .catch(error => console.error(error.message))
             }, 0)
         })

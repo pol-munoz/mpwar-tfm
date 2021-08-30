@@ -81,7 +81,7 @@ final class EngineController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{id}/file/main', name: 'web_engines_main_file_post', methods: ['POST'])]
+    #[Route('/file/main/{id}', name: 'web_engines_main_file_post', methods: ['POST'])]
     public function engineMainPost(
         Request $request,
         CommandBus $commandBus,
@@ -95,7 +95,7 @@ final class EngineController extends AbstractController
         return new Response();
     }
 
-    #[Route('/{id}/delete', name: 'web_engines_delete', methods: ['GET'])]
+    #[Route('/delete/{id}', name: 'web_engines_delete', methods: ['GET'])]
     public function engineDelete(
         CommandBus $commandBus,
         UrlGeneratorInterface $urlGenerator,
@@ -108,7 +108,7 @@ final class EngineController extends AbstractController
         return new RedirectResponse($urlGenerator->generate('web_engines'), Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/file/delete', name: 'web_engines_delete_file_post', methods: ['POST'])]
+    #[Route('/file/delete/{id}', name: 'web_engines_delete_file_post', methods: ['POST'])]
     public function engineDeleteFilePost(
         Request $request,
         CommandBus $commandBus,

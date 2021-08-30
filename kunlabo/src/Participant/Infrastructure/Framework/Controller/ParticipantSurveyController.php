@@ -4,6 +4,7 @@ namespace Kunlabo\Participant\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Participant\Application\Command\SurveyFilled\SurveyFilledCommand;
+use Kunlabo\Participant\Application\Query\FindParticipantById\FindParticipantByIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class ParticipantSurveyController extends AbstractController
 {
-    #[Route('/{id}/survey', name: 'web_participant_survey', methods: ['GET'])]
+    #[Route('/survey/{id}', name: 'web_participant_survey', methods: ['GET'])]
     public function survey(
         QueryBus $queryBus,
         SessionInterface $session,
@@ -31,19 +32,22 @@ final class ParticipantSurveyController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if ($session->has(ParticipantController::STUDIES_SESSION_KEY) && array_key_exists(
-                $id,
-                $session->get(ParticipantController::STUDIES_SESSION_KEY)
-            )) {
-            return new RedirectResponse(
-                $urlGenerator->generate('web_participant', ['id' => $id]), Response::HTTP_SEE_OTHER
-            );
+        if ($session->has(ParticipantController::STUDIES_SESSION_KEY) &&
+            array_key_exists($id, $session->get(ParticipantController::STUDIES_SESSION_KEY))) {
+            $participant = $session->get(ParticipantController::STUDIES_SESSION_KEY)[$id];
+
+            $p = $queryBus->ask(FindParticipantByIdQuery::create($participant))->getParticipant();
+            if ($p !== null) {
+                return new RedirectResponse(
+                    $urlGenerator->generate('web_participant', ['id' => $id]), Response::HTTP_SEE_OTHER
+                );
+            }
         }
 
         return $this->render('study/survey.html.twig', ['id' => $id]);
     }
 
-    #[Route('/{id}/survey', name: 'web_participant_survey_post', methods: ['POST'])]
+    #[Route('/survey/{id}', name: 'web_participant_survey_post', methods: ['POST'])]
     public function surveyPost(
         Request $request,
         QueryBus $queryBus,

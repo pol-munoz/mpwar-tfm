@@ -31,7 +31,7 @@ final class AllStudiesController extends AbstractController
     }
 
 
-    #[Route('/{id}/delete', name: 'web_studies_delete', methods: ['GET'])]
+    #[Route('/delete/{id}', name: 'web_studies_delete', methods: ['GET'])]
     public function engineDelete(
         CommandBus $commandBus,
         UrlGeneratorInterface $urlGenerator,
