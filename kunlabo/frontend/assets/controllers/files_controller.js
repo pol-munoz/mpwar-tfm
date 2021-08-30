@@ -182,11 +182,24 @@ export default class extends Controller {
     toggleFolder(event) {
         let isOpen = event.target.classList.contains('fa-folder-open')
         if (isOpen) {
-            event.target.classList.replace('fa-folder-open', 'fa-folder')
-            event.target.parentNode.parentNode.classList.add('Files-folder-closed')
+            this.closeFolderFromIcon(event.target)
         } else {
             event.target.classList.replace('fa-folder', 'fa-folder-open')
             event.target.parentNode.parentNode.classList.remove('Files-folder-closed')
+        }
+    }
+
+    closeFolderFromIcon(icon) {
+        icon.classList.replace('fa-folder-open', 'fa-folder')
+        icon.parentNode.parentNode.classList.add('Files-folder-closed')
+
+        let contents = icon.parentNode.parentNode.lastElementChild
+
+        for (let i = 0; i < contents.childElementCount; i++) {
+            let child = contents.children.item(i)
+            if (child.classList.contains('Files-folder') && !child.classList.contains('Files-folder-closed')) {
+                this.closeFolderFromIcon(child.firstElementChild.firstElementChild)
+            }
         }
     }
 
