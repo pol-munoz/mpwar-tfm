@@ -62,6 +62,22 @@ final class DoctrineEngineRepository implements EngineRepository
         );
     }
 
+    public function readFilesForEngineIdAndFolder(Uuid $engine, string $folder): array
+    {
+        $qb = $this->manager->createQueryBuilder();
+        $query = $qb->select('f')
+            ->from(EngineFile::class, 'f')
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('f.engineId', $qb->expr()->literal($engine)),
+                    $qb->expr()->like('f.path', $qb->expr()->literal($folder . '%'))
+                )
+            )
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function update(Engine $engine): void
     {
         $this->manager->flush();

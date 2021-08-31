@@ -1,30 +1,60 @@
-{% macro folder(contents, files, main, path = "", white = true) %}
+{% macro folder(contents, files, main, folder = "/", path = "", white = true) %}
     {% for name, content in contents %}
         {% if content is iterable %}
             {% set p = path ~ "/" ~ name %}
-            <div class="Files-folder Files-folder-closed" style="background: {{ white ? 'white' : '#F5F6F9' }}">
-                <div class="Files-folder-header">
-                    <i class="fas fa-fw fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
-                    <p class="Files-text"><strong>{{ name }}</strong></p>
+            {% if p starts with folder %}
+                {% set route = app.request.attributes.get('_route') %}
+                <div class="Files-folder Files-folder-closed" style="background: {{ white ? 'white' : '#F5F6F9' }}">
+                    <div class="Files-folder-header">
+                        <i class="fas fa-fw fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
+                        <a class="Files-folder-link"
+                           href="{{ path(
+                               route ~ (route ends with '_and_folder' ? '' : '_and_folder'),
+                               app.request.attributes.get('_route_params') | merge({'folder': p})
+                           )}}"
+                        >
+                            <p class="Files-text"><strong>{{ name }}</strong></p>
+                        </a>
+                    </div>
+                    <div class="Files-folder-contents" id="{{ p }}">
+                        {{ _self.folder(content, files, main, folder, p, not white) }}
+                    </div>
                 </div>
-                <div class="Files-folder-contents" id="{{ p }}">
-                    {{ _self.folder(content, files, main, p, not white) }}
-                </div>
-            </div>
+            {% else %}
+                {{ _self.folder(content, files, main, folder, p, white) }}
+            {% endif %}
         {% else %}
-            <div class="App-four-columns-right Files-file" id="{{ content }}">
-                {% if content == main %}
-                    <p class="Files-text Files-name" id="main">
-                        <i class="fas fa-fw fa-star Files-main-icon"></i>
-                        {{ name }}
-                    </p>
-                {% else %}
-                    <p class="Files-text Files-name">{{ name }}</p>
-                {% endif %}
-                <p class="Files-text Files-date">{{ files[content].created | ago }}</p>
-                <p class="Files-text Files-date">{{ files[content].modified | ago }}</p>
-                <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->files#toggleFileMenu"></i>
-            </div>
+            {% if content starts with folder %}
+                <div class="App-four-columns-right Files-file" id="{{ content }}">
+                    {% if content == main %}
+                        <p class="Files-text Files-name" id="main">
+                            <i class="fas fa-fw fa-star Files-main-icon"></i>
+                            {{ name }}
+                        </p>
+                    {% else %}
+                        <p class="Files-text Files-name">{{ name }}</p>
+                    {% endif %}
+                    <p class="Files-text Files-date">{{ files[content].created | ago }}</p>
+                    <p class="Files-text Files-date">{{ files[content].modified | ago }}</p>
+                    <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->files#toggleFileMenu"></i>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro location(folder) %}
+    {% set p = "" %}
+    {% for part in folder %}
+        {% set p = p ~ "/" ~ part %}
+        <a class="Files-location-link" href="{{ path(
+            app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params') | merge({'folder': p})
+        )}}">
+            {{ part }}
+        </a>
+        {% if not loop.last %}
+            <span>/</span>
         {% endif %}
     {% endfor %}
 {% endmacro %}

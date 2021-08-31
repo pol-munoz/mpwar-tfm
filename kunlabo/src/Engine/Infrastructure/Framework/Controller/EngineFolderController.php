@@ -1,13 +1,13 @@
 <?php
 
+
 namespace Kunlabo\Engine\Infrastructure\Framework\Controller;
+
 
 use DomainException;
 use Kunlabo\Engine\Application\Command\CreateEngineFile\CreateEngineFileCommand;
-use Kunlabo\Engine\Application\Command\DeleteEngineFile\DeleteEngineFileCommand;
-use Kunlabo\Engine\Application\Command\SetEngineMainFile\SetEngineMainFileCommand;
 use Kunlabo\Engine\Application\Query\FindEngineById\FindEngineByIdQuery;
-use Kunlabo\Engine\Application\Query\SearchEngineFilesByEngineId\SearchEngineFilesByEngineIdQuery;
+use Kunlabo\Engine\Application\Query\SearchEngineFilesByEngineIdAndFolder\SearchEngineFilesByEngineIdAndFolderQuery;
 use Kunlabo\Engine\Domain\EngineFile;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
@@ -18,12 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class EngineController extends AbstractController
+final class EngineFolderController extends AbstractController
 {
-    #[Route('/{id}', name: 'web_engines_by_id', methods: ['GET'])]
-    public function engine(
+    #[Route('/{id}{folder}', name: 'web_engines_by_id_and_folder', requirements: ['folder' => '.+'], methods: ['GET'])]
+    public function engineFolder(
         QueryBus $queryBus,
-        string $id
+        string $id,
+        string $folder,
     ): Response {
         try {
             $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
@@ -34,7 +35,7 @@ final class EngineController extends AbstractController
                 throw $this->createNotFoundException();
             }
 
-            $files = $queryBus->ask(SearchEngineFilesByEngineIdQuery::create($id))->getEngineFiles();
+            $files = $queryBus->ask(SearchEngineFilesByEngineIdAndFolderQuery::create($id, $folder))->getEngineFiles();
 
             $output = [];
             $items = [];
@@ -46,24 +47,25 @@ final class EngineController extends AbstractController
             }
 
             return $this->render(
-                'app/engines/engine.html.twig',
-                ['engine' => $engine, 'paths' => $output, 'files' => $items, 'folder' => '/']
+                'app/engines/folder.html.twig',
+                ['engine' => $engine, 'paths' => $output, 'files' => $items, 'folder' => $folder . '/']
             );
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }
     }
 
-    #[Route('/{id}', name: 'web_engines_by_id_post', methods: ['POST'])]
-    public function enginePost(
+    #[Route('/{id}{folder}', name: 'web_engines_by_id_and_folder_post', requirements: ['folder' => '.+'], methods: ['POST'])]
+    public function engineFolderPost(
         Request $request,
         CommandBus $commandBus,
-        string $id
+        string $id,
+        string $folder
     ): Response {
         $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
         // This is application-layer stuff
-        $path = $request->request->get('path');
+        $path = $folder . $request->request->get('path');
         $file = $request->files->get('file');
 
         if ($file) {
@@ -74,34 +76,6 @@ final class EngineController extends AbstractController
 
             $file->move($full, $name);
         }
-
-        return new Response();
-    }
-
-    #[Route('/file/main/{id}', name: 'web_engines_main_file_post', methods: ['POST'])]
-    public function engineMainPost(
-        Request $request,
-        CommandBus $commandBus,
-        string $id
-    ): Response {
-        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
-
-        $main = $request->getContent();
-        $commandBus->dispatch(SetEngineMainFileCommand::create($id, $main));
-
-        return new Response();
-    }
-
-    #[Route('/file/delete/{id}', name: 'web_engines_delete_file_post', methods: ['POST'])]
-    public function engineDeleteFilePost(
-        Request $request,
-        CommandBus $commandBus,
-        string $id
-    ): Response {
-        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
-
-        $path = $request->getContent();
-        $commandBus->dispatch(DeleteEngineFileCommand::create($id, $path));
 
         return new Response();
     }

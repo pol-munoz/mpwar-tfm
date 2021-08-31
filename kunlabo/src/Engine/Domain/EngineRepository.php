@@ -13,6 +13,7 @@ interface EngineRepository
     public function readAllForUser(Uuid $owner): array;
     public function readFileByEngineIdAndPath(Uuid $engine, string $path): ?EngineFile;
     public function readFilesForEngineId(Uuid $engine): array;
+    public function readFilesForEngineIdAndFolder(Uuid $engine, string $folder): array;
 
     public function update(Engine $engine): void;
     public function updateFile($file): void;

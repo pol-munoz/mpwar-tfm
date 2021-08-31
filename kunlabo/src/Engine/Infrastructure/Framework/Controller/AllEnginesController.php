@@ -4,6 +4,7 @@ namespace Kunlabo\Engine\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Engine\Application\Command\CreateEngine\CreateEngineCommand;
+use Kunlabo\Engine\Application\Command\DeleteEngine\DeleteEngineCommand;
 use Kunlabo\Engine\Application\Query\SearchEnginesByOwnerId\SearchEnginesByOwnerIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
 
 final class AllEnginesController extends AbstractController
@@ -61,4 +63,18 @@ final class AllEnginesController extends AbstractController
             );
         }
     }
+
+    #[Route('/delete/{id}', name: 'web_engines_delete', methods: ['GET'])]
+    public function engineDelete(
+        CommandBus $commandBus,
+        UrlGeneratorInterface $urlGenerator,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $commandBus->dispatch(DeleteEngineCommand::create($id));
+
+        return new RedirectResponse($urlGenerator->generate('web_engines'), Response::HTTP_SEE_OTHER);
+    }
+
 }

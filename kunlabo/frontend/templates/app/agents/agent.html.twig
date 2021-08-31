@@ -27,8 +27,10 @@
 
         <div class="Agents-header">
             <div class="Agents-header-row">
-                <a href="{{ path('web_agents') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
-                <h2 class="App-title">{{ agent.name }}</h2>
+                {% block header %}
+                    <a href="{{ path('web_agents') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
+                    <h2 class="App-title">{{ agent.name }}</h2>
+                {% endblock %}
             </div>
         </div>
 
@@ -38,7 +40,7 @@
             <p class="Agents-list-item"><strong>Modified</strong></p>
         </div>
         <div class="Files" data-files-target="files" style="{{ paths is empty ? 'display : none' : '' }}">
-            {{ folder(paths, files, agent.main) }}
+            {{ folder(paths, files, agent.main, folder) }}
             <div class="App-menu" data-files-target="menu">
                 <div class="App-menu-option" data-action="click->files#setAsMain">
                     <i class="fas fa-fw fa-star App-menu-option-icon"></i>

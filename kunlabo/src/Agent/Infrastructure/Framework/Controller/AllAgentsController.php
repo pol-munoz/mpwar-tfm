@@ -4,6 +4,7 @@ namespace Kunlabo\Agent\Infrastructure\Framework\Controller;
 
 use DomainException;
 use Kunlabo\Agent\Application\Command\CreateAgent\CreateAgentCommand;
+use Kunlabo\Agent\Application\Command\DeleteAgent\DeleteAgentCommand;
 use Kunlabo\Agent\Application\Query\SearchAgentsByOwnerId\SearchAgentsByOwnerIdQuery;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
 
 final class AllAgentsController extends AbstractController
@@ -61,5 +63,18 @@ final class AllAgentsController extends AbstractController
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
+    }
+
+    #[Route('/delete/{id}', name: 'web_agents_delete', methods: ['GET'])]
+    public function engineDelete(
+        CommandBus $commandBus,
+        UrlGeneratorInterface $urlGenerator,
+        string $id
+    ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
+
+        $commandBus->dispatch(DeleteAgentCommand::create($id));
+
+        return new RedirectResponse($urlGenerator->generate('web_agents'), Response::HTTP_SEE_OTHER);
     }
 }

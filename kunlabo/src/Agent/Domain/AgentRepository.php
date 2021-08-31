@@ -13,6 +13,7 @@ interface AgentRepository
     public function readAllForUser(Uuid $owner): array;
     public function readFileByAgentIdAndPath(Uuid $agent, string $path): ?AgentFile;
     public function readFilesForAgentId(Uuid $agent): array;
+    public function readFilesForAgentIdAndFolder(Uuid $agent, string $folder): array;
 
     public function update(Agent $agent): void;
     public function updateFile($file): void;

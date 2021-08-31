@@ -291,8 +291,9 @@ export default class extends Controller {
     injectBeforeId(prefix) {
         let path = window.location.href
         let parts = path.split('/')
-        let id = parts[parts.length - 1]
+        let id = parts[5]
+        let index = path.indexOf(id)
 
-        return path.slice(0, -(id.length)) + prefix + id
+        return path.slice(0, index) + prefix + id
     }
 }

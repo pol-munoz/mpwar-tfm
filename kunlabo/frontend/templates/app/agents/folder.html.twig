@@ -1,0 +1,8 @@
+{% from "app/files.html.twig" import location %}
+
+{% extends 'app/agents/agent.html.twig' %}
+
+{% block header %}
+    <a href="{{ path('web_agents_by_id', {id: agent.id}) }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
+    <h2 class="App-title">{{ location(folder[1:-1] | split('/')) }}</h2>
+{% endblock %}

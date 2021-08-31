@@ -7,7 +7,6 @@ use Doctrine\Persistence\ObjectRepository;
 use Kunlabo\Agent\Domain\Agent;
 use Kunlabo\Agent\Domain\AgentFile;
 use Kunlabo\Agent\Domain\AgentRepository;
-use Kunlabo\Engine\Domain\EngineFile;
 use Kunlabo\Shared\Domain\Utils;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
@@ -61,6 +60,22 @@ final class DoctrineAgentRepository implements AgentRepository
         return $this->fileRepository->findBy(
             ['agentId' => $agent]
         );
+    }
+
+    public function readFilesForAgentIdAndFolder(Uuid $agent, string $folder): array
+    {
+        $qb = $this->manager->createQueryBuilder();
+        $query = $qb->select('f')
+            ->from(AgentFile::class, 'f')
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('f.agentId', $qb->expr()->literal($agent)),
+                    $qb->expr()->like('f.path', $qb->expr()->literal($folder . '%'))
+                )
+            )
+            ->getQuery();
+
+        return $query->getResult();
     }
 
     public function update(Agent $agent): void

@@ -55,6 +55,24 @@
     cursor: pointer;
 }
 
+.Files-folder-link {
+    text-decoration: none;
+    flex: 1;
+}
+
+.Files-folder-link:hover .Files-text {
+    color: #264F92;
+}
+
+.Files-location-link {
+    color: #040910;
+    text-decoration: none;
+}
+
+.Files-location-link:hover {
+    color: #264F92;
+}
+
 .Files-folder-contents {
     display: flex;
     flex-direction: column;

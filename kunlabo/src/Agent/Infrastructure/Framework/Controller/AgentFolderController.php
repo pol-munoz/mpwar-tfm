@@ -1,13 +1,13 @@
 <?php
 
+
 namespace Kunlabo\Agent\Infrastructure\Framework\Controller;
+
 
 use DomainException;
 use Kunlabo\Agent\Application\Command\CreateAgentFile\CreateAgentFileCommand;
-use Kunlabo\Agent\Application\Command\DeleteAgentFile\DeleteAgentFileCommand;
-use Kunlabo\Agent\Application\Command\SetAgentMainFile\SetAgentMainFileCommand;
 use Kunlabo\Agent\Application\Query\FindAgentById\FindAgentByIdQuery;
-use Kunlabo\Agent\Application\Query\SearchAgentFilesByAgentId\SearchAgentFilesByAgentIdQuery;
+use Kunlabo\Agent\Application\Query\SearchAgentFilesByAgentIdAndFolder\SearchAgentFilesByAgentIdAndFolderQuery;
 use Kunlabo\Agent\Domain\AgentFile;
 use Kunlabo\Shared\Application\Bus\Command\CommandBus;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
@@ -18,12 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class AgentController extends AbstractController
+final class AgentFolderController extends AbstractController
 {
-    #[Route('/{id}', name: 'web_agents_by_id', methods: ['GET'])]
-    public function agent(
+    #[Route('/{id}{folder}', name: 'web_agents_by_id_and_folder', requirements: ['folder' => '.+'], methods: ['GET'])]
+    public function agentFolder(
         QueryBus $queryBus,
-        string $id
+        string $id,
+        string $folder,
     ): Response {
         try {
             $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
@@ -34,7 +35,7 @@ final class AgentController extends AbstractController
                 throw $this->createNotFoundException();
             }
 
-            $files = $queryBus->ask(SearchAgentFilesByAgentIdQuery::create($id))->getAgentFiles();
+            $files = $queryBus->ask(SearchAgentFilesByAgentIdAndFolderQuery::create($id, $folder))->getAgentFiles();
 
             $output = [];
             $items = [];
@@ -46,24 +47,25 @@ final class AgentController extends AbstractController
             }
 
             return $this->render(
-                'app/agents/agent.html.twig',
-                ['agent' => $agent, 'paths' => $output, 'files' => $items, 'folder' => '/']
+                'app/agents/folder.html.twig',
+                ['agent' => $agent, 'paths' => $output, 'files' => $items, 'folder' => $folder . '/']
             );
         } catch (DomainException) {
             throw $this->createNotFoundException();
         }
     }
 
-    #[Route('/{id}', name: 'web_agents_by_id_post', methods: ['POST'])]
-    public function agentPost(
+    #[Route('/{id}{folder}', name: 'web_agents_by_id_and_folder_post', requirements: ['folder' => '.+'], methods: ['POST'])]
+    public function agentFolderPost(
         Request $request,
         CommandBus $commandBus,
-        string $id
+        string $id,
+        string $folder
     ): Response {
         $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
         // This is application-layer stuff
-        $path = $request->request->get('path');
+        $path = $folder . $request->request->get('path');
         $file = $request->files->get('file');
 
         if ($file) {
@@ -74,34 +76,6 @@ final class AgentController extends AbstractController
 
             $file->move($full, $name);
         }
-
-        return new Response();
-    }
-
-    #[Route('/file/main/{id}', name: 'web_agents_main_file_post', methods: ['POST'])]
-    public function agentMainPost(
-        Request $request,
-        CommandBus $commandBus,
-        string $id
-    ): Response {
-        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
-
-        $main = $request->getContent();
-        $commandBus->dispatch(SetAgentMainFileCommand::create($id, $main));
-
-        return new Response();
-    }
-
-    #[Route('/file/delete/{id}', name: 'web_agents_delete_file_post', methods: ['POST'])]
-    public function engineDeletePost(
-        Request $request,
-        CommandBus $commandBus,
-        string $id
-    ): Response {
-        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
-
-        $path = $request->getContent();
-        $commandBus->dispatch(DeleteAgentFileCommand::create($id, $path));
 
         return new Response();
     }
