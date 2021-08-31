@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block body %}
-    <a class="Auth-logo" href="{{ path("web_landing") }}">
-        <img height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
+    <a draggable="false" class="Auth-logo" href="{{ path("web_landing") }}">
+        <img draggable="false" height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
     </a>
     <main class="Auth-wrapper" data-controller="password">
         {% block auth %}

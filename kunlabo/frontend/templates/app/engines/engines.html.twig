@@ -39,7 +39,7 @@
                 </div>
                 {% for engine in engines %}
                     <div class="App-menu-wrapper" id="{{ engine.id }}">
-                        <a class="App-four-columns-right Engines-list-row" href="{{ path('web_engines_by_id', {id: engine.id}) }}">
+                        <a draggable="false" class="App-four-columns-right Engines-list-row" href="{{ path('web_engines_by_id', {id: engine.id}) }}">
                             <div class="Engines-list-item"><span>{{ engine.name }}</span></div>
                             <div class="Engines-list-item"><span>{{ engine.created | ago }}</span></div>
                             <div class="Engines-list-item"><span>{{ engine.modified | ago }}</span></div>
@@ -48,7 +48,7 @@
                         </a>
 
                         <div class="App-menu">
-                            <a class="App-menu-option" data-action="click->menu#confirm"
+                            <a draggable="false" class="App-menu-option" data-action="click->menu#confirm"
                                data-name="{{ engine.name }}"
                                href="{{ path('web_engines_delete', {id: engine.id}) }}">
                                 <i class="fas fa-fw fa-trash-alt App-menu-option-icon App-menu-option-danger"></i>

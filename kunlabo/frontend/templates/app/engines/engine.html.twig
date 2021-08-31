@@ -28,7 +28,7 @@
         <div class="Engines-header">
             <div class="Engines-header-row">
                 {% block header %}
-                    <a href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
+                    <a draggable="false" href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
                     <h2 class="App-title">{{ engine.name }}</h2>
                 {% endblock %}
             </div>

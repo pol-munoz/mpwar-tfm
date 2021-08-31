@@ -7,7 +7,7 @@
                 <div class="Files-folder Files-folder-closed" style="background: {{ white ? 'white' : '#F5F6F9' }}">
                     <div class="Files-folder-header">
                         <i class="fas fa-fw fa-folder Files-folder-button" data-action="click->files#toggleFolder"></i>
-                        <a class="Files-folder-link"
+                        <a draggable="false" class="Files-folder-link"
                            href="{{ path(
                                route ~ (route ends with '_and_folder' ? '' : '_and_folder'),
                                app.request.attributes.get('_route_params') | merge({'folder': p})
@@ -47,7 +47,7 @@
     {% set p = "" %}
     {% for part in folder %}
         {% set p = p ~ "/" ~ part %}
-        <a class="Files-location-link" href="{{ path(
+        <a draggable="false" class="Files-location-link" href="{{ path(
             app.request.attributes.get('_route'),
             app.request.attributes.get('_route_params') | merge({'folder': p})
         )}}">

@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block body %}
-    <img class="Survey-logo" height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
+    <img draggable="false" class="Survey-logo" height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
     <main class="Survey-wrapper">
         <form class="Survey-form" action="{{ path('web_participant_survey_post', {id: id}) }}" method="post" autocomplete="off">
             <div class="Survey-header">
