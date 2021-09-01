@@ -54,7 +54,7 @@
                 </div>
                 {% for agent in agents %}
                     <div class="App-menu-wrapper" id="{{ agent.id }}">
-                        <a class="App-five-columns Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
+                        <a draggable="false" class="App-five-columns Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
                             <div class="Agents-list-item">
                                 <i class="fas fa-fw fa-{{ agent.kind == 'human' ? 'user' : 'robot' }} Agents-list-icon"></i>
                             </div>
@@ -66,12 +66,11 @@
                         </a>
 
                         <div class="App-menu">
-                            <a class="App-menu-option" data-action="click->menu#confirm"
-                               data-name="{{ agent.name }}"
-                               href="{{ path('web_agents_delete', {id: agent.id}) }}">
+                            <div class="App-menu-option" data-action="click->menu#delete" data-name="{{ agent.name }}"
+                                 data-url="{{ path('web_agents_delete', {id: agent.id}) }}">
                                 <i class="fas fa-fw fa-trash-alt App-menu-option-icon App-menu-option-danger"></i>
                                 <p class="App-menu-option-text App-menu-option-danger">Delete agent</p>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

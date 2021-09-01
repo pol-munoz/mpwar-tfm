@@ -48,12 +48,11 @@
                         </a>
 
                         <div class="App-menu">
-                            <a draggable="false" class="App-menu-option" data-action="click->menu#confirm"
-                               data-name="{{ engine.name }}"
-                               href="{{ path('web_engines_delete', {id: engine.id}) }}">
+                            <div class="App-menu-option" data-action="click->menu#delete" data-name="{{ engine.name }}"
+                                 data-url="{{ path('web_engines_delete', {id: engine.id}) }}">
                                 <i class="fas fa-fw fa-trash-alt App-menu-option-icon App-menu-option-danger"></i>
                                 <p class="App-menu-option-text App-menu-option-danger">Delete engine</p>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

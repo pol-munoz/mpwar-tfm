@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Security;
 
 final class AllAgentsController extends AbstractController
@@ -65,16 +64,15 @@ final class AllAgentsController extends AbstractController
         }
     }
 
-    #[Route('/delete/{id}', name: 'web_agents_delete', methods: ['GET'])]
+    #[Route('/{id}', name: 'web_agents_delete', methods: ['DELETE'])]
     public function engineDelete(
         CommandBus $commandBus,
-        UrlGeneratorInterface $urlGenerator,
         string $id
     ): Response {
         $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
         $commandBus->dispatch(DeleteAgentCommand::create($id));
 
-        return new RedirectResponse($urlGenerator->generate('web_agents'), Response::HTTP_SEE_OTHER);
+        return new Response();
     }
 }

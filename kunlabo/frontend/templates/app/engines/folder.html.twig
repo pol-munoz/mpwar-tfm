@@ -3,6 +3,6 @@
 {% extends 'app/engines/engine.html.twig' %}
 
 {% block header %}
-    <a href="{{ path('web_engines_by_id', {id: engine.id}) }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
+    <a draggable="false" href="{{ path('web_engines_by_id', {id: engine.id}) }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
     <h2 class="App-title">{{ location(folder[1:-1] | split('/')) }}</h2>
 {% endblock %}

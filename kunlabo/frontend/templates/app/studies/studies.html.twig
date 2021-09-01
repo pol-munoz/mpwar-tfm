@@ -22,7 +22,7 @@
          data-menu-delete-message-value="Are you sure you want to delete this study? This will remove its participants and logs.">
         <div class="Studies-header">
             <h1 class="App-title">Studies</h1>
-            <a href="{{ path('web_studies_new') }}" class="App-button" data-turbo-frame="modal">New study</a>
+            <a draggable="false" href="{{ path('web_studies_new') }}" class="App-button" data-turbo-frame="modal">New study</a>
         </div>
 
         {% if studies is empty %}
@@ -38,7 +38,7 @@
             </div>
             {% for study in studies %}
                 <div class="App-menu-wrapper" id="{{ study.id }}">
-                    <a class="App-four-columns-right Studies-list-row" href="{{ path('web_studies_by_id', {id: study.id}) }}">
+                    <a draggable="false" class="App-four-columns-right Studies-list-row" href="{{ path('web_studies_by_id', {id: study.id}) }}">
                         <div class="Studies-list-item"><span>{{ study.name }}</span></div>
                         <div class="Studies-list-item"><span>{{ study.created | ago }}</span></div>
                         <div class="Studies-list-item"><span>{{ study.modified | ago }}</span></div>
@@ -53,18 +53,18 @@
                             <i class="fas fa-fw fa-link App-menu-option-icon"></i>
                             <p class="App-menu-option-text">Copy link</p>
                         </div>
-                        <a class="App-menu-option"
+                        <a draggable="false" class="App-menu-option"
                            href="{{ path('web_logs_by_study', {id: study.id}) }}"
                            download="{{ study.name }}.json">
                             <i class="fas fa-fw fa-clipboard-list App-menu-option-icon"></i>
                             <p class="App-menu-option-text">Download logs</p>
                         </a>
-                        <a class="App-menu-option" data-action="click->menu#confirm"
-                           data-name="{{ study.name }}"
-                           href="{{ path('web_studies_delete', {id: study.id}) }}">
+
+                        <div class="App-menu-option" data-action="click->menu#delete" data-name="{{ study.name }}"
+                             data-url="{{ path('web_studies_delete', {id: study.id}) }}">
                             <i class="fas fa-fw fa-trash-alt App-menu-option-icon App-menu-option-danger"></i>
                             <p class="App-menu-option-text App-menu-option-danger">Delete study</p>
-                        </a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

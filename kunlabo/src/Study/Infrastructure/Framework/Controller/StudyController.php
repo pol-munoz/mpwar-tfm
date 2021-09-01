@@ -11,10 +11,8 @@ use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class StudyController extends AbstractController
 {
@@ -46,10 +44,9 @@ final class StudyController extends AbstractController
         }
     }
 
-    #[Route('/delete/{id}/{participant}', name: 'web_studies_participant_delete', methods: ['GET'])]
+    #[Route('/{id}/{participant}', name: 'web_studies_participant_delete', methods: ['DELETE'])]
     public function participantDelete(
         CommandBus $commandBus,
-        UrlGeneratorInterface $urlGenerator,
         string $id,
         string $participant
     ): Response {
@@ -57,6 +54,6 @@ final class StudyController extends AbstractController
 
         $commandBus->dispatch(DeleteParticipantCommand::create($participant, $id));
 
-        return new RedirectResponse($urlGenerator->generate('web_studies_by_id', ['id' => $id]), Response::HTTP_SEE_OTHER);
+        return new Response();
     }
 }

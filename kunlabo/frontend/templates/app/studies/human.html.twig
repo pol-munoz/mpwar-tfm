@@ -17,7 +17,7 @@
     <div class="Studies-wrapper">
         <div class="Studies-header">
             <div class="Studies-header-row">
-                <a href="{{ path('web_studies_by_id', {id: study.id}) }}" class="App-button-back">
+                <a draggable="false" href="{{ path('web_studies_by_id', {id: study.id}) }}" class="App-button-back">
                     <h2 class="App-title"><i class="fa fa-chevron-left"></i></h2>
                 </a>
                 <h2 class="App-title">{{ agent.name }} - {{ study.name }}</h2>

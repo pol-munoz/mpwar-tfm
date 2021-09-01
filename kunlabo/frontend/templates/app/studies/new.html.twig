@@ -16,7 +16,7 @@
     <div class="Studies-modal" data-controller="modal" data-action="click->modal#close" id="modal">
         <form class="Studies-form" action="{{ path('web_studies_new_post') }}" method="post" autocomplete="off"
               data-turbo-frame="_top">
-            <a href="{{ path('web_studies') }}" class="Studies-close" data-modal-target="close">
+            <a draggable="false" href="{{ path('web_studies') }}" class="Studies-close" data-modal-target="close">
                 <i class="fas fa-fw fa-times"></i>
             </a>
             <label class="App-label" for="name">Name</label>

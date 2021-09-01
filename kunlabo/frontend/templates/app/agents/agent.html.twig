@@ -28,7 +28,7 @@
         <div class="Agents-header">
             <div class="Agents-header-row">
                 {% block header %}
-                    <a href="{{ path('web_agents') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
+                    <a draggable="false" href="{{ path('web_agents') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
                     <h2 class="App-title">{{ agent.name }}</h2>
                 {% endblock %}
             </div>

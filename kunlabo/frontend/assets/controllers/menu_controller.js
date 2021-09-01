@@ -46,15 +46,26 @@ export default class extends Controller {
         }
     }
 
-    confirm(event) {
+    delete(event) {
         let target = event.target
 
         if (!target.dataset.name) {
             target = target.parentNode
         }
 
-        if (!confirm(this.deleteMessageValue + '\n\n"' + target.dataset.name + '"')) {
-            event.preventDefault()
+        if (confirm(this.deleteMessageValue + '\n\n"' + target.dataset.name + '"')) {
+            this.closeMenu()
+            fetch(target.dataset.url, {
+                method: 'DELETE',
+                credentials: 'include'
+            })
+            .then(() => {
+                // A bit lazy but placeholders make asynchronously updating the page more complicated
+                location.reload()
+            })
+            .catch(error => {
+                console.error(error.message)
+            })
         }
     }
 }
