@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class HumanStudyController extends AbstractController
 {
-    #[Route('/human/{id}/{participant}', name: 'web_studies_human', methods: ['GET'])]
+    #[Route('/{id}/{participant}', name: 'web_studies_human', methods: ['GET'])]
     public function human(
         QueryBus $queryBus,
         string $id,
@@ -54,7 +54,7 @@ final class HumanStudyController extends AbstractController
         }
     }
 
-    #[Route('/human/{id}/{participant}', name: 'web_studies_human_post', methods: ['POST'])]
+    #[Route('/{id}/{participant}', name: 'web_studies_human_post', methods: ['POST'])]
     public function humanPost(
         Request $request,
         CommandBus $commandBus,

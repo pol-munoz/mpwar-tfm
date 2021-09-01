@@ -419,6 +419,9 @@
     "symfony/twig-pack": {
         "version": "v1.0.1"
     },
+    "symfony/ux-chartjs": {
+        "version": "v1.3.0"
+    },
     "symfony/ux-turbo": {
         "version": "v1.3.0"
     },

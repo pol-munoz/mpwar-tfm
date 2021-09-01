@@ -19,7 +19,7 @@ install@php:
 .PHONY: install@node
 install@node:
 	@echo "🏗 ${BOLD}Installing Node dependencies${UNBOLD}..."
-	@docker-compose -f docker-compose.node.yaml run --rm -T node yarn install
+	@docker-compose -f docker-compose.node.yaml run --rm -T node yarn install --force
 
 .PHONY: install
 install: install@php install@node

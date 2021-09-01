@@ -18,13 +18,19 @@ This project makes use of several Domain-Driven Design practices and other relat
 
 ## Frameworks and Libraries
 
-- [Symfony](https://symfony.com/) as the main framework. Including the following components:
-    - [Symfony Security](https://symfony.com/doc/current/security.html) to manage user accounts with the [new authenticator system](https://symfony.com/doc/current/security/authenticator_manager.html).
-    - [Symfony Messenger](https://symfony.com/doc/current/messenger.html) to implement Command, Query and Domain Event buses.
+### Frontend:
 
-- [Ramsey UUID](https://uuid.ramsey.dev/en/stable/) to provide UUID-v4 unique entity identifiers.
-  
-- [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) as the Object-Relational-Mapper.
+- [Stimulus](https://stimulus.hotwired.dev/) as a light JavaScript framework.
+
+- [Turbo](https://turbo.hotwired.dev/) to improve perceived performance by performing requests in the background and updating instead of reloading the page.
+                       
+- [Chart.js](https://www.chartjs.org/) to display charts.
+
+- [FontAwesome](https://fontawesome.com/) for icons.
+
+- [Webpack Encore](https://symfony.com/doc/current/frontend.html) to manage, process and bundle assets.
+
+### Backend:
 
 - [Mercure](https://mercure.rocks/) for realtime server->client communication.
 
@@ -32,10 +38,15 @@ This project makes use of several Domain-Driven Design practices and other relat
 
 - [Elastic Stack](https://www.elastic.co/elastic-stack/) to efficiently structure and index logs from said file.
 
-- [Webpack Encore](https://symfony.com/doc/current/frontend.html) to manage, process and bundle assets.
-    - [Stimulus](https://stimulus.hotwired.dev/) as a light JavaScript framework.
-    - [Turbo](https://turbo.hotwired.dev/) to improve perceived performance by performing requests in the background and updating instead of reloading the page.
+- [Doctrine ORM](https://www.doctrine-project.org/projects/orm.html) as an Object-Relational-Mapper.
 
-- [Twig](https://twig.symfony.com/) to define and render templates.
+- [Twig](https://twig.symfony.com/) to define and render templates from the backend.
 
-- [FontAwesome](https://fontawesome.com/) for icons.
+- [Symfony](https://symfony.com/) as the main framework. Including the following components:
+    - [Symfony Security](https://symfony.com/doc/current/security.html) to manage user accounts with the [new authenticator system](https://symfony.com/doc/current/security/authenticator_manager.html).
+    - [Symfony Messenger](https://symfony.com/doc/current/messenger.html) to implement Command, Query and Domain Event buses.
+    - [Symfony UX Turbo](https://github.com/symfony/ux-turbo) to bridge Turbo and Symfony.
+    - [Symfony UX Chart.js](https://github.com/symfony/ux-chartjs) to bridge Chart.js and Symfony.
+    - Other bundles for the rest of the relevant technologies (Twig, Mercure, Monolog...)
+    
+- [Ramsey UUID](https://uuid.ramsey.dev/en/stable/) to provide UUID-v4 unique entity identifiers.
