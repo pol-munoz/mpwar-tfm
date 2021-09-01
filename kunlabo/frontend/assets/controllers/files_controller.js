@@ -228,7 +228,7 @@ export default class extends Controller {
         let main = document.getElementById('main')
 
         if (lastName.firstElementChild === null) {
-            fetch(this.injectBeforeId('file/main/'), {
+            fetch(this.injectBeforeId('file/'), {
                 method: 'POST',
                 body: this.lastFile,
                 credentials: 'include'
@@ -248,9 +248,9 @@ export default class extends Controller {
 
     delete() {
         let file = this.lastFile
-        if (confirm('Are you sure you want to delete this file?\n\n"' + this.lastFile + '"')) {
-            fetch(this.injectBeforeId('file/delete/'), {
-                method: 'POST',
+        if (confirm('Are you sure you want to delete this file?\n\n"' + this.file + '"')) {
+            fetch(this.injectBeforeId('file/'), {
+                method: 'DELETE',
                 body: file,
                 credentials: 'include'
             })

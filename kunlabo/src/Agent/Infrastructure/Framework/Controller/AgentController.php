@@ -78,7 +78,7 @@ final class AgentController extends AbstractController
         return new Response();
     }
 
-    #[Route('/file/main/{id}', name: 'web_agents_main_file_post', methods: ['POST'])]
+    #[Route('/file/{id}', name: 'web_agents_main_file', methods: ['POST'])]
     public function agentMainPost(
         Request $request,
         CommandBus $commandBus,
@@ -92,7 +92,7 @@ final class AgentController extends AbstractController
         return new Response();
     }
 
-    #[Route('/file/delete/{id}', name: 'web_agents_delete_file_post', methods: ['POST'])]
+    #[Route('/file/{id}', name: 'web_agents_delete_file', methods: ['DELETE'])]
     public function engineDeletePost(
         Request $request,
         CommandBus $commandBus,
