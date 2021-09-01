@@ -22,10 +22,17 @@
                 </a>
                 <h2 class="App-title">Participants - {{ study.name }}</h2>
             </div>
-            <button class="App-button" data-controller="clipboard" data-action="clipboard#copy"
-                    data-clipboard-text-value="{{ absolute_url(path('web_participant', {id: study.id })) }}">
-                Copy link
-            </button>
+            <div class="Studies-header-row">
+                <a href="{{ path('web_logs_by_study', {id: study.id}) }}"
+                   class="App-button" data-turbo-frame="modal"
+                   download="{{ study.name }}.json">
+                    Download logs
+                </a>
+                <button class="App-button" data-controller="clipboard" data-action="clipboard#copy"
+                        data-clipboard-text-value="{{ absolute_url(path('web_participant', {id: study.id })) }}">
+                    Copy link
+                </button>
+            </div>
         </div>
 
         {% if participants is empty %}
