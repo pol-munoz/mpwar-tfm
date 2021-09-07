@@ -30,14 +30,14 @@ function keyPressed() {
       creatures[cCreature].init()
       creatures[cCreature].activate()
       resetScenario()
-      logNewEvent('USER_STARTED_SIMULATION')
+      logNewEvent('Simulation started')
     } else {
       if (cCreature < creatures.length) {
         currentState = controllerStates.SHAPELAB
         creatures[cCreature].deactivate();
         creatures[cCreature].init()
         shapeLab.initCreature();
-        logNewEvent('USER_STARTED_SHAPELAB')
+        logNewEvent('Started shapelab')
       }
     }
     if (!roomAdmin) {
@@ -174,16 +174,16 @@ function manageEditionMode() {
       if (!roomAdmin) {
         updateUserStatus(currentState)
       }
-      logNewEvent('USER_FINISHED_EDITING', creatures[cCreature], true)
+      logNewEvent('Finished editing', creatures[cCreature], true)
     } else {
       activateEditionMode()
       if (!roomAdmin) {
         updateUserStatus(currentState + " (edit)")
       }
-      logNewEvent('USER_STARTED_EDITING')
+      logNewEvent('Started editing')
     }
   } else {
-    logNewEvent('USER_TRIED_EDITING_BUT_UNABLE')
+    logNewEvent('Tried editing but unable')
   }
 }
 function activateEditionMode() {
@@ -199,12 +199,12 @@ function finishEditionMode() {
 function addNewPiece() {
   activateEditionMode();
   shapeLab.addPiece();
-  logNewEvent('USER_ADDED_NEW_PIECE', {id: Date.now(), dna: shapeLab.roboArm.convert2Genes()}, true)
+  logNewEvent('Added piece', {id: Date.now(), dna: shapeLab.roboArm.convert2Genes()}, true)
 }
 function removeLastPiece() {
   activateEditionMode();
   shapeLab.removePiece();
-  logNewEvent('USER_REMOVED_LAST_PIECE', {id: Date.now(), dna: shapeLab.roboArm.convert2Genes()}, true)
+  logNewEvent('Removed piece', {id: Date.now(), dna: shapeLab.roboArm.convert2Genes()}, true)
 }
 function createNewCreature() {
   shapeLab.newCreature();
@@ -227,9 +227,9 @@ function clearCurrentCreature() {
   if (canEdit()) {
     shapeLab.clearPieces();
     activateEditionMode();
-    logNewEvent('USER_CLEARED_CREATURE')
+    logNewEvent('Cleared creature')
   } else {
-    logNewEvent('USER_TRIED_CLEARING_CREATURE_BUT_UNABLE')
+    logNewEvent('Tried clearing creature but unable')
   }
 }
 
@@ -257,7 +257,7 @@ function pullCurrentCreature() {
 }
 
 function acceptSuggestion(i) {
-  logNewEvent('USER_ACCEPTED_SUGGESTION', {channel: i, suggestion: suggestions[i]}, true)
+  logNewEvent('Accepted suggestion', {channel: i, suggestion: suggestions[i]}, true)
   shapeLab.pushTo(suggestions[i], 'creatures', 0)
 
   if (!roomAdmin) {
@@ -267,7 +267,7 @@ function acceptSuggestion(i) {
 }
 
 function rejectSuggestion(i) {
-  logNewEvent('USER_REJECTED_SUGGESTION', {channel: i, suggestion: suggestions[i]}, true)
+  logNewEvent('Rejected suggestion', {channel: i, suggestion: suggestions[i]}, true)
   
   if (!roomAdmin) {
     removeSuggestion(i)
@@ -275,7 +275,7 @@ function rejectSuggestion(i) {
   }
 }
 function endCurrentTurn() {
-  logNewEvent('USER_FINISHED_TURN')
+  logNewEvent('Finished turn')
 
   if (!roomAdmin) {
     sendAgentMessage({meta: meta.TURN})
@@ -288,13 +288,13 @@ function endCurrentTurn() {
 }
 
 function updateAiChange() {
-  logNewEvent('USER_UPDATED_AI_CHANGE', this.checked)
+  logNewEvent('Updated AI change', this.checked)
   if (!roomAdmin) {
     sendAgentMessage({meta: meta.AI, change: this.checked}, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
   }
 }
 function updateAiSimilarity() {
-  logNewEvent('USER_UPDATED_AI_SIMILARITY', this.value)
+  logNewEvent('Updated AI similarity', this.value)
   if (!roomAdmin) {
     sendAgentMessage({meta: meta.AI, similarity: this.value}, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
   }

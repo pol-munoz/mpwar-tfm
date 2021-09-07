@@ -50,7 +50,7 @@ class ShapeLab{
             y--
           }
 
-          logNewEvent('USER_STARTED_DRAGGING', { position: y, gene: creatures[cCreature].getDNA().getGenome(y) })
+          logNewEvent('Started dragging', { position: y, gene: creatures[cCreature].getDNA().getGenome(y) })
         }
       }
 
@@ -71,7 +71,7 @@ class ShapeLab{
 
       if (this._isYoinking) {
         this.updateProposal()
-        logNewEvent('USER_FINISHED_DRAGGING', creatures[cCreature], true)
+        logNewEvent('Finished dragging', creatures[cCreature], true)
       }
       this._isDragging = false;
       this._isYoinking = false;

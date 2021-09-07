@@ -47,4 +47,23 @@ final class Utils
             rmdir($dir);
         }
     }
+
+    public static function randomAlphaColor(float $alpha): string
+    {
+        $red = rand(0, 255);
+        $green = rand(0, 255);
+        $blue = rand(0, 255);
+
+        return 'rgba(' . $red . ', ' . $green . ', ' . $blue . ', ' . $alpha . ')';
+    }
+
+    public static function startColors(int $seed): void
+    {
+        srand($seed);
+    }
+
+    public static function endColors(): void
+    {
+        srand();
+    }
 }

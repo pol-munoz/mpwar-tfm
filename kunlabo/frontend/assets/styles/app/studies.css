@@ -166,3 +166,28 @@
     font-size: 1em;
     margin: 15px 0 0;
 }
+
+.Studies-insights-charts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Studies-insights-chart {
+    position: relative;
+    width: 30%;
+    min-width: 450px;
+    padding: 5px;
+}
+
+.Studies-insights-chart-large {
+    position: relative;
+    width: 50%;
+    min-width: 450px;
+    padding: 5px;
+}
+
+.Studies-insights-title {
+    color: #040910;
+}

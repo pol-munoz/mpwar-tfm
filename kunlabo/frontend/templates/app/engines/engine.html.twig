@@ -2,7 +2,7 @@
 
 {% extends 'app/base.html.twig' %}
 
-{% block title %}{{ engine.name }} - Kunlabo{% endblock %}
+{% block title %}{{ engine.name }} - Files - Kunlabo{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -29,7 +29,7 @@
             <div class="Engines-header-row">
                 {% block header %}
                     <a draggable="false" href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
-                    <h2 class="App-title">{{ engine.name }}</h2>
+                    <h2 class="App-title">Files - {{ engine.name }}</h2>
                 {% endblock %}
             </div>
         </div>

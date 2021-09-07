@@ -22,7 +22,7 @@
                 </a>
                 <h2 class="App-title">{{ agent.name }} - {{ study.name }}</h2>
             </div>
-            <p class="Studies-participant">{{ participant.name }} ({{ participant.age.raw }}, {{ participant.gender }}, {{ participant.handedness }})</p>
+            <p class="Studies-participant"><strong>{{ participant.name }}</strong> ({{ participant.age.raw }}, {{ participant.gender }}, {{ participant.handedness }})</p>
         </div>
         <iframe class="Studies-frame" src="{{ asset(agent.mainUrl) }}" title="{{ study.name }}" data-controller="iframe"
                 data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/agent/{{ study.id }}/{{ participant.id }}"

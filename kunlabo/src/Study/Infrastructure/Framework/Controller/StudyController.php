@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class StudyController extends AbstractController
 {
     #[Route('/{id}', name: 'web_studies_by_id', methods: ['GET'])]
-    public function engine(
+    public function study(
         QueryBus $queryBus,
         string $id
     ): Response {

@@ -27,7 +27,7 @@ function onEngineMessage(message) {
     switch (message.meta) {
         case meta.TURN:
             yourTurn = true
-            logNewEvent('USER_STARTED_TURN', creatures[cCreature], true)
+            logNewEvent('Turn started', creatures[cCreature], true)
             updateUserUI()
             break
         case meta.CREATURE:
@@ -100,7 +100,7 @@ function updateSuggestion(key, value) {
     suggestions[key] = Supercreature.fromRemote(value)
     suggestions[key].init()
 
-    logNewEvent('USER_RECEIVED_SUGGESTION', {channel: key, suggestion: suggestions[key]}, true)
+    logNewEvent('Suggestion received', {channel: key, suggestion: suggestions[key]}, true)
     
     switch (roomType) {
         case roomTypes.OVERLAP:

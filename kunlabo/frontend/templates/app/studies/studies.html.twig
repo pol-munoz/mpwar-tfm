@@ -53,6 +53,13 @@
                             <i class="fas fa-fw fa-link App-menu-option-icon"></i>
                             <p class="App-menu-option-text">Copy link</p>
                         </div>
+
+                        <a draggable="false" class="App-menu-option"
+                           href="{{ path('web_studies_insights', {id: study.id}) }}">
+                            <i class="fas fa-fw fa-chart-bar App-menu-option-icon"></i>
+                            <p class="App-menu-option-text">Insights</p>
+                        </a>
+
                         <a draggable="false" class="App-menu-option"
                            href="{{ path('web_logs_by_study', {id: study.id}) }}"
                            download="{{ study.name }}.json">

@@ -7,7 +7,10 @@ use Kunlabo\Shared\Domain\ValueObject\StringValueObject;
 
 final class Gender extends StringValueObject
 {
-    const GENDERS = ['male', 'female', 'nb'];
+    const MALE = 'male';
+    const FEMALE = 'female';
+    const NONBINARY = 'nb';
+    const GENDERS = [self::MALE, self::FEMALE, self::NONBINARY];
 
     public static function fromRaw(string $raw): self
     {
@@ -20,5 +23,20 @@ final class Gender extends StringValueObject
         if (!in_array($gender, self::GENDERS)) {
             throw new InvalidGenderException($gender);
         }
+    }
+
+    public function isMale(): bool
+    {
+        return $this->raw === self::MALE;
+    }
+
+    public function isFemale(): bool
+    {
+        return $this->raw === self::FEMALE;
+    }
+
+    public function isNonBinary(): bool
+    {
+        return $this->raw === self::NONBINARY;
     }
 }

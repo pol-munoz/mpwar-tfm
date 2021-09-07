@@ -71,7 +71,7 @@ btnShapeLabEndTurn.addEventListener('click', endCurrentTurn)
 selectEditionMode.addEventListener('change', onEditionModeClick)
 
 function onEditionModeClick() {
-    logNewEvent('USER_CHANGED_DRAG_MODE', this.value)
+    logNewEvent('Changed drag mode', this.value)
 }
 
 function getShapeLabBrush() { return selectEditionMode.value }

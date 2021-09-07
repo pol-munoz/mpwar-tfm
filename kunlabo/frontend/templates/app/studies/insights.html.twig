@@ -1,0 +1,85 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ study.name }} - Insights - Kunlabo{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('studies') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('studies') }}
+{% endblock %}
+
+{% block content %}
+    <div class="Studies-wrapper">
+        <div class="Studies-header">
+            <div class="Studies-header-row">
+                <a draggable="false" href="{{ path('web_studies') }}" class="App-button-back">
+                    <h2 class="App-title"><i class="fa fa-chevron-left"></i></h2>
+                </a>
+                <h2 class="App-title">Insights - {{ study.name }}</h2>
+            </div>
+
+            <div class="Studies-header-row">
+                <a draggable="false" href="{{ path('web_studies_by_id', {id: study.id}) }}"
+                   class="App-button">
+                    Participants
+                </a>
+                <a draggable="false" href="{{ path('web_logs_by_study', {id: study.id}) }}"
+                   class="App-button" download="{{ study.name }}.json">
+                    Download logs
+                </a>
+                <button class="App-button" data-controller="clipboard" data-action="clipboard#copy"
+                        data-clipboard-text-value="{{ absolute_url(path('web_participant', {id: study.id })) }}">
+                    Copy link
+                </button>
+            </div>
+        </div>
+
+        <h3 class="Studies-insights-title">Participants: {{ participants }}</h3>
+
+        {% if participants > 0 %}
+            <div class="Studies-insights-charts">
+                <div class="Studies-insights-chart">
+                    {{ render_chart(ages) }}
+                </div>
+                <div class="Studies-insights-chart">
+                    {{ render_chart(genders) }}
+                </div>
+                <div class="Studies-insights-chart">
+                    {{ render_chart(hands) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="App-placeholder">
+                <i class="fas fa-users App-placeholder-icon"></i>
+                <p class="App-placeholder-text">No participants yet. Check back later!</p>
+            </div>
+        {% endif %}
+
+        <h3 class="Studies-insights-title">Logs: {{ logs }}</h3>
+
+        {% if logs > 0 %}
+            {% if hasTypes %}
+                 <div class="Studies-insights-charts">
+                     <div class="Studies-insights-chart-large">
+                        {{ render_chart(types) }}
+                    </div>
+                 </div>
+            {% else %}
+                <div class="App-placeholder">
+                    <i class="fas fa-clipboard-list App-placeholder-icon"></i>
+                    <p class="App-placeholder-text">Your logs don't have a 'type' field.</p>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="App-placeholder">
+                <i class="fas fa-clipboard-list App-placeholder-icon"></i>
+                <p class="App-placeholder-text">No logs yet. Check back later!</p>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

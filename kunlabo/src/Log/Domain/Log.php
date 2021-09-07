@@ -7,6 +7,8 @@ use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
 final class Log
 {
+    const TYPE_KEY = 'type';
+
     private function __construct(
         private DateTime $created,
         private Uuid $studyId,
@@ -53,5 +55,15 @@ final class Log
     public function getBody(): array
     {
         return $this->body;
+    }
+
+    public function hasType(): bool
+    {
+        return array_key_exists(self::TYPE_KEY, $this->body);
+    }
+
+    public function getType(): string
+    {
+        return $this->body[self::TYPE_KEY];
     }
 }

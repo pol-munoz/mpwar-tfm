@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Security;
 final class AllStudiesController extends AbstractController
 {
     #[Route('/', name: 'web_studies', methods: ['GET'])]
-    public function allEngines(
+    public function allStudies(
         QueryBus $queryBus,
         Security $security
     ): Response {
@@ -30,7 +30,7 @@ final class AllStudiesController extends AbstractController
 
 
     #[Route('/{id}', name: 'web_studies_delete', methods: ['DELETE'])]
-    public function engineDelete(
+    public function studyDelete(
         CommandBus $commandBus,
         string $id
     ): Response {

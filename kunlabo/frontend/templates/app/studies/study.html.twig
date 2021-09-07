@@ -1,6 +1,6 @@
 {% extends 'app/base.html.twig' %}
 
-{% block title %}{{ study.name }} - Kunlabo{% endblock %}
+{% block title %}{{ study.name }} - Participants - Kunlabo{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -23,9 +23,12 @@
                 <h2 class="App-title">Participants - {{ study.name }}</h2>
             </div>
             <div class="Studies-header-row">
+                <a draggable="false" href="{{ path('web_studies_insights', {id: study.id}) }}"
+                   class="App-button">
+                    Insights
+                </a>
                 <a draggable="false" href="{{ path('web_logs_by_study', {id: study.id}) }}"
-                   class="App-button" data-turbo-frame="modal"
-                   download="{{ study.name }}.json">
+                   class="App-button" download="{{ study.name }}.json">
                     Download logs
                 </a>
                 <button class="App-button" data-controller="clipboard" data-action="clipboard#copy"
