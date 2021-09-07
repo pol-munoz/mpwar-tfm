@@ -202,6 +202,7 @@ final class StudyInsightsController extends AbstractController
                     $types++;
                 }
             }
+
         }
         Utils::endColors();
 
@@ -226,9 +227,6 @@ final class StudyInsightsController extends AbstractController
         );
         $ages->setOptions(
             [
-                'animation' => [
-                    'duration' => 0
-                ],
                 'scales' => [
                     'yAxes' => [
                         [
@@ -278,9 +276,6 @@ final class StudyInsightsController extends AbstractController
         );
         $genders->setOptions(
             [
-                'animation' => [
-                    'duration' => 0
-                ],
                 'legend' => [
                     'position' => 'bottom',
                     'labels' => [
@@ -315,9 +310,6 @@ final class StudyInsightsController extends AbstractController
         );
         $hands->setOptions(
             [
-                'animation' => [
-                    'duration' => 0
-                ],
                 'legend' => [
                     'position' => 'bottom',
                     'labels' => [
@@ -349,9 +341,6 @@ final class StudyInsightsController extends AbstractController
         );
         $types->setOptions(
             [
-                'animation' => [
-                    'duration' => 0
-                ],
                 'scales' => [
                     'yAxes' => [
                         [

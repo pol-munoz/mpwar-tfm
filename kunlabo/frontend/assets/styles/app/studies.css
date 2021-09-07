@@ -179,6 +179,8 @@
     width: 30%;
     min-width: 450px;
     padding: 5px;
+    opacity: 0;
+    animation: chart-fade-in 0.5s 0.4s forwards;
 }
 
 .Studies-insights-chart-large {
@@ -186,8 +188,17 @@
     width: 50%;
     min-width: 450px;
     padding: 5px;
+    opacity: 0;
+
+    animation: chart-fade-in 0.5s 0.4s forwards;
 }
 
 .Studies-insights-title {
     color: #040910;
+}
+
+
+@keyframes chart-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
