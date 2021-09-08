@@ -30,7 +30,7 @@ function keyPressed() {
       creatures[cCreature].init()
       creatures[cCreature].activate()
       resetScenario()
-      logNewEvent('Simulation started')
+      logNewEvent('Started simulation')
     } else {
       if (cCreature < creatures.length) {
         currentState = controllerStates.SHAPELAB

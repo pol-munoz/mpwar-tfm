@@ -17,6 +17,9 @@ final class ElasticLogRepository implements LogRepository
 
     public function readAllByStudyId(Uuid $studyId): array
     {
+        if (!$this->elastic->indices()->exists(['index' => self::INDEX])) {
+            return [];
+        }
         $response = $this->elastic->search(
             [
                 'index' => self::INDEX,
@@ -37,6 +40,9 @@ final class ElasticLogRepository implements LogRepository
 
     public function readAllByStudyAndParticipantId(Uuid $studyId, Uuid $participantId): array
     {
+        if (!$this->elastic->indices()->exists(['index' => self::INDEX])) {
+            return [];
+        }
         $response = $this->elastic->search(
             [
                 'index' => self::INDEX,
@@ -68,6 +74,9 @@ final class ElasticLogRepository implements LogRepository
 
     public function deleteAllByParticipantId(Uuid $participantId): void
     {
+        if (!$this->elastic->indices()->exists(['index' => self::INDEX])) {
+            return;
+        }
         $this->elastic->deleteByQuery(
             [
                 'index' => self::INDEX,

@@ -165,7 +165,7 @@ function simulateScenario() {
 
 function endScenario() {
   let fitness = scenario.getReward()
-  logNewEvent('SIMULATION_ENDED_NATURALLY', fitness)
+  logNewEvent('Simulation timeout', fitness)
   creatures[cCreature].setFitness(fitness);
   resetScenario();
   creatures[cCreature].deactivate();

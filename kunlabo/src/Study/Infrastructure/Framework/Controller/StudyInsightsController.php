@@ -16,6 +16,8 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 final class StudyInsightsController extends AbstractController
 {
+    const POINT_STYLES = ['circle', 'rect', 'rectRounded', 'rectRot', 'triangle'];
+
     #[Route('/insights/{id}', name: 'web_studies_insights', methods: ['GET'])]
     public function studyInsights(
         QueryBus $queryBus,
@@ -33,30 +35,39 @@ final class StudyInsightsController extends AbstractController
 
         $participantData = $this->prepareParticipantData($participants);
 
-        $ages = $this->prepareAges($chartBuilder, $participantData);
-        $genders = $this->prepareGenders($chartBuilder, $participantData);
-        $hands = $this->prepareHands($chartBuilder, $participantData);
+        $ageChart = $this->prepareAgeChart($chartBuilder, $participantData);
+        $genderChart = $this->prepareGenderChart($chartBuilder, $participantData);
+        $handChart = $this->prepareHandChart($chartBuilder, $participantData);
 
         $logs = [];
+        $count = 0;
+
         foreach ($participants as $participant) {
-            $results = $queryBus->ask(SearchLogsByStudyAndParticipantQuery::create($id, $participant->getId()->getRaw()))->getLogs();
-            $logs = array_merge($logs, $results);
+            $results = $queryBus->ask(
+                SearchLogsByStudyAndParticipantQuery::create($id, $participant->getId()->getRaw())
+            )->getLogs();
+            $logs[$participant->getId()->getRaw()]['logs'] = $results;
+            $logs[$participant->getId()->getRaw()]['name'] = $participant->getName()->getRaw();
+
+            $count += count($results);
         }
 
         $logsData = $this->prepareLogsData($logs);
-        $types = $this->prepareTypes($chartBuilder, $logsData);
+        $typeChart = $this->prepareTypeChart($chartBuilder, $logsData);
+        $journeyChart = $this->prepareJourneyChart($chartBuilder, $logsData);
 
         return $this->render(
             'app/studies/insights.html.twig',
             [
                 'study' => $study,
-                'ages' => $ages,
-                'genders' => $genders,
-                'hands' => $hands,
-                'participants' => count($participants),
-                'logs' => count($logs),
-                'hasTypes' => $logsData['hasTypes'],
-                'types' => $types,
+                'ageChart' => $ageChart,
+                'genderChart' => $genderChart,
+                'handChart' => $handChart,
+                'participantCount' => count($participants),
+                'logCount' => $count,
+                'typeCount' => $logsData['typeCount'],
+                'typeChart' => $typeChart,
+                'journeyChart' => $journeyChart
             ]
         );
     }
@@ -171,11 +182,15 @@ final class StudyInsightsController extends AbstractController
     private function prepareLogsData(array $logs): array
     {
         $data = [
-            'hasTypes' => false,
+            'typeCount' => 0,
+            'colors' => [],
             'types' => [
                 'labels' => [],
                 'data' => [],
-                'colors' => []
+            ],
+            'journeys' => [
+                'labels' => [],
+                'datasets' => []
             ]
         ];
 
@@ -186,30 +201,58 @@ final class StudyInsightsController extends AbstractController
         $lookup = [];
         $types = 0;
 
-        Utils::startColors(25);
-        foreach ($logs as $log) {
-            if ($log->hasType()) {
-                $data['hasTypes'] = true;
+        foreach ($logs as $participant) {
+            $minTimestamp = PHP_INT_MAX;
+            foreach ($participant['logs'] as $log) {
+                if ($log->hasType()) {
+                    $type = $log->getType();
 
-                $type = $log->getType();
-                if (array_key_exists($type, $lookup)) {
+                    if (!array_key_exists($type, $lookup)) {
+                        $color = Utils::uniqueAlphaColor($types, 0.7);
+
+                        $lookup[$type] = $types;
+                        $data['types']['labels'][] = $type;
+                        $data['types']['data'][] = 0;
+                        $data['colors'][] = $color;
+
+                        $data['journeys']['datasets'][] = [
+                            'data' => [],
+                            'pointStyle' => self::POINT_STYLES[$types % count(self::POINT_STYLES)],
+                            'pointBackgroundColor' => $color,
+                            'pointBorderColor' => $color,
+                            'label' => $type,
+                            'backgroundColor' => $color,
+                        ];
+
+                        $types++;
+                    }
                     $data['types']['data'][$lookup[$type]]++;
-                } else {
-                    $lookup[$type] = $types;
-                    $data['types']['labels'][] = $type;
-                    $data['types']['colors'][] = Utils::randomAlphaColor(0.6);
-                    $data['types']['data'][] = 1;
-                    $types++;
+
+                    if ($log->getTimestamp() < $minTimestamp) {
+                        $minTimestamp = $log->getTimestamp();
+                    }
                 }
             }
 
-        }
-        Utils::endColors();
+            $data['journeys']['labels'][] = $participant['name'];
 
+            foreach ($participant['logs'] as $log) {
+                if ($log->hasType()) {
+                    $type = $log->getType();
+
+                    $data['journeys']['datasets'][$lookup[$type]]['data'][] = [
+                        'x' => ($log->getTimestamp() - $minTimestamp) / 1000.0,
+                        'y' => $participant['name']
+                    ];
+                }
+            }
+        }
+
+        $data['typeCount'] = $types;
         return $data;
     }
 
-    private function prepareAges(ChartBuilderInterface $chartBuilder, array $data): Chart
+    private function prepareAgeChart(ChartBuilderInterface $chartBuilder, array $data): Chart
     {
         $ages = $chartBuilder->createChart(Chart::TYPE_BAR);
         $ages->setData(
@@ -256,7 +299,7 @@ final class StudyInsightsController extends AbstractController
         return $ages;
     }
 
-    private function prepareGenders(ChartBuilderInterface $chartBuilder, array $data): Chart
+    private function prepareGenderChart(ChartBuilderInterface $chartBuilder, array $data): Chart
     {
         $genders = $chartBuilder->createChart(Chart::TYPE_PIE);
         $genders->setData(
@@ -290,7 +333,7 @@ final class StudyInsightsController extends AbstractController
         return $genders;
     }
 
-    private function prepareHands(ChartBuilderInterface $chartBuilder, array $data): Chart
+    private function prepareHandChart(ChartBuilderInterface $chartBuilder, array $data): Chart
     {
         $hands = $chartBuilder->createChart(Chart::TYPE_PIE);
         $hands->setData(
@@ -324,7 +367,7 @@ final class StudyInsightsController extends AbstractController
         return $hands;
     }
 
-    private function prepareTypes(ChartBuilderInterface $chartBuilder, array $data): Chart
+    private function prepareTypeChart(ChartBuilderInterface $chartBuilder, array $data): Chart
     {
         $types = $chartBuilder->createChart(Chart::TYPE_BAR);
         $types->setData(
@@ -333,7 +376,7 @@ final class StudyInsightsController extends AbstractController
                 'datasets' => [
                     [
                         'label' => 'Logs',
-                        'backgroundColor' => $data['types']['colors'],
+                        'backgroundColor' => $data['colors'],
                         'data' => $data['types']['data']
                     ]
                 ]
@@ -363,6 +406,56 @@ final class StudyInsightsController extends AbstractController
                     'display' => false
                 ],
                 'title' => $this->titleConfig('Log type frequency'),
+                'aspectRatio' => 1.5
+            ]
+        );
+
+        return $types;
+    }
+
+    private function prepareJourneyChart(ChartBuilderInterface $chartBuilder, array $data): Chart
+    {
+        $types = $chartBuilder->createChart(Chart::TYPE_SCATTER);
+        $types->setData(
+            [
+                'datasets' => $data['journeys']['datasets']
+            ]
+        );
+
+        $types->setOptions(
+            [
+                'scales' => [
+                    'xAxes' => [
+                        [
+                            'ticks' => [
+                                'beginAtZero' => true,
+                                'precision' => 0
+                            ],
+                            'scaleLabel' => $this->axisLabelConfig('Time (seconds)')
+                        ]
+                    ],
+                    'yAxes' => [
+                        [
+                            'type' => 'category',
+                            'labels' => $data['journeys']['labels'],
+                            'scaleLabel' => $this->axisLabelConfig('Participant')
+                        ]
+                    ]
+                ],
+                'elements' => [
+                    'point' => [
+                        'radius' => 8,
+                        'hoverRadius' => 10
+                    ]
+                ],
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'padding' => 20,
+                        'usePointStyle' => true,
+                    ]
+                ],
+                'title' => $this->titleConfig('Participant journey over time'),
                 'aspectRatio' => 1.5
             ]
         );

@@ -39,7 +39,7 @@ final class Log
 
     public function getTimestamp(): int
     {
-        return  $this->created->getTimestamp();
+        return  $this->created->getTimestamp() * 1000 + (intval($this->created->format('u')) / 1000);
     }
 
     public function getStudyId(): Uuid

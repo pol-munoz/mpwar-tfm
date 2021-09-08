@@ -40,30 +40,41 @@ final class Utils
                 new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
                 RecursiveIteratorIterator::CHILD_FIRST
             );
-            foreach ($files as $fileinfo) {
-                $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-                $todo($fileinfo->getRealPath());
+            foreach ($files as $fileInfo) {
+                $todo = ($fileInfo->isDir() ? 'rmdir' : 'unlink');
+                $todo($fileInfo->getRealPath());
             }
             rmdir($dir);
         }
     }
 
-    public static function randomAlphaColor(float $alpha): string
-    {
-        $red = rand(0, 255);
-        $green = rand(0, 255);
-        $blue = rand(0, 255);
+    private const SILVER_RATIO = 0.618033988749895;
 
-        return 'rgba(' . $red . ', ' . $green . ', ' . $blue . ', ' . $alpha . ')';
+    public static function uniqueAlphaColor(int $n, float $alpha = 1.0): string
+    {
+        $h = 0.53;
+
+        if ($n % 2 === 0) {
+            $light = 50;
+            $sat = 80;
+        } else {
+            $light = 35;
+            $sat = 95;
+        }
+
+        for ($i = 0; $i < $n; $i++) {
+            if ($i % 2 ===1) {
+                $h += self::SILVER_RATIO;
+            }
+
+            if ($h > 1) {
+                $h -= 1;
+            }
+        }
+
+        $hue = $h * 360;
+
+        return "hsla(" . round($hue) . ", $sat%, $light%, $alpha)";
     }
 
-    public static function startColors(int $seed): void
-    {
-        srand($seed);
-    }
-
-    public static function endColors(): void
-    {
-        srand();
-    }
 }

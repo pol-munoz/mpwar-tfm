@@ -22,8 +22,8 @@
                     <button class="App-button" data-action="new-entity#show">New human agent</button>
                     <form class="Agents-form" action="{{ path('web_agents_post') }}" method="post" autocomplete="off"
                           data-new-entity-target="form" data-action="new-entity#submit">
-                        <label class="App-label" for="name" style="display: none">Name</label>
-                        <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="40"
+                        <label class="App-label" for="name" style="display: none">Human agent name</label>
+                        <input class="App-input" name="name" type="text" id="name" placeholder="Human agent name" size="40"
                                data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
                         <input type="hidden" name="kind" value="human">
                     </form>
@@ -32,8 +32,8 @@
                     <button class="App-button" data-action="new-entity#show">New AI agent</button>
                     <form class="Agents-form" action="{{ path('web_agents_post') }}" method="post" autocomplete="off"
                           data-new-entity-target="form" data-action="new-entity#submit">
-                        <label class="App-label" for="name" style="display: none">Name</label>
-                        <input class="App-input" name="name" type="text" id="name" placeholder="Name" size="40"
+                        <label class="App-label" for="name" style="display: none">AI agent name</label>
+                        <input class="App-input" name="name" type="text" id="name" placeholder="AI agent name" size="40"
                                data-new-entity-target="input" data-action="keyup->new-entity#keyUp blur->new-entity#blur">
                         <input type="hidden" name="kind" value="ai">
                     </form>
