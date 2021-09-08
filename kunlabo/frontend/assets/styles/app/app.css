@@ -59,6 +59,7 @@ body {
 }
 
 .App-nav {
+    margin-right: 1px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

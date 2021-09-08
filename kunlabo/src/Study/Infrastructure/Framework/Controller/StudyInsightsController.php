@@ -54,7 +54,8 @@ final class StudyInsightsController extends AbstractController
 
         $logsData = $this->prepareLogsData($logs);
         $typeChart = $this->prepareTypeChart($chartBuilder, $logsData);
-        $journeyChart = $this->prepareJourneyChart($chartBuilder, $logsData);
+        $journeyTimeChart = $this->prepareJourneyTimeChart($chartBuilder, $logsData);
+        $journeyActionChart = $this->prepareJourneyActionChart($chartBuilder, $logsData);
 
         return $this->render(
             'app/studies/insights.html.twig',
@@ -67,7 +68,8 @@ final class StudyInsightsController extends AbstractController
                 'logCount' => $count,
                 'typeCount' => $logsData['typeCount'],
                 'typeChart' => $typeChart,
-                'journeyChart' => $journeyChart
+                'journeyTimeChart' => $journeyTimeChart,
+                'journeyActionChart' => $journeyActionChart
             ]
         );
     }
@@ -189,8 +191,14 @@ final class StudyInsightsController extends AbstractController
                 'data' => [],
             ],
             'journeys' => [
-                'labels' => [],
-                'datasets' => []
+                'time' => [
+                    'labels' => [],
+                    'datasets' => []
+                ],
+                'action' => [
+                    'labels' => [],
+                    'datasets' => []
+                ]
             ]
         ];
 
@@ -215,7 +223,15 @@ final class StudyInsightsController extends AbstractController
                         $data['types']['data'][] = 0;
                         $data['colors'][] = $color;
 
-                        $data['journeys']['datasets'][] = [
+                        $data['journeys']['time']['datasets'][] = [
+                            'data' => [],
+                            'pointStyle' => self::POINT_STYLES[$types % count(self::POINT_STYLES)],
+                            'pointBackgroundColor' => $color,
+                            'pointBorderColor' => $color,
+                            'label' => $type,
+                            'backgroundColor' => $color,
+                        ];
+                        $data['journeys']['action']['datasets'][] = [
                             'data' => [],
                             'pointStyle' => self::POINT_STYLES[$types % count(self::POINT_STYLES)],
                             'pointBackgroundColor' => $color,
@@ -234,14 +250,19 @@ final class StudyInsightsController extends AbstractController
                 }
             }
 
-            $data['journeys']['labels'][] = $participant['name'];
+            $data['journeys']['time']['labels'][] = $participant['name'];
+            $data['journeys']['action']['labels'][] = $participant['name'];
 
-            foreach ($participant['logs'] as $log) {
+            foreach ($participant['logs'] as $x => $log) {
                 if ($log->hasType()) {
                     $type = $log->getType();
 
-                    $data['journeys']['datasets'][$lookup[$type]]['data'][] = [
+                    $data['journeys']['time']['datasets'][$lookup[$type]]['data'][] = [
                         'x' => ($log->getTimestamp() - $minTimestamp) / 1000.0,
+                        'y' => $participant['name']
+                    ];
+                    $data['journeys']['action']['datasets'][$lookup[$type]]['data'][] = [
+                        'x' => $x,
                         'y' => $participant['name']
                     ];
                 }
@@ -292,7 +313,7 @@ final class StudyInsightsController extends AbstractController
                     'display' => false
                 ],
                 'title' => $this->titleConfig('Age distribution'),
-                'aspectRatio' => 1.5
+                'aspectRatio' => 1.618
             ]
         );
 
@@ -326,7 +347,7 @@ final class StudyInsightsController extends AbstractController
                     ]
                 ],
                 'title' => $this->titleConfig('Gender distribution'),
-                'aspectRatio' => 1.5
+                'aspectRatio' => 1.618
             ]
         );
 
@@ -360,7 +381,7 @@ final class StudyInsightsController extends AbstractController
                     ]
                 ],
                 'title' => $this->titleConfig('Handedness distribution'),
-                'aspectRatio' => 1.5
+                'aspectRatio' => 1.618
             ]
         );
 
@@ -406,19 +427,19 @@ final class StudyInsightsController extends AbstractController
                     'display' => false
                 ],
                 'title' => $this->titleConfig('Log type frequency'),
-                'aspectRatio' => 1.5
+                'aspectRatio' => 1.618
             ]
         );
 
         return $types;
     }
 
-    private function prepareJourneyChart(ChartBuilderInterface $chartBuilder, array $data): Chart
+    private function prepareJourneyTimeChart(ChartBuilderInterface $chartBuilder, array $data): Chart
     {
         $types = $chartBuilder->createChart(Chart::TYPE_SCATTER);
         $types->setData(
             [
-                'datasets' => $data['journeys']['datasets']
+                'datasets' => $data['journeys']['time']['datasets']
             ]
         );
 
@@ -437,7 +458,7 @@ final class StudyInsightsController extends AbstractController
                     'yAxes' => [
                         [
                             'type' => 'category',
-                            'labels' => $data['journeys']['labels'],
+                            'labels' => $data['journeys']['time']['labels'],
                             'scaleLabel' => $this->axisLabelConfig('Participant')
                         ]
                     ]
@@ -455,8 +476,58 @@ final class StudyInsightsController extends AbstractController
                         'usePointStyle' => true,
                     ]
                 ],
-                'title' => $this->titleConfig('Participant journey over time'),
-                'aspectRatio' => 1.5
+                'title' => $this->titleConfig('Interaction journey over time'),
+                'maintainAspectRatio' => false
+            ]
+        );
+
+        return $types;
+    }
+
+    private function prepareJourneyActionChart(ChartBuilderInterface $chartBuilder, array $data): Chart
+    {
+        $types = $chartBuilder->createChart(Chart::TYPE_SCATTER);
+        $types->setData(
+            [
+                'datasets' => $data['journeys']['action']['datasets']
+            ]
+        );
+
+        $types->setOptions(
+            [
+                'scales' => [
+                    'xAxes' => [
+                        [
+                            'ticks' => [
+                                'beginAtZero' => true,
+                                'precision' => 0
+                            ],
+                            'scaleLabel' => $this->axisLabelConfig('Action #')
+                        ]
+                    ],
+                    'yAxes' => [
+                        [
+                            'type' => 'category',
+                            'labels' => $data['journeys']['action']['labels'],
+                            'scaleLabel' => $this->axisLabelConfig('Participant')
+                        ]
+                    ]
+                ],
+                'elements' => [
+                    'point' => [
+                        'radius' => 8,
+                        'hoverRadius' => 10
+                    ]
+                ],
+                'legend' => [
+                    'position' => 'bottom',
+                    'labels' => [
+                        'padding' => 20,
+                        'usePointStyle' => true,
+                    ]
+                ],
+                'title' => $this->titleConfig('Interaction journey over actions'),
+                'maintainAspectRatio' => false
             ]
         );
 

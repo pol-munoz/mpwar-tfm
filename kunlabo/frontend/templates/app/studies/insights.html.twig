@@ -42,13 +42,13 @@
 
         {% if participantCount > 0 %}
             <div class="Studies-insights-charts">
-                <div class="Studies-insights-chart">
+                <div class="Studies-insights-chart Studies-insights-chart-small">
                     {{ render_chart(ageChart) }}
                 </div>
-                <div class="Studies-insights-chart">
+                <div class="Studies-insights-chart Studies-insights-chart-small">
                     {{ render_chart(genderChart) }}
                 </div>
-                <div class="Studies-insights-chart">
+                <div class="Studies-insights-chart Studies-insights-chart-small">
                     {{ render_chart(handChart) }}
                 </div>
             </div>
@@ -64,13 +64,20 @@
         {% if logCount > 0 %}
             {% if typeCount > 0 %}
                  <div class="Studies-insights-charts">
-                     <div class="Studies-insights-chart-large">
+                     <div class="Studies-insights-chart Studies-insights-chart-large">
                         {{ render_chart(typeChart) }}
                     </div>
-                     <div class="Studies-insights-chart-large">
-                        {{ render_chart(journeyChart, {height: max(30 + 10 * participantCount + 5 * typeCount, 150) }) }}
-                    </div>
                  </div>
+
+                <div class="Studies-insights-charts">
+                    {% set height = max(100 + 30 * participantCount + 10 * typeCount, 350) %}
+                    <div class="Studies-insights-chart Studies-insights-chart-medium">
+                        {{ render_chart(journeyTimeChart, {height}) }}
+                    </div>
+                    <div class="Studies-insights-chart Studies-insights-chart-medium">
+                        {{ render_chart(journeyActionChart, {height}) }}
+                    </div>
+                </div>
             {% else %}
                 <div class="App-placeholder">
                     <i class="fas fa-clipboard-list App-placeholder-icon"></i>

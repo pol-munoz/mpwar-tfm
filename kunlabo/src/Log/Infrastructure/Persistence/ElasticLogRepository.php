@@ -26,6 +26,7 @@ final class ElasticLogRepository implements LogRepository
                 'size' => 100,
                 'scroll' => '30s',
                 'body' => [
+                    'sort' => ['datetime'],
                     'query' => [
                         'term' => [
                             'log.study.keyword' => $studyId->getRaw()
@@ -49,6 +50,7 @@ final class ElasticLogRepository implements LogRepository
                 'size' => 100,
                 'scroll' => '30s',
                 'body' => [
+                    'sort' => ['datetime'],
                     'query' => [
                         'bool' => [
                             'must' => [

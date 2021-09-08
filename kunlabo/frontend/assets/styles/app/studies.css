@@ -176,20 +176,21 @@
 
 .Studies-insights-chart {
     position: relative;
-    width: 30%;
     min-width: 450px;
     padding: 5px;
     opacity: 0;
     animation: chart-fade-in 0.5s 0.4s forwards;
 }
 
+.Studies-insights-chart-small {
+    width: 30%;
+}
+
+.Studies-insights-chart-medium {
+    width: 40%;
+}
 .Studies-insights-chart-large {
-    position: relative;
     width: 50%;
-    min-width: 450px;
-    padding: 5px;
-    opacity: 0;
-    animation: chart-fade-in 0.5s 0.4s forwards;
 }
 
 .Studies-insights-title {
