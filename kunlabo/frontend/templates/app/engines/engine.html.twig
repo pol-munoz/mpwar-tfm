@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Engines-wrapper" data-controller="files" data-files-main-value="{{ engine.main }}"
+    <div class="App-content-wrapper" data-controller="files" data-files-main-value="{{ engine.main }}"
          data-action="dragenter->files#dragEnter dragover->files#drag dragleave->files#dragLeave drop->files#drop click->files#closeMenuIfOutside">
 
         <div class="Files-overlay-wrapper" data-files-target="overlay">
@@ -25,8 +25,8 @@
             </div>
         </div>
 
-        <div class="Engines-header">
-            <div class="Engines-header-row">
+        <div class="App-content-header">
+            <div class="App-content-header-row">
                 {% block header %}
                     <a draggable="false" href="{{ path('web_engines') }}" class="App-button-back"><h2 class="App-title"><i class="fa fa-chevron-left"></i></h2></a>
                     <h2 class="App-title">Files - {{ engine.name }}</h2>

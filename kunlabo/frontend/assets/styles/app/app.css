@@ -26,6 +26,31 @@ body {
     border-bottom: 1px solid #f8f8f8;
 }
 
+.App-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 50px;
+    position: relative;
+}
+
+.App-content-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.App-content-header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 7px 0;
+}
+
+
 .App-logo {
     display: flex;
 }

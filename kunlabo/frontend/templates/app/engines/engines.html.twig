@@ -13,9 +13,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="Engines-wrapper" data-controller="new-entity menu" data-action="click->menu#closeMenuIfOutside"
+    <div class="App-content-wrapper" data-controller="new-entity menu" data-action="click->menu#closeMenuIfOutside"
          data-menu-delete-message-value="Are you sure you want to delete this engine? This will remove any studies that use it.">
-        <div class="Engines-header">
+        <div class="App-content-header">
             <h1 class="App-title">Engines</h1>
             <button class="App-button" data-action="new-entity#show">New engine</button>
             <form class="Engines-form" action="{{ path('web_engines_post') }}" method="post" autocomplete="off"

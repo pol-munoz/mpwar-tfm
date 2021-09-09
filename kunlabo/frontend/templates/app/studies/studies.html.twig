@@ -18,9 +18,9 @@
         {% block modal %}
         {% endblock %}
     </turbo-frame>
-    <div class="Studies-wrapper" data-controller="menu" data-action="click->menu#closeMenuIfOutside"
+    <div class="App-content-wrapper" data-controller="menu" data-action="click->menu#closeMenuIfOutside"
          data-menu-delete-message-value="Are you sure you want to delete this study? This will remove its participants and logs.">
-        <div class="Studies-header">
+        <div class="App-content-header">
             <h1 class="App-title">Studies</h1>
             <a draggable="false" href="{{ path('web_studies_new') }}" class="App-button" data-turbo-frame="modal">New study</a>
         </div>
