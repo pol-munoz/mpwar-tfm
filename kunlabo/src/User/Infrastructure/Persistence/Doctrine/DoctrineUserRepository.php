@@ -24,13 +24,11 @@ final class DoctrineUserRepository implements UserRepository
         $this->manager->flush();
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readById(Uuid $id): ?User
     {
         return $this->repository->find($id);
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readByEmail(Email $email): ?User
     {
         return $this->repository->findOneBy(

@@ -23,7 +23,6 @@ final class DoctrineParticipantRepository implements ParticipantRepository
         $this->manager->flush();
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readById(Uuid $id): ?Participant
     {
         return $this->repository->find($id);
@@ -34,6 +33,15 @@ final class DoctrineParticipantRepository implements ParticipantRepository
         return $this->repository->findBy(
             ['studyId' => $study],
             ['modified' => 'DESC']
+        );
+    }
+
+    public function readNewForStudy(Uuid $study): array
+    {
+        return $this->repository->findBy(
+            ['studyId' => $study],
+            ['created' => 'DESC'],
+            5
         );
     }
 

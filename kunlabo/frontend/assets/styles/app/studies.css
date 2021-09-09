@@ -1,37 +1,3 @@
-.Studies-list-header {
-    padding: 10px 20px;
-}
-
-.Studies-list-item {
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-    justify-content: flex-end;
-    color: #040910;
-    overflow: hidden;
-}
-
-.Studies-list-item:first-of-type {
-    justify-content: flex-start;
-}
-
-.Studies-list-row {
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 2em;
-}
-
-.Studies-list-item > span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.Studies-list-row:hover {
-    background: white;
-    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
-}
-
 .Studies-participant-list-row {
     padding: 10px 20px;
     text-decoration: none;
@@ -169,11 +135,6 @@
 .Studies-insights-chart-large {
     width: 50%;
 }
-
-.Studies-insights-title {
-    color: #040910;
-}
-
 
 @keyframes chart-fade-in {
     from { opacity: 0; }

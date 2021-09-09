@@ -4,37 +4,3 @@
     right: 0;
     z-index: 10;
 }
-
-.Engines-list-header {
-    padding: 10px 20px;
-}
-
-.Engines-list-item {
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-    justify-content: flex-end;
-    color: #040910;
-    overflow: hidden;
-}
-
-.Engines-list-item:first-of-type {
-    justify-content: flex-start;
-}
-
-.Engines-list-row {
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 2em;
-}
-
-.Engines-list-item > span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.Engines-list-row:hover {
-    background: white;
-    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
-}

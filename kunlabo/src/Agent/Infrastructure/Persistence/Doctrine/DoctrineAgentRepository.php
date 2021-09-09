@@ -33,7 +33,6 @@ final class DoctrineAgentRepository implements AgentRepository
         $this->manager->flush();
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readById(Uuid $id): ?Agent
     {
         return $this->repository->find($id);
@@ -47,7 +46,6 @@ final class DoctrineAgentRepository implements AgentRepository
         );
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readFileByAgentIdAndPath(Uuid $agent, string $path): ?AgentFile
     {
         return $this->fileRepository->findOneBy(

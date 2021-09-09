@@ -2,5 +2,53 @@
 
 {% block title %}Home - Kunlabo{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('home') }}
+{% endblock %}
+
 {% block content %}
+    <div class="App-content-wrapper">
+        <div class="App-content-header">
+            <h1 class="App-title">Home</h1>
+        </div>
+
+        <h3 class="App-subtitle">Recent activity</h3>
+
+        <h1>TODO number of logs over time last week</h1>
+
+        <h3 class="App-subtitle">New participants</h3>
+
+        {% if participants is empty %}
+            <div class="App-placeholder">
+                <i class="fas fa-users App-placeholder-icon"></i>
+                <p class="App-placeholder-text">No participants yet. Check back later!</p>
+            </div>
+        {% else %}
+            <div class="App-six-columns App-list-header">
+                <p class="App-list-item"><strong>Study</strong></p>
+                <p class="App-list-item"><strong>Nickname</strong></p>
+                <p class="App-list-item"><strong>Age</strong></p>
+                <p class="App-list-item"><strong>Gender</strong></p>
+                <p class="App-list-item"><strong>Handedness</strong></p>
+                <p class="App-list-item"><strong>Joined</strong></p>
+            </div>
+                {% for participant in participants %}
+                    <a draggable="false" class="App-six-columns App-list-row" href="{{ path('web_studies_by_id', {id: participant.studyId}) }}">
+                        <div class="App-list-item"><span>{{ studies[participant.studyId.raw].name }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.name }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.age.raw }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.gender }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.handedness }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.modified | ago }}</span></div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

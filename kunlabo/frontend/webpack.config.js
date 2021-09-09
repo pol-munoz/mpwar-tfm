@@ -23,6 +23,7 @@ Encore
     .addEntry('app', './webpack/app/app.js')
     .addEntry('auth', './webpack/auth/auth.js')
     .addEntry('landing', './webpack/landing.js')
+    .addEntry('home', './webpack/app/home.js')
     .addEntry('engines', './webpack/app/engines.js')
     .addEntry('agents', './webpack/app/agents.js')
     .addEntry('studies', './webpack/app/studies.js')

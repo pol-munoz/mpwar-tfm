@@ -47,20 +47,20 @@
                 <p class="App-placeholder-text">No agents yet. Create one!</p>
             </div>
         {% else %}
-                <div class="App-four-columns-right Agents-list-header">
-                    <p class="Agents-list-item"><strong>Name</strong></p>
-                    <p class="Agents-list-item"><strong>Created</strong></p>
-                    <p class="Agents-list-item"><strong>Modified</strong></p>
+                <div class="App-four-columns-right App-list-header">
+                    <p class="App-list-item"><strong>Name</strong></p>
+                    <p class="App-list-item"><strong>Created</strong></p>
+                    <p class="App-list-item"><strong>Modified</strong></p>
                 </div>
                 {% for agent in agents %}
                     <div class="App-menu-wrapper" id="{{ agent.id }}">
-                        <a draggable="false" class="App-five-columns Agents-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
-                            <div class="Agents-list-item">
+                        <a draggable="false" class="App-five-columns-left App-list-row" href="{{ path('web_agents_by_id', {id: agent.id}) }}">
+                            <div class="App-list-item">
                                 <i class="fas fa-fw fa-{{ agent.kind == 'human' ? 'user' : 'robot' }} Agents-list-icon"></i>
                             </div>
-                            <div class="Agents-list-item"><span>{{ agent.name }}</span></div>
-                            <div class="Agents-list-item"><span>{{ agent.created | ago }}</span></div>
-                            <div class="Agents-list-item"><span>{{ agent.modified | ago }}</span></div>
+                            <div class="App-list-item"><span>{{ agent.name }}</span></div>
+                            <div class="App-list-item"><span>{{ agent.created | ago }}</span></div>
+                            <div class="App-list-item"><span>{{ agent.modified | ago }}</span></div>
 
                             <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->menu#toggleMenu"></i>
                         </a>

@@ -23,7 +23,6 @@ final class DoctrineStudyRepository implements StudyRepository
         $this->manager->flush();
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readById(Uuid $id): ?Study
     {
         return $this->repository->find($id);

@@ -215,6 +215,10 @@ body {
     color: #040910;
 }
 
+.App-subtitle {
+    color: #040910;
+}
+
 .App-button-back {
     cursor: pointer;
     width: 2.25em;
@@ -254,11 +258,6 @@ body {
     grid-template-columns: 1fr 15vw 15vw;
 }
 
-.App-six-columns-right {
-    display: grid;
-    grid-template-columns: 1fr 5vw 9vw 12vw 15vw 60px;
-}
-
 .App-four-columns-right {
     display: grid;
     grid-template-columns: 1fr 15vw 15vw 60px;
@@ -269,9 +268,58 @@ body {
     grid-template-columns: 35px 1fr 15vw 15vw;
 }
 
-.App-five-columns {
+.App-five-columns-left {
     display: grid;
     grid-template-columns: 35px 1fr 15vw 15vw 60px;
+}
+
+.App-five-columns {
+    display: grid;
+    grid-template-columns: 1fr 5vw 9vw 12vw 15vw;
+}
+
+.App-six-columns {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 5vw 9vw 12vw 15vw;
+}
+
+.App-six-columns-right {
+    display: grid;
+    grid-template-columns: 1fr 5vw 9vw 12vw 15vw 60px;
+}
+
+.App-list-header {
+    padding: 10px 20px;
+}
+
+.App-list-item {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    justify-content: flex-end;
+    color: #040910;
+    overflow: hidden;
+}
+
+.App-list-item > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.App-list-item:first-of-type {
+    justify-content: flex-start;
+}
+
+.App-list-row {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 2em;
+}
+
+.App-list-row:hover {
+    background: white;
+    box-shadow: 0 1px 4px rgba(29, 61, 112, 0.2);
 }
 
 .App-error {
@@ -282,7 +330,6 @@ body {
     border-radius: 2em;
     margin: 20px 0 0;
 }
-
 
 .App-kebab-button {
     color: #1d3d70;

@@ -33,7 +33,6 @@ final class DoctrineEngineRepository implements EngineRepository
         $this->manager->flush();
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readById(Uuid $id): ?Engine
     {
         return $this->repository->find($id);
@@ -47,7 +46,6 @@ final class DoctrineEngineRepository implements EngineRepository
         );
     }
 
-    /** @noinspection PhpIncompatibleReturnTypeInspection */
     public function readFileByEngineIdAndPath(Uuid $engine, string $path): ?EngineFile
     {
         return $this->fileRepository->findOneBy(

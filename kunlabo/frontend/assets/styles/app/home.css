@@ -1,0 +1,3 @@
+.App-list-item:nth-of-type(2) {
+    justify-content: flex-start;
+}

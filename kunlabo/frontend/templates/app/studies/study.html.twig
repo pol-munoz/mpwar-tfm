@@ -44,21 +44,21 @@
                 <p class="App-placeholder-text">No participants yet. Share your link!</p>
             </div>
         {% else %}
-            <div class="App-six-columns-right Studies-list-header">
-                <p class="Studies-list-item"><strong>Nickname</strong></p>
-                <p class="Studies-list-item"><strong>Age</strong></p>
-                <p class="Studies-list-item"><strong>Gender</strong></p>
-                <p class="Studies-list-item"><strong>Handedness</strong></p>
-                <p class="Studies-list-item"><strong>Last active</strong></p>
+            <div class="App-six-columns-right App-list-header">
+                <p class="App-list-item"><strong>Nickname</strong></p>
+                <p class="App-list-item"><strong>Age</strong></p>
+                <p class="App-list-item"><strong>Gender</strong></p>
+                <p class="App-list-item"><strong>Handedness</strong></p>
+                <p class="App-list-item"><strong>Last active</strong></p>
             </div>
             {% for participant in participants %}
                 <div class="App-menu-wrapper" id="{{ participant.id }}">
                     <div class="App-six-columns-right Studies-participant-list-row">
-                        <div class="Studies-list-item"><span>{{ participant.name }}</span></div>
-                        <div class="Studies-list-item"><span>{{ participant.age.raw }}</span></div>
-                        <div class="Studies-list-item"><span>{{ participant.gender }}</span></div>
-                        <div class="Studies-list-item"><span>{{ participant.handedness }}</span></div>
-                        <div class="Studies-list-item"><span>{{ participant.modified | ago }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.name }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.age.raw }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.gender }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.handedness }}</span></div>
+                        <div class="App-list-item"><span>{{ participant.modified | ago }}</span></div>
 
                         <i class="fas fa-ellipsis-v fa-fw App-kebab-button" data-action="click->menu#toggleMenu"></i>
                     </div>
