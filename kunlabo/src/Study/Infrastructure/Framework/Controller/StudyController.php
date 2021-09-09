@@ -13,12 +13,14 @@ use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class StudyController extends AbstractController
 {
     #[Route('/{id}', name: 'web_studies_by_id', methods: ['GET'])]
     public function study(
         QueryBus $queryBus,
+        Security $security,
         string $id
     ): Response {
         try {
@@ -26,7 +28,8 @@ final class StudyController extends AbstractController
 
             $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
-            if ($study === null) {
+            $owner = $security->getUser()->getId();
+            if ($study === null || !$study->isOwnedBy($owner)) {
                 throw $this->createNotFoundException();
             }
 

@@ -17,12 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class EngineFolderController extends AbstractController
 {
     #[Route('/{id}{folder}', name: 'web_engines_by_id_and_folder', requirements: ['folder' => '.+'], methods: ['GET'])]
     public function engineFolder(
         QueryBus $queryBus,
+        Security $security,
         string $id,
         string $folder,
     ): Response {
@@ -31,7 +33,8 @@ final class EngineFolderController extends AbstractController
 
             $engine = $queryBus->ask(FindEngineByIdQuery::create($id))->getEngine();
 
-            if ($engine === null) {
+            $owner = $security->getUser()->getId();
+            if ($engine === null || !$engine->isOwnedBy($owner)) {
                 throw $this->createNotFoundException();
             }
 

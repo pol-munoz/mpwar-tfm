@@ -17,12 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class AgentController extends AbstractController
 {
     #[Route('/{id}', name: 'web_agents_by_id', methods: ['GET'])]
     public function agent(
         QueryBus $queryBus,
+        Security $security,
         string $id
     ): Response {
         try {
@@ -30,7 +32,8 @@ final class AgentController extends AbstractController
 
             $agent = $queryBus->ask(FindAgentByIdQuery::create($id))->getAgent();
 
-            if ($agent === null) {
+            $owner = $security->getUser()->getId();
+            if ($agent === null || !$agent->isOwnedBy($owner)) {
                 throw $this->createNotFoundException();
             }
 

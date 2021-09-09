@@ -17,12 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class AgentFolderController extends AbstractController
 {
     #[Route('/{id}{folder}', name: 'web_agents_by_id_and_folder', requirements: ['folder' => '.+'], methods: ['GET'])]
     public function agentFolder(
         QueryBus $queryBus,
+        Security $security,
         string $id,
         string $folder,
     ): Response {
@@ -31,7 +33,8 @@ final class AgentFolderController extends AbstractController
 
             $agent = $queryBus->ask(FindAgentByIdQuery::create($id))->getAgent();
 
-            if ($agent === null) {
+            $owner = $security->getUser()->getId();
+            if ($agent === null || !$agent->isOwnedBy($owner)) {
                 throw $this->createNotFoundException();
             }
 

@@ -14,12 +14,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class HumanStudyController extends AbstractController
 {
     #[Route('/human/{id}/{participant}', name: 'web_studies_human', methods: ['GET'])]
     public function human(
         QueryBus $queryBus,
+        Security $security,
         string $id,
         string $participant
     ): Response {
@@ -28,7 +30,8 @@ final class HumanStudyController extends AbstractController
 
             $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
-            if ($study === null) {
+            $owner = $security->getUser()->getId();
+            if ($study === null || !$study->isOwnedBy($owner)) {
                 throw $this->createNotFoundException();
             }
 
@@ -59,6 +62,7 @@ final class HumanStudyController extends AbstractController
         Request $request,
         CommandBus $commandBus,
         QueryBus $queryBus,
+        Security $security,
         string $id,
         string $participant
     ): Response {
@@ -66,7 +70,8 @@ final class HumanStudyController extends AbstractController
 
         $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
-        if ($study === null) {
+        $owner = $security->getUser()->getId();
+        if ($study === null || !$study->isOwnedBy($owner)) {
             throw $this->createNotFoundException();
         }
 

@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class LogController extends AbstractController
 {
@@ -19,12 +20,14 @@ final class LogController extends AbstractController
     #[Route('/{id}/{participant}', name: 'web_logs_by_participant', methods: ['GET'])]
     public function participantLogs(
         QueryBus $queryBus,
+        Security $security,
         string $id,
         string $participant
     ): Response {
         $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
-        if ($study === null) {
+        $owner = $security->getUser()->getId();
+        if ($study === null || !$study->isOwnedBy($owner)) {
             throw $this->createNotFoundException();
         }
 
@@ -45,11 +48,13 @@ final class LogController extends AbstractController
     #[Route('/{id}', name: 'web_logs_by_study', methods: ['GET'])]
     public function studyLogs(
         QueryBus $queryBus,
+        Security $security,
         string $id
     ): Response {
         $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
-        if ($study === null) {
+        $owner = $security->getUser()->getId();
+        if ($study === null || !$study->isOwnedBy($owner)) {
             throw $this->createNotFoundException();
         }
 

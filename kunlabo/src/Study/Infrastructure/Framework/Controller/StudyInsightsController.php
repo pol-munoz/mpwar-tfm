@@ -11,6 +11,7 @@ use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
@@ -21,13 +22,16 @@ final class StudyInsightsController extends AbstractController
     #[Route('/insights/{id}', name: 'web_studies_insights', methods: ['GET'])]
     public function studyInsights(
         QueryBus $queryBus,
+        Security $security,
         ChartBuilderInterface $chartBuilder,
         string $id
     ): Response {
         $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
 
         $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
-        if ($study === null) {
+
+        $owner = $security->getUser()->getId();
+        if ($study === null || !$study->isOwnedBy($owner)) {
             throw $this->createNotFoundException();
         }
 

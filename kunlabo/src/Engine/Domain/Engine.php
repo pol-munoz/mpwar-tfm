@@ -9,20 +9,20 @@ use Kunlabo\Engine\Domain\Event\EngineFileCreatedEvent;
 use Kunlabo\Engine\Domain\Event\EngineFileDeletedEvent;
 use Kunlabo\Engine\Domain\Event\EngineFileUpdatedEvent;
 use Kunlabo\Engine\Domain\Event\EngineMainPathSetEvent;
-use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
+use Kunlabo\Shared\Domain\Aggregate\OwnedNamedAggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-final class Engine extends NamedAggregateRoot {
+final class Engine extends OwnedNamedAggregateRoot {
     private function __construct(
         Uuid $id,
         DateTime $created,
         DateTime $modified,
         Name $name,
-        private Uuid $owner,
+        Uuid $owner,
         private string $main
     ) {
-        parent::__construct($id, $created, $modified, $name);
+        parent::__construct($id, $created, $modified, $name, $owner);
     }
 
     public static function create(
@@ -34,11 +34,6 @@ final class Engine extends NamedAggregateRoot {
         $engine->record(new EngineCreatedEvent($engine));
 
         return $engine;
-    }
-
-    public function getOwner(): Uuid
-    {
-        return $this->owner;
     }
 
     public function getMain(): string

@@ -63,13 +63,13 @@ final class NewStudyController extends AbstractController
         try {
             $engineQuery = FindEngineByIdQuery::create($engineId);
             $engine = $queryBus->ask($engineQuery)->getEngine();
-            if ($engine === null) {
+            if ($engine === null || !$engine->isOwnedBy($owner)) {
                 throw new UnknownEngineException($engineQuery->getId());
             }
 
             $agentQuery = FindAgentByIdQuery::create($agentId);
             $agent = $queryBus->ask($agentQuery)->getAgent();
-            if ($agent === null) {
+            if ($agent === null || !$agent->isOwnedBy($owner)) {
                 throw new UnknownAgentException($agentQuery->getId());
             }
 

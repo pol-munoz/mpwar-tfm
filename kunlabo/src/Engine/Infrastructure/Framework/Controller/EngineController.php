@@ -17,12 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class EngineController extends AbstractController
 {
     #[Route('/{id}', name: 'web_engines_by_id', methods: ['GET'])]
     public function engine(
         QueryBus $queryBus,
+        Security $security,
         string $id
     ): Response {
         try {
@@ -30,7 +32,8 @@ final class EngineController extends AbstractController
 
             $engine = $queryBus->ask(FindEngineByIdQuery::create($id))->getEngine();
 
-            if ($engine === null) {
+            $owner = $security->getUser()->getId();
+            if ($engine === null || !$engine->isOwnedBy($owner)) {
                 throw $this->createNotFoundException();
             }
 

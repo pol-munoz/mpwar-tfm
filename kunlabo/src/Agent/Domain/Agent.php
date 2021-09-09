@@ -10,21 +10,21 @@ use Kunlabo\Agent\Domain\Event\AgentFileDeletedEvent;
 use Kunlabo\Agent\Domain\Event\AgentFileUpdatedEvent;
 use Kunlabo\Agent\Domain\Event\AgentMainPathSetEvent;
 use Kunlabo\Agent\Domain\ValueObject\AgentKind;
-use Kunlabo\Shared\Domain\Aggregate\NamedAggregateRoot;
+use Kunlabo\Shared\Domain\Aggregate\OwnedNamedAggregateRoot;
 use Kunlabo\Shared\Domain\ValueObject\Name;
 use Kunlabo\Shared\Domain\ValueObject\Uuid;
 
-final class Agent extends NamedAggregateRoot {
+final class Agent extends OwnedNamedAggregateRoot {
     private function __construct(
         Uuid $id,
         DateTime $created,
         DateTime $modified,
         Name $name,
-        private Uuid $owner,
+        Uuid $owner,
         private AgentKind $kind,
         private string $main
     ) {
-        parent::__construct($id, $created, $modified, $name);
+        parent::__construct($id, $created, $modified, $name, $owner);
     }
 
     public static function create(
@@ -37,11 +37,6 @@ final class Agent extends NamedAggregateRoot {
         $agent->record(new AgentCreatedEvent($agent));
 
         return $agent;
-    }
-
-    public function getOwner(): Uuid
-    {
-        return $this->owner;
     }
 
     public function getKind(): AgentKind
