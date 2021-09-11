@@ -262,6 +262,8 @@ final class StudyInsightsController extends AbstractController
                         'label' => 'Participants',
                         'backgroundColor' => 'rgba(38, 79, 146, 0.5)',
                         'hoverBackgroundColor' => 'rgba(38, 79, 146, 0.65)',
+                        'barPercentage' => 1.0,
+                        'categoryPercentage' => 1.0,
                         'data' => $data['ages']['data']
                     ]
                 ]
@@ -281,8 +283,6 @@ final class StudyInsightsController extends AbstractController
                     ],
                     'xAxes' => [
                         [
-                            'barPercentage' => 1.0,
-                            'categoryPercentage' => 1.0,
                             'scaleLabel' => ChartUtils::axisLabelConfig('Age (years)')
                         ]
                     ]
@@ -376,6 +376,8 @@ final class StudyInsightsController extends AbstractController
                     [
                         'label' => 'Logs',
                         'backgroundColor' => $data['colors'],
+                        'barPercentage' => 1.0,
+                        'categoryPercentage' => 1.0,
                         'data' => $data['types']['data']
                     ]
                 ]
@@ -395,8 +397,6 @@ final class StudyInsightsController extends AbstractController
                     ],
                     'xAxes' => [
                         [
-                            'barPercentage' => 1.0,
-                            'categoryPercentage' => 1.0,
                             'scaleLabel' => ChartUtils::axisLabelConfig('Log type')
                         ]
                     ]

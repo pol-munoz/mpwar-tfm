@@ -8,6 +8,7 @@ use Kunlabo\Shared\Domain\ValueObject\Uuid;
 interface LogRepository
 {
     public function readAllByStudyId(Uuid $studyId): array;
+    public function readNewByStudyId(Uuid $studyId): array;
     public function readAllByStudyAndParticipantId(Uuid $studyId, Uuid $participantId): array;
 
     public function deleteAllByParticipantId(Uuid $participantId): void;

@@ -39,6 +39,45 @@ final class ElasticLogRepository implements LogRepository
         return $this->performFullQuery($response);
     }
 
+
+    public function readNewByStudyId(Uuid $studyId): array
+    {
+        if (!$this->elastic->indices()->exists(['index' => self::INDEX])) {
+            return [];
+        }
+        $response = $this->elastic->search(
+            [
+                'index' => self::INDEX,
+                'size' => 100,
+                'scroll' => '30s',
+                'body' => [
+                    'sort' => ['datetime'],
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                [
+                                    'range' => [
+                                        'datetime' => [
+                                            'gte' => 'now-7d/d',
+                                            'lt' => 'now'
+                                        ]
+                                    ]
+                                ],
+                                [
+                                    'term' => [
+                                        'log.study.keyword' => $studyId->getRaw()
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        );
+
+        return $this->performFullQuery($response);
+    }
+
     public function readAllByStudyAndParticipantId(Uuid $studyId, Uuid $participantId): array
     {
         if (!$this->elastic->indices()->exists(['index' => self::INDEX])) {

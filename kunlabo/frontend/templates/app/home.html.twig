@@ -20,9 +20,18 @@
 
         <h3 class="App-subtitle">Recent activity</h3>
 
-        <h1>TODO number of logs over time last week</h1>
+        {% if logCount > 0 %}
+            <div class="Home-chart">
+                {{ render_chart(logsChart) }}
+            </div>
+        {% else %}
+            <div class="App-placeholder">
+                <i class="fas fa-clipboard-list App-placeholder-icon"></i>
+                <p class="App-placeholder-text">No logs yet. Check back later!</p>
+            </div>
+        {% endif %}
 
-        <h3 class="App-subtitle">New participants</h3>
+        <h3 class="App-subtitle">Newest participants</h3>
 
         {% if participants is empty %}
             <div class="App-placeholder">

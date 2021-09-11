@@ -41,6 +41,10 @@ final class Log
     {
         return  $this->created->getTimestamp() * 1000 + (intval($this->created->format('u')) / 1000);
     }
+    public function getTimestampSeconds(): int
+    {
+        return  $this->created->getTimestamp();
+    }
 
     public function getStudyId(): Uuid
     {
