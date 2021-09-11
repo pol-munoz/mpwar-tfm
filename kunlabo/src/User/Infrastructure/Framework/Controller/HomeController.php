@@ -82,9 +82,8 @@ final class HomeController extends AbstractController
         }
 
         foreach ($logs as $log) {
-            $timestamp = $log->getTimestampSeconds();
-            if ($timestamp >= $start) {
-                $time = intdiv($timestamp, 3600) * 3600;
+            $time = intdiv($log->getTimestampSeconds(), 3600) * 3600;
+            if ($time >= $start) {
                 $counts[$time]++;
             }
         }
