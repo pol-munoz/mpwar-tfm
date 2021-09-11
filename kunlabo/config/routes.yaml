@@ -30,4 +30,4 @@ participant_controllers:
 log_controllers:
     resource: '../src/Log/Infrastructure/Framework/Controller'
     type: annotation
-    prefix: logs
+    prefix: app/logs

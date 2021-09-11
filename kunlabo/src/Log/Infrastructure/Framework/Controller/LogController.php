@@ -8,6 +8,7 @@ use Kunlabo\Participant\Application\Query\SearchParticipantsByStudyId\SearchPart
 use Kunlabo\Participant\Domain\Participant;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
+use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ final class LogController extends AbstractController
         string $id,
         string $participant
     ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
         $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         $owner = $security->getUser()->getId();
@@ -51,6 +53,7 @@ final class LogController extends AbstractController
         Security $security,
         string $id
     ): Response {
+        $this->denyAccessUnlessGranted(AuthUser::ROLE_RESEARCHER);
         $study = $queryBus->ask(FindStudyByIdQuery::create($id))->getStudy();
 
         $owner = $security->getUser()->getId();
