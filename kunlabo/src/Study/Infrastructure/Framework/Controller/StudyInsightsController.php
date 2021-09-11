@@ -17,8 +17,6 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 final class StudyInsightsController extends AbstractController
 {
-    const POINT_STYLES = ['circle', 'rect', 'rectRounded', 'rectRot', 'triangle'];
-
     #[Route('/insights/{id}', name: 'web_studies_insights', methods: ['GET'])]
     public function studyInsights(
         QueryBus $queryBus,
@@ -205,7 +203,7 @@ final class StudyInsightsController extends AbstractController
 
                         $data['journeys']['time']['datasets'][] = [
                             'data' => [],
-                            'pointStyle' => self::POINT_STYLES[$types % count(self::POINT_STYLES)],
+                            'pointStyle' => ChartUtils::POINT_STYLES[$types % ChartUtils::POINT_STYLES_NUMBER],
                             'pointBackgroundColor' => $color,
                             'pointBorderColor' => $color,
                             'label' => $type,
@@ -213,7 +211,7 @@ final class StudyInsightsController extends AbstractController
                         ];
                         $data['journeys']['action']['datasets'][] = [
                             'data' => [],
-                            'pointStyle' => self::POINT_STYLES[$types % count(self::POINT_STYLES)],
+                            'pointStyle' => ChartUtils::POINT_STYLES[$types % ChartUtils::POINT_STYLES_NUMBER],
                             'pointBackgroundColor' => $color,
                             'pointBorderColor' => $color,
                             'label' => $type,

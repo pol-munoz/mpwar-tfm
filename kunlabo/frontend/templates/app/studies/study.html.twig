@@ -64,14 +64,14 @@
                     </div>
                     <div class="App-menu">
                         {% if human %}
-                            <a draggable="false" class="App-menu-option"
+                            <a draggable="false" class="App-menu-option" data-action="click->menu#closeMenu"
                                href="{{ path('web_studies_human', {id: study.id, participant: participant.id}) }}">
                                 <i class="fas fa-fw fa-brain App-menu-option-icon"></i>
                                 <p class="App-menu-option-text">Human agent</p>
                             </a>
                         {% endif %}
 
-                        <a draggable="false" class="App-menu-option"
+                        <a draggable="false" class="App-menu-option" data-action="click->menu#closeMenu"
                            href="{{ path('web_logs_by_participant', {id: study.id, participant: participant.id}) }}"
                            download="{{ participant.name }}.json">
                             <i class="fas fa-fw fa-clipboard-list App-menu-option-icon"></i>

@@ -54,19 +54,19 @@
                             <p class="App-menu-option-text">Copy link</p>
                         </div>
 
-                        <a draggable="false" class="App-menu-option"
+                        <a draggable="false" class="App-menu-option" data-action="click->menu#closeMenu"
                            href="{{ path('web_studies_by_id', {id: study.id}) }}">
                             <i class="fas fa-fw fa-users App-menu-option-icon"></i>
                             <p class="App-menu-option-text">Participants</p>
                         </a>
 
-                        <a draggable="false" class="App-menu-option"
+                        <a draggable="false" class="App-menu-option" data-action="click->menu#closeMenu"
                            href="{{ path('web_studies_insights', {id: study.id}) }}">
                             <i class="fas fa-fw fa-chart-bar App-menu-option-icon"></i>
                             <p class="App-menu-option-text">Insights</p>
                         </a>
 
-                        <a draggable="false" class="App-menu-option"
+                        <a draggable="false" class="App-menu-option" data-action="click->menu#closeMenu"
                            href="{{ path('web_logs_by_study', {id: study.id}) }}"
                            download="{{ study.name }}.json">
                             <i class="fas fa-fw fa-clipboard-list App-menu-option-icon"></i>

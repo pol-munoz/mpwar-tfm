@@ -4,6 +4,8 @@ namespace Kunlabo\Shared\Infrastructure;
 
 final class ChartUtils
 {
+    const POINT_STYLES = ['circle', 'rect', 'rectRounded', 'rectRot', 'triangle'];
+    const POINT_STYLES_NUMBER = 5;
 
     private const SILVER_RATIO = 0.618033988749895;
 
