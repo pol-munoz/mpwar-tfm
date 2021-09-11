@@ -5,7 +5,7 @@ namespace Kunlabo\Study\Infrastructure\Framework\Controller;
 use Kunlabo\Log\Application\Query\SearchLogsByStudyAndParticipant\SearchLogsByStudyAndParticipantQuery;
 use Kunlabo\Participant\Application\Query\SearchParticipantsByStudyId\SearchParticipantsByStudyIdQuery;
 use Kunlabo\Shared\Application\Bus\Query\QueryBus;
-use Kunlabo\Shared\Domain\Utils;
+use Kunlabo\Shared\Infrastructure\ChartUtils;
 use Kunlabo\Study\Application\Query\FindStudyById\FindStudyByIdQuery;
 use Kunlabo\User\Infrastructure\Framework\Auth\AuthUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,30 +76,6 @@ final class StudyInsightsController extends AbstractController
                 'journeyActionChart' => $journeyActionChart
             ]
         );
-    }
-
-    private function titleConfig(string $text): array
-    {
-        return [
-            'display' => true,
-            'text' => $text,
-            'fontFamily' => "'Poppins', sans-serif",
-            'fontSize' => 18,
-            'fontColor' => '#040910',
-            'padding' => 20
-        ];
-    }
-
-    private function axisLabelConfig(string $text): array
-    {
-        return [
-            'display' => true,
-            'labelString' => $text,
-            'fontSize' => 14,
-            'fontColor' => '#1d3d70',
-            'fontStyle' => 'bold',
-            'padding' => 10
-        ];
     }
 
     private function prepareParticipantData($participants): array
@@ -220,7 +196,7 @@ final class StudyInsightsController extends AbstractController
                     $type = $log->getType();
 
                     if (!array_key_exists($type, $lookup)) {
-                        $color = Utils::uniqueAlphaColor($types, 0.7);
+                        $color = ChartUtils::uniqueAlphaColor($types, 0.7);
 
                         $lookup[$type] = $types;
                         $data['types']['labels'][] = $type;
@@ -302,21 +278,21 @@ final class StudyInsightsController extends AbstractController
                                 'beginAtZero' => true,
                                 'precision' => 0
                             ],
-                            'scaleLabel' => $this->axisLabelConfig('# of Participants')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('# of Participants')
                         ]
                     ],
                     'xAxes' => [
                         [
                             'barPercentage' => 1.0,
                             'categoryPercentage' => 1.0,
-                            'scaleLabel' => $this->axisLabelConfig('Age (years)')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('Age (years)')
                         ]
                     ]
                 ],
                 'legend' => [
                     'display' => false
                 ],
-                'title' => $this->titleConfig('Age distribution'),
+                'title' => ChartUtils::titleConfig('Age distribution'),
                 'aspectRatio' => 1.618
             ]
         );
@@ -350,7 +326,7 @@ final class StudyInsightsController extends AbstractController
                         'padding' => 20,
                     ]
                 ],
-                'title' => $this->titleConfig('Gender distribution'),
+                'title' => ChartUtils::titleConfig('Gender distribution'),
                 'aspectRatio' => 1.618
             ]
         );
@@ -384,7 +360,7 @@ final class StudyInsightsController extends AbstractController
                         'padding' => 20,
                     ]
                 ],
-                'title' => $this->titleConfig('Handedness distribution'),
+                'title' => ChartUtils::titleConfig('Handedness distribution'),
                 'aspectRatio' => 1.618
             ]
         );
@@ -416,21 +392,21 @@ final class StudyInsightsController extends AbstractController
                                 'beginAtZero' => true,
                                 'precision' => 0
                             ],
-                            'scaleLabel' => $this->axisLabelConfig('# of Logs')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('# of Logs')
                         ]
                     ],
                     'xAxes' => [
                         [
                             'barPercentage' => 1.0,
                             'categoryPercentage' => 1.0,
-                            'scaleLabel' => $this->axisLabelConfig('Log type')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('Log type')
                         ]
                     ]
                 ],
                 'legend' => [
                     'display' => false
                 ],
-                'title' => $this->titleConfig('Log type frequency'),
+                'title' => ChartUtils::titleConfig('Log type frequency'),
                 'aspectRatio' => 1.618
             ]
         );
@@ -456,14 +432,14 @@ final class StudyInsightsController extends AbstractController
                                 'beginAtZero' => true,
                                 'precision' => 0
                             ],
-                            'scaleLabel' => $this->axisLabelConfig('Time (seconds)')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('Time (seconds)')
                         ]
                     ],
                     'yAxes' => [
                         [
                             'type' => 'category',
                             'labels' => $data['journeys']['time']['labels'],
-                            'scaleLabel' => $this->axisLabelConfig('Participant')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('Participant')
                         ]
                     ]
                 ],
@@ -480,7 +456,7 @@ final class StudyInsightsController extends AbstractController
                         'usePointStyle' => true,
                     ]
                 ],
-                'title' => $this->titleConfig('Interaction journey over time'),
+                'title' => ChartUtils::titleConfig('Interaction journey over time'),
                 'maintainAspectRatio' => false
             ]
         );
@@ -506,14 +482,14 @@ final class StudyInsightsController extends AbstractController
                                 'beginAtZero' => true,
                                 'precision' => 0
                             ],
-                            'scaleLabel' => $this->axisLabelConfig('Action #')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('Action #')
                         ]
                     ],
                     'yAxes' => [
                         [
                             'type' => 'category',
                             'labels' => $data['journeys']['action']['labels'],
-                            'scaleLabel' => $this->axisLabelConfig('Participant')
+                            'scaleLabel' => ChartUtils::axisLabelConfig('Participant')
                         ]
                     ]
                 ],
@@ -530,7 +506,7 @@ final class StudyInsightsController extends AbstractController
                         'usePointStyle' => true,
                     ]
                 ],
-                'title' => $this->titleConfig('Interaction journey over actions'),
+                'title' => ChartUtils::titleConfig('Interaction journey over actions'),
                 'maintainAspectRatio' => false
             ]
         );

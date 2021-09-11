@@ -47,34 +47,4 @@ final class Utils
             rmdir($dir);
         }
     }
-
-    private const SILVER_RATIO = 0.618033988749895;
-
-    public static function uniqueAlphaColor(int $n, float $alpha = 1.0): string
-    {
-        $h = 0.53;
-
-        if ($n % 2 === 0) {
-            $light = 50;
-            $sat = 80;
-        } else {
-            $light = 35;
-            $sat = 95;
-        }
-
-        for ($i = 0; $i < $n; $i++) {
-            if ($i % 2 ===1) {
-                $h += self::SILVER_RATIO;
-            }
-
-            if ($h > 1) {
-                $h -= 1;
-            }
-        }
-
-        $hue = $h * 360;
-
-        return "hsla(" . round($hue) . ", $sat%, $light%, $alpha)";
-    }
-
 }
