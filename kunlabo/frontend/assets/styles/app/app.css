@@ -47,9 +47,11 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 7px 0;
 }
 
+.App-content-inner-header {
+    margin: 7px 0;
+}
 
 .App-logo {
     display: flex;
