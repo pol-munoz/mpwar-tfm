@@ -38,17 +38,17 @@
                 <p class="App-list-item"><strong>Handedness</strong></p>
                 <p class="App-list-item"><strong>Joined</strong></p>
             </div>
-                {% for participant in participants %}
-                    <a draggable="false" class="App-six-columns App-list-row" href="{{ path('web_studies_by_id', {id: participant.studyId}) }}">
-                        <div class="App-list-item"><span>{{ studies[participant.studyId.raw].name }}</span></div>
-                        <div class="App-list-item"><span>{{ participant.name }}</span></div>
-                        <div class="App-list-item"><span>{{ participant.age.raw }}</span></div>
-                        <div class="App-list-item"><span>{{ participant.gender }}</span></div>
-                        <div class="App-list-item"><span>{{ participant.handedness }}</span></div>
-                        <div class="App-list-item"><span>{{ participant.modified | ago }}</span></div>
-                    </a>
-                {% endfor %}
-            </div>
+
+            {% for participant in participants %}
+                <a draggable="false" class="App-six-columns App-list-row" href="{{ path('web_studies_by_id', {id: participant.studyId}) }}">
+                    <div class="App-list-item"><span>{{ studies[participant.studyId.raw].name }}</span></div>
+                    <div class="App-list-item"><span>{{ participant.name }}</span></div>
+                    <div class="App-list-item"><span>{{ participant.age.raw }}</span></div>
+                    <div class="App-list-item"><span>{{ participant.gender }}</span></div>
+                    <div class="App-list-item"><span>{{ participant.handedness }}</span></div>
+                    <div class="App-list-item"><span>{{ participant.modified | ago }}</span></div>
+                </a>
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock %}
