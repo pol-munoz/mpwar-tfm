@@ -7,3 +7,50 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('landing') }}
 {% endblock %}
+
+{% block body %}
+    <header class="Landing-header">
+        <img draggable="false" class="Landing-logo" height="30" src="{{ asset('build/logo.svg') }}" alt="kunlabo logo">
+        <div class="Landing-header-row">
+            <a href="{{ path('web_login') }}" class="Landing-link" style="margin-right: 15px">Sign in</a>
+            <a href="{{ path('web_register') }}" class="Landing-link-cta">Register</a>
+        </div>
+    </header>
+    <main>
+        <section class="Landing-section-first">
+            <h1 class="Landing-title">A platform for user testing in co‑creative scenarios</h1>
+        </section>
+        <div class="Landing-section-main-wrapper">
+            <section class="Landing-section-main">
+                <article class="Landing-article">
+                    <div>
+                        <h2>Use any engine and agent</h2>
+                        <p>The platform is fully agnostic, providing you simple tools to use any collaboration engine with your agent.</p>
+                        <p>Just design your messaging protocol and forget about implementing the communication between them.</p>
+                    </div>
+                </article>
+                <article class="Landing-article">
+                    <div>
+                        <h2>Study collaboration with humans or AI</h2>
+                        <p>Agents can be built using web technologies or Python, making it easy to have control groups.</p>
+                        <p>Human agents can be operated manually per participant, while AI agents run automatically.</p>
+                    </div>
+                </article>
+                <article class="Landing-article">
+                    <div>
+                        <h2>Invite participants to your study</h2>
+                        <p>Share your study's link with as many participants as you want.</p>
+                        <p>Get statistics and insights based on participant answers to a pre-defined survey.</p>
+                    </div>
+                </article>
+                <article class="Landing-article">
+                    <div>
+                        <h2>Get logs and advanced insights</h2>
+                        <p>Decide what to log in your engines without any restrictions.</p>
+                        <p>Get more statistics and charts based on your logs if you include a 'type' field.</p>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+{% endblock %}

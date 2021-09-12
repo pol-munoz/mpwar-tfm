@@ -148,8 +148,12 @@ body {
 }
 
 .Auth-link {
-    color: #264F92;
+    color: #244B8A;
     text-decoration: none;
+}
+
+.Auth-link:hover {
+    color: #2E61B2;
 }
 
 .Auth-separation {

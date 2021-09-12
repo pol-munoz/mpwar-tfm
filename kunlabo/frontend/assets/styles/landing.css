@@ -1,0 +1,105 @@
+html {
+    font-family: 'Poppins', sans-serif;
+    color: #040910;
+    min-height: 100vh;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: white;
+    background: linear-gradient(180deg, white 0%, white 10%, #EFF3FB 20%, #AEC5EA 60%);
+}
+
+.Landing-header {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Landing-header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.Landing-logo {
+    display: flex;
+}
+
+.Landing-link {
+    color: #244B8A;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 50px;
+    border: solid 1px white;
+    background: white;
+}
+
+.Landing-link:hover {
+    color: #2E61B2;
+    box-shadow: 0 2px 6px rgba(29, 61, 112, 0.2);
+}
+
+.Landing-link:active {
+    background: #f9f9f9;
+}
+
+.Landing-link-cta {
+    color: #244B8A;
+    text-decoration: none;
+    border: solid 1px #244B8A;
+    padding: 5px 15px;
+    border-radius: 50px;
+    background: white;
+}
+
+.Landing-link-cta:hover {
+    color: #2E61B2;
+    border-color: #2E61B2;
+    box-shadow: 0 2px 6px rgba(29, 61, 112, 0.2);
+}
+
+.Landing-link-cta:active {
+    background: #f9f9f9;
+}
+
+.Landing-title {
+    font-size: 2.5em;
+    max-width: 40vw;
+    min-width: 230px;
+    align-self: flex-end;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(255, 255, 255, 0.9), 1px 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+.Landing-section-first {
+    padding: 20px 25vw;
+    min-height: 40vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.Landing-section-main {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    margin-top: -50px;
+    clip-path: polygon(0 100px, 100% 0,100% 100%,0 100%);
+    padding-top: 140px;
+    padding-bottom: 40px;
+}
+
+.Landing-section-main-wrapper {
+    filter: drop-shadow(-5px 0 10px rgba(29, 61, 112, 0.2));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+.Landing-article {
+    padding: 20px 25vw;
+    display: flex;
+    flex-direction: row;
+}

@@ -134,6 +134,11 @@ body {
     box-shadow: 0 2px 6px rgba(29, 61, 112, 0.2);
 }
 
+.App-nav-item:active {
+    background: #2B5AA6;
+    box-shadow: 0 2px 4px rgba(29, 61, 112, 0.3);
+}
+
 .App-nav-item-active {
     background: #326AC3 !important;
     box-shadow: 0 2px 6px rgba(29, 61, 112, 0.2) !important;
