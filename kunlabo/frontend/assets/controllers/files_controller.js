@@ -248,7 +248,7 @@ export default class extends Controller {
 
     delete() {
         let file = this.lastFile
-        if (confirm('Are you sure you want to delete this file?\n\n"' + this.file + '"')) {
+        if (confirm('Are you sure you want to delete this file?\n\n"' + file + '"')) {
             fetch(this.injectBeforeId('file/'), {
                 method: 'DELETE',
                 body: file,
