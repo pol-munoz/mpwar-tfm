@@ -6,7 +6,7 @@ use Kunlabo\Log\Domain\LogRepository;
 use Kunlabo\Participant\Domain\Event\ParticipantDeletedEvent;
 use Kunlabo\Shared\Application\Bus\Event\DomainEventSubscriber;
 
-final class DeleteLogsOnParticpantDeleted implements DomainEventSubscriber
+final class DeleteLogsOnParticipantDeleted implements DomainEventSubscriber
 {
     public function __construct(
         private LogRepository $repository
