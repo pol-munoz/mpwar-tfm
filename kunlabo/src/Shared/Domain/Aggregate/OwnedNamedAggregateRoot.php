@@ -19,8 +19,8 @@ abstract class OwnedNamedAggregateRoot extends NamedAggregateRoot
         return $this->owner;
     }
 
-    public function isOwnedBy(Uuid $userId): bool
+    public function isOwnedBy(Uuid $id): bool
     {
-        return $this->owner->getRaw() === $userId->getRaw();
+        return $this->owner->getRaw() === $id->getRaw();
     }
 }
