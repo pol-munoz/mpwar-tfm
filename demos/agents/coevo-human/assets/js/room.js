@@ -23,65 +23,66 @@ function onPersistLoaded(data) {
     updateAIUI(data.change, data.similarity)
 }
 
-function onEngineMessage(message) {
-    switch (message.meta) {
-        case meta.TURN:
-            yourTurn = true
-            logNewEvent('Turn started', creatures[cCreature], true)
-            updateUserUI()
-            break
-        case meta.CREATURE:
-            if (message.hasOwnProperty('suggestions')) {
-                if (roomType !== roomTypes.TURNS) {
+function onMessage(message) {
+    if (!roomAdmin) {
+        switch (message.meta) {
+            case meta.TURN:
+                yourTurn = true
+                logNewEvent('Turn started', creatures[cCreature], true)
+                updateUserUI()
+                break
+            case meta.CREATURE:
+                if (message.hasOwnProperty('suggestions')) {
+                    if (roomType !== roomTypes.TURNS) {
+                        for (let index in message.suggestions) {
+                            if (message.suggestions.hasOwnProperty(index)) {
+                                updateSuggestion(index, message.suggestions[index])
+                            }
+                        }
+                    }
+                } else {
+                    for (let index in message.creatures) {
+                        if (message.creatures.hasOwnProperty(index)) {
+                            updateCreature(index, message.creatures[index])
+                        }
+                    }
+                }
+                break
+        }
+    } else {
+        switch (message.meta) {
+            case meta.TURN:
+                yourTurn = true
+                updateAdminUI()
+                break
+            case meta.CREATURE:
+                if (message.hasOwnProperty('suggestions')) {
                     for (let index in message.suggestions) {
                         if (message.suggestions.hasOwnProperty(index)) {
                             updateSuggestion(index, message.suggestions[index])
                         }
                     }
-                }
-            } else {
-                for (let index in message.creatures) {
-                    if (message.creatures.hasOwnProperty(index)) {
-                        updateCreature(index, message.creatures[index])
+                } else if (message.hasOwnProperty('creatures')) {
+                    for (let index in message.creatures) {
+                        if (message.creatures.hasOwnProperty(index)) {
+                            updateCreature(index, message.creatures[index])
+                        }
                     }
                 }
-            }
-            break
-    }
-}
-function onAgentMessage(message) {
-    switch (message.meta) {
-        case meta.TURN:
-            yourTurn = true
-            updateAdminUI()
-            break
-        case meta.CREATURE:
-            if (message.hasOwnProperty('suggestions')) {
-                for (let index in message.suggestions) {
-                    if (message.suggestions.hasOwnProperty(index)) {
-                        updateSuggestion(index, message.suggestions[index])
-                    }
-                }
-            } else if (message.hasOwnProperty('creatures')) {
-                for (let index in message.creatures) {
-                    if (message.creatures.hasOwnProperty(index)) {
-                        updateCreature(index, message.creatures[index])
-                    }
-                }
-            }
-            break
-        case meta.ACCEPT:
-            removeSuggestion(message.index)
-            break
-        case meta.REJECT:
-            removeSuggestion(message.index)
-            break
-        case meta.STATUS:
-            showUserStatus(message.status)
-            break
-            case meta.AI:
-                updateAIUI(message.change, message.similarity)
-            break
+                break
+            case meta.ACCEPT:
+                removeSuggestion(message.index)
+                break
+            case meta.REJECT:
+                removeSuggestion(message.index)
+                break
+            case meta.STATUS:
+                showUserStatus(message.status)
+                break
+                case meta.AI:
+                    updateAIUI(message.change, message.similarity)
+                break
+        }
     }
 }
 

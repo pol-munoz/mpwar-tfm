@@ -27,7 +27,7 @@
         <iframe class="Studies-frame" src="{{ asset(agent.mainUrl) }}" title="{{ study.name }}" data-controller="iframe"
                 data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/agent/{{ study.id }}/{{ participant.id }}"
                 data-iframe-mercure-value="{{ mercure }}" data-iframe-persist-value="/persisted/{{ study.id }}/{{ participant.id }}.json"
-                data-iframe-sub-value="onAgentMessage" data-iframe-pub-value="sendEngineMessage"
+                data-iframe-sub-value="onMessage" data-iframe-pub-value="sendMessage"
                 sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts"
                 {# Disallowed: allow-popups-to-escape-sandbox, allow-top-navigation, allow-top-navigation-by-user #}
         ></iframe>

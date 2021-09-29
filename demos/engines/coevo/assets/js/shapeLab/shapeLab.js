@@ -100,12 +100,12 @@ class ShapeLab{
     }
 
     if (!roomAdmin) {
-      sendAgentMessage({meta: meta.CREATURE, [path]: { [to]: upload } }, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
+      sendMessage({meta: meta.CREATURE, [path]: { [to]: upload } }, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
     } else {
       if (path === 'suggestions') {
-        sendEngineMessage({meta: meta.CREATURE, [path]: { [to]: upload } })
+        sendMessage({meta: meta.CREATURE, [path]: { [to]: upload } })
       } else {
-        sendEngineMessage({meta: meta.CREATURE, [path]: { [to]: upload } }, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
+        sendMessage({meta: meta.CREATURE, [path]: { [to]: upload } }, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
       }
     }
   }

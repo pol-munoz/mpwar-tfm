@@ -1,7 +1,7 @@
 function logNewEvent(type, val = null, isCreature = false) {
     if (!roomAdmin) {
         if (val === null) {
-            sendAgentMessage({type}, [KunlaboAction.LOG])
+            sendMessage({type}, [KunlaboAction.LOG])
         } else {
             let value = val
             if (isCreature) {
@@ -11,7 +11,7 @@ function logNewEvent(type, val = null, isCreature = false) {
                     value = filterCreature(value)
                 }
             }
-            sendAgentMessage({type, value}, [KunlaboAction.LOG])
+            sendMessage({type, value}, [KunlaboAction.LOG])
         }
     }
 }

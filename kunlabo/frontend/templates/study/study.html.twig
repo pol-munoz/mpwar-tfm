@@ -7,7 +7,7 @@
     <iframe class="Study-frame" src="{{ asset(engine.mainUrl) }}" title="{{ study.name }}" data-controller="iframe"
             data-iframe-target="iframe" data-iframe-topic-value="http://kunlabo.com/engine/{{ study.id }}/{{ participant }}"
             data-iframe-mercure-value="{{ mercure }}" data-iframe-persist-value="/persisted/{{ study.id }}/{{ participant }}.json"
-            data-iframe-sub-value="onEngineMessage" data-iframe-pub-value="sendAgentMessage"
+            data-iframe-sub-value="onMessage" data-iframe-pub-value="sendMessage"
             sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts"
             {# Disallowed: allow-popups-to-escape-sandbox, allow-top-navigation, allow-top-navigation-by-user #}
     >

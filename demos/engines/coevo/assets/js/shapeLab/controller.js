@@ -118,7 +118,7 @@ function mousePressed() {
 }
 
 function updateUserStatus(status) {
-  sendAgentMessage({meta: meta.STATUS, status}, [KunlaboAction.MESSAGE])
+  sendMessage({meta: meta.STATUS, status}, [KunlaboAction.MESSAGE])
 }
 
 
@@ -237,12 +237,9 @@ function pushCurrentCreature() {
   switch (roomType) {
     case roomTypes.TURNS:
       shapeLab.pushTo(creatures[cCreature], 'creatures', 0)
-          
-      if (!roomAdmin) {
-        sendAgentMessage({meta: meta.TURN})
-      } else {
-        sendEngineMessage({meta: meta.TURN})
-      }
+      
+        sendMessage({meta: meta.TURN})
+
       break
     case roomTypes.OVERLAP:
       shapeLab.pushTo(creatures[cCreature], 'suggestions', 0)
@@ -262,7 +259,7 @@ function acceptSuggestion(i) {
 
   if (!roomAdmin) {
     removeSuggestion(i)
-    sendAgentMessage({meta: meta.ACCEPT, index: i})
+    sendMessage({meta: meta.ACCEPT, index: i})
   }
 }
 
@@ -271,17 +268,13 @@ function rejectSuggestion(i) {
   
   if (!roomAdmin) {
     removeSuggestion(i)
-    sendAgentMessage({meta: meta.REJECT, index: i})
+    sendMessage({meta: meta.REJECT, index: i})
   }
 }
 function endCurrentTurn() {
   logNewEvent('Finished turn')
 
-  if (!roomAdmin) {
-    sendAgentMessage({meta: meta.TURN})
-  } else {
-    sendEngineMessage({meta: meta.TURN})
-  }
+  sendMessage({meta: meta.TURN})
   yourTurn = false
   shapeLab.finishEditing()
   updateView()
@@ -290,12 +283,12 @@ function endCurrentTurn() {
 function updateAiChange() {
   logNewEvent('Updated AI change', this.checked)
   if (!roomAdmin) {
-    sendAgentMessage({meta: meta.AI, change: this.checked}, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
+    sendMessage({meta: meta.AI, change: this.checked}, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
   }
 }
 function updateAiSimilarity() {
   logNewEvent('Updated AI similarity', this.value)
   if (!roomAdmin) {
-    sendAgentMessage({meta: meta.AI, similarity: this.value}, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
+    sendMessage({meta: meta.AI, similarity: this.value}, [KunlaboAction.MESSAGE, KunlaboAction.PERSIST])
   }
 }
