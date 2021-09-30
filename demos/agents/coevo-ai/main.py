@@ -2,7 +2,7 @@ import random
 import copy
 
 
-def on_agent_message(data):
+def on_message(data):
     if data['meta'] != 'CREATURE':
         return {}
 

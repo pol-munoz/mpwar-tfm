@@ -22,7 +22,7 @@ def handle_message(data):
     spec.loader.exec_module(module)
 
     os.chdir(folder)
-    result = module.on_agent_message(body)
+    result = module.on_message(body)
 
     if result:
         post = {
