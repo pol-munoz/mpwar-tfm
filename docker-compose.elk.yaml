@@ -26,10 +26,11 @@ services:
         depends_on:
             - elasticsearch
 
-    filebeats:
+    filebeat:
         build: ./ops/filebeat
         volumes:
             - ./kunlabo/var/log:/var/log/kunlabo
+            - ./volumes/filebeat:/usr/share/filebeat/data
         depends_on:
             - logstash
 
