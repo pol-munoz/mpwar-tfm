@@ -38,7 +38,7 @@ services:
             MERCURE_PUBLISHER_JWT_KEY: ${JWT_SECRET_KEY}
             MERCURE_SUBSCRIBER_JWT_KEY: ${JWT_SECRET_KEY}
             MERCURE_EXTRA_DIRECTIVES: |
-                cors_origins http://localhost:8080
+                cors_origins *
                 anonymous
                 subscriptions
         depends_on:
