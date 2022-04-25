@@ -1,5 +1,7 @@
 FROM php:8.0.9-fpm-alpine3.14
 
+COPY ./ops/php-fpm/uploads.ini /usr/local/etc/php/conf.d
+
 RUN apk update && docker-php-ext-install bcmath pdo_mysql
 
 RUN apk add --no-cache curl git unzip \

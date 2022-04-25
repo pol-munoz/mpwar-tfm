@@ -45,7 +45,9 @@ services:
             - php
 
     php:
-        build: ./ops/php-fpm
+        build:
+            context: ./
+            dockerfile: ./ops/php-fpm/Dockerfile
         volumes:
             - ./kunlabo:/var/www/kunlabo
         working_dir: /var/www/kunlabo
